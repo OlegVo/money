@@ -1,35 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     View,
     StyleSheet,
+    StatusBar,
 } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import actionCreators from '../actions';
 
 import MenuScreen from './MenuScreen';
 import BalanceScreen from './BalanceScreen';
+import AddExpenceScreen from './AddExpeneseScreen';
 
-export default class Navigator extends Component {
-    state = {
-        page: 'menu',
+class Navigator extends Component {
+    static propTypes = {
+        navigation: PropTypes.shape({
+            page: PropTypes.string.isRequired,
+        }).isRequired,
     };
 
+    constructor(props) {
+        super(props);
+
+        this.pages = {
+            menu: <MenuScreen />,
+            balance: <BalanceScreen />,
+            addExpence: <AddExpenceScreen />,
+        };
+    }
+
     render() {
-        const { store } = this.props;
-        const { page } = this.state;
+        const { navigation } = this.props;
+        const { page } = navigation;
 
-        let component;
-        switch (page) {
-            case 'menu':
-                component = <MenuScreen />;
-                break;
-
-            case 'balance':
-                component = <BalanceScreen {...store} />;
-                break;
-        }
+        const component = this.pages[page];
 
         return (
             <View style={styles.panel}>
                 {component}
+
+                <StatusBar animated={true} barStyle='light-content' />
             </View>
         );
     }
@@ -40,3 +50,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+
+export default connect(
+    state => state,
+    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+)(Navigator);

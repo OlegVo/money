@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
     TouchableHighlight,
     View,
@@ -6,10 +6,18 @@ import {
     Dimensions,
     StyleSheet,
 } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import actionCreators from '../actions';
+import * as styleConstants from '../constants/styles';
 
 const window = Dimensions.get('window');
 
-export default class MenuScreen extends Component {
+class MenuScreen extends Component {
+    static propTypes = {
+        actions: PropTypes.object.isRequired,
+    };
+
     constructor(props) {
         super(props);
 
@@ -25,8 +33,8 @@ export default class MenuScreen extends Component {
     };
 
     onPress() {
-        const { changePage } = this.props;
-        changePage('balance');
+        const { actions } = this.props;
+        actions.changePage('balance');
     }
 
     render() {
@@ -49,18 +57,25 @@ export default class MenuScreen extends Component {
 const styles = StyleSheet.create({
     menu: {
         flex: 1,
-        marginTop: 30,
+        paddingTop: styleConstants.MENU_PADDING + 10,
         borderTopWidth: 1,
         borderColor: '#ccc',
+        backgroundColor: '#1a97cb',
+        paddingHorizontal: 20,
     },
     item: {
         width: window.width,
         paddingVertical: 10,
-        paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderColor: '#ccc',
     },
     itemText: {
         fontSize: 22,
+        color: '#fff',
     }
 });
+
+export default connect(
+    state => state,
+    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+)(MenuScreen);
