@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -7,18 +7,18 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
-import ExpensesList from './ExpensesList';
+import { ExpensesList } from '../components';
 
-class ExpensesScreen extends Component {
-    static propTypes = {
-        expenses: PropTypes.array.isRequired,
-        categories: PropTypes.object.isRequired,
-        currency: PropTypes.string.isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+class ExpensesScreen extends React.Component<any, {}> {
+    // static propTypes = {
+    //     expenses: PropTypes.array.isRequired,
+    //     categories: PropTypes.object.isRequired,
+    //     currency: PropTypes.string.isRequired,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     constructor(props) {
         super(props);
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(ExpensesScreen);
+export { connected as ExpensesScreen };

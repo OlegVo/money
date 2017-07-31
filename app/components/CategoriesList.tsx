@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -14,10 +14,10 @@ const HORIZONTAL_PADDING = 10;
 const ITEM_SIZE = 60;
 const HORIZONTAL_MARGIN = Math.floor(((window.width - HORIZONTAL_PADDING*2) / 3 - ITEM_SIZE) / 2);
 
-export default class CategoriesList extends Component {
-    static propTypes = {
-        onPressCategory: PropTypes.func.isRequired,
-    };
+export class CategoriesList extends React.Component<any, {}> {
+    // static propTypes = {
+    //     onPressCategory: PropTypes.func.isRequired,
+    // };
 
     render() {
         const { categories } = this.props;

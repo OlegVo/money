@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -7,15 +7,15 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
-class BalanceScreen extends Component {
-    static propTypes = {
-        balance: PropTypes.number.isRequired,
-        currency: PropTypes.string.isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+class BalanceScreen extends React.Component<any, {}> {
+    // static propTypes = {
+    //     balance: PropTypes.number.isRequired,
+    //     currency: PropTypes.string.isRequired,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     constructor(props) {
         super(props);
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(BalanceScreen);
+export { connected as BalanceScreen };

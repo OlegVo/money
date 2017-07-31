@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     TouchableHighlight,
     View,
@@ -17,20 +17,20 @@ const menuItems = [
     {text: 'Графики', page: 'planning'},
 ];
 
-export default class Menu extends Component {
-    static propTypes = {
-        actions: PropTypes.object.isRequired,
-    };
+export class Menu extends React.Component<any, any> {
+    // static propTypes = {
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     constructor(props) {
         super(props);
 
         this.onPress = this.onPress.bind(this);
-    }
 
-    state = {
-        items: menuItems
-    };
+        this.state = {
+            items: menuItems
+        };
+    }
 
     onPress(item) {
         const { actions } = this.props;
@@ -48,11 +48,11 @@ export default class Menu extends Component {
     }
 }
 
-class MenuItem extends Component {
-    static propTypes = {
-        item: PropTypes.object.isRequired,
-        onPress: PropTypes.func.isRequired,
-    };
+class MenuItem extends React.Component<any, {}> {
+    // static propTypes = {
+    //     item: PropTypes.object.isRequired,
+    //     onPress: PropTypes.func.isRequired,
+    // };
 
     constructor(props) {
         super(props);

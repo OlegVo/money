@@ -1,17 +1,17 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
 
 import { AsyncStorage } from 'react-native';
 
-import Navigator from './Navigator';
+import { Navigator } from './Navigator';
 
-class Main extends Component {
-    static propTypes = {
-        expenses: PropTypes.array,
-        actions: PropTypes.object.isRequired,
-    };
+class Main extends React.Component<any, {}> {
+    // static propTypes = {
+    //     expenses: PropTypes.array,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     componentDidMount() {
         const { actions } = this.props;
@@ -38,7 +38,8 @@ class Main extends Component {
     }
 }
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(Main);
+export { connected as Main };

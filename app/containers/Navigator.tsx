@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     StyleSheet,
@@ -6,23 +6,21 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
-import BalanceScreen from './BalanceScreen';
-import AddExpenseScreen from './AddExpeneseScreen';
-import PlanningScreen from './PlanningScreen';
-import ExpensesScreen from './ExpensesScreen';
+import { BalanceScreen, AddExpenseScreen, PlanningScreen, ExpensesScreen } from '../containers';
+import { Menu } from '../components';
 
-import Menu from './Menu';
+class Navigator extends React.Component<any, {}> {
+    // static propTypes = {
+    //     navigation: PropTypes.shape({
+    //         page: PropTypes.string.isRequired,
+    //     }).isRequired,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
-class Navigator extends Component {
-    static propTypes = {
-        navigation: PropTypes.shape({
-            page: PropTypes.string.isRequired,
-        }).isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+    private pages;
 
     constructor(props) {
         super(props);
@@ -60,7 +58,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(Navigator);
+export { connected as Navigator };

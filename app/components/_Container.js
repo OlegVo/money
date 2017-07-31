@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
-class Container extends Component {
+class Container extends React.Component<any, {}> {
     static propTypes = {
     };
 

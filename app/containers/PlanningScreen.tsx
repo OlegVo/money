@@ -1,24 +1,21 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 
-class PlanningScreen extends Component {
-    static propTypes = {
-        balance: PropTypes.number.isRequired,
-        currency: PropTypes.string.isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+class PlanningScreen extends React.Component<any, {}> {
+    // static propTypes = {
+    //     balance: PropTypes.number.isRequired,
+    //     currency: PropTypes.string.isRequired,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     render() {
-        const { actions } = this.props;
-
         return (
             <View style={styles.container}>
                 <Text>План на месяц</Text>
@@ -36,7 +33,8 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(PlanningScreen);
+export { connected as PlanningScreen };

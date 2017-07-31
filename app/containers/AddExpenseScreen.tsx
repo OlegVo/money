@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -9,26 +9,25 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
-import moment from 'moment';
+import * as moment from 'moment';
 
 const window = Dimensions.get('window');
 
-import CategoriesList from './CategoriesList';
-import DatePicker from './DatePicker';
+import { CategoriesList, DatePicker } from '../components';
 
 const CONTENT_TOP = styleConstants.NAVIGATION_BAR_HEIGHT;
 const CONTENT_HEIGHT = window.height - CONTENT_TOP - styleConstants.MENU_HEIGHT;
 
-class AddExpenseScreen extends Component {
-    static propTypes = {
-        categories: PropTypes.shape({
-            expenses: PropTypes.array.isRequired,
-        }).isRequired,
-        actions: PropTypes.object.isRequired,
-    };
+class AddExpenseScreen extends React.Component<any, any> {
+    // static propTypes = {
+    //     categories: PropTypes.shape({
+    //         expenses: PropTypes.array.isRequired,
+    //     }).isRequired,
+    //     actions: PropTypes.object.isRequired,
+    // };
 
     constructor(props) {
         super(props);
@@ -39,15 +38,15 @@ class AddExpenseScreen extends Component {
         this.onSelectDate = this.onSelectDate.bind(this);
         this.onChangeSum = this.onChangeSum.bind(this);
         this.submit = this.submit.bind(this);
-    }
 
-    state = {
-        category: null,
-        sum: '',
-        comment: '',
-        date: moment().format(formats.DATE_FORMAT),
-        selectDate: false,
-    };
+        this.state = {
+            category: null,
+            sum: '',
+            comment: '',
+            date: moment().format(formats.DATE_FORMAT),
+            selectDate: false,
+        };
+    }
 
     back() {
         this.props.actions.changePage('balance');
@@ -87,7 +86,7 @@ class AddExpenseScreen extends Component {
         const d = moment(date, formats.DATE_FORMAT);
         const dateString = d.format('LL').replace(/,?\s?\d+\s?\D*$/, '');
         let dateComment;
-        if (date == moment().format(formats.DATE_FORMAT)) {
+        if (date === moment().format(formats.DATE_FORMAT)) {
             dateComment = 'сегодня';
         } else {
             dateComment = d.format('dddd');
@@ -262,7 +261,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(
+const connected = connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
 )(AddExpenseScreen);
+export { connected as AddExpenseScreen };

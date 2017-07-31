@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
 
-export default class Component extends Component {
+export default class Component extends React.Component<any, {}> {
     static propTypes = {
     };
 

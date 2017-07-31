@@ -1,25 +1,22 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
-    Dimensions,
     ScrollView,
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
-import moment from 'moment';
+import * as moment from 'moment';
 import _ from 'lodash';
 
-const window = Dimensions.get('window');
-
-export default class ExpensesList extends Component {
-    static propTypes = {
-        expenses: PropTypes.array.isRequired,
-        categories: PropTypes.array.isRequired,
-        currency: PropTypes.string.isRequired,
-    };
+export class ExpensesList extends React.Component<any, {}> {
+    // static propTypes = {
+    //     expenses: PropTypes.array.isRequired,
+    //     categories: PropTypes.array.isRequired,
+    //     currency: PropTypes.string.isRequired,
+    // };
 
     render() {
         const { categories, currency } = this.props;
@@ -31,10 +28,10 @@ export default class ExpensesList extends Component {
             <View style={styles.container}>
                 <ScrollView style={styles.list}>
                     {expenses.map((expense, i) => {
-                        const category = categories.find(category => (category.id == expense.category));
+                        const category = categories.find(category => (category.id === expense.category));
                         const date = moment(expense.date, formats.DATE_FORMAT).format('LL').replace(/,?\s?\d+\s?\D*$/, '');
 
-                        const sameDate = !!(expenses[i-1] && expenses[i-1].date == expense.date);
+                        const sameDate = !!(expenses[i - 1] && expenses[i - 1].date === expense.date);
                         console.log('expense', expense)
                         console.log('expense.date', expense.date)
                         console.log('sameDate', sameDate)

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import * as React from 'react';
 import {
     View,
     Text,
@@ -7,7 +7,7 @@ import {
     Dimensions,
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
-import moment from 'moment';
+import * as moment from 'moment';
 
 const window = Dimensions.get('window');
 
@@ -15,11 +15,11 @@ const DAY_SIZE = (window.width - 20) / 7;
 
 const WEEK_DAYS = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 
-export default class DatePicker extends Component {
-    static propTypes = {
-        date: PropTypes.string.isRequired,
-        onSelectDate: PropTypes.func.isRequired,
-    };
+export class DatePicker extends React.Component<any, any> {
+    // static propTypes = {
+    //     date: PropTypes.string.isRequired,
+    //     onSelectDate: PropTypes.func.isRequired,
+    // };
 
     constructor(props) {
         super(props);
@@ -47,7 +47,7 @@ export default class DatePicker extends Component {
 
         const monthDay = date.date();
 
-        let month = [];
+        const month: any[] = [];
         const firstDayOfMonth = moment(date).date(1);
         const firstDayOfMonthWeekDay = firstDayOfMonth.day()
         // считать надо до дня недели первого дня в месяце
@@ -82,7 +82,7 @@ export default class DatePicker extends Component {
                         {month.map((day, i) => {
                             const dayStyle = [styles.day];
                             const daytTextStyle = [styles.dayText];
-                            if (day == monthDay) {
+                            if (day === monthDay) {
                                 dayStyle.push(styles.dayCurrent);
                                 daytTextStyle.push(styles.dayTextCurrent);
                             } else if (day > today.date()) {
