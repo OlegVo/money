@@ -7,30 +7,36 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
+import * as styleConstants from '../constants/styles';
 
-import MenuScreen from './MenuScreen';
 import BalanceScreen from './BalanceScreen';
-import AddExpenceScreen from './AddExpeneseScreen';
+import AddExpenseScreen from './AddExpeneseScreen';
+import PlanningScreen from './PlanningScreen';
+import ExpensesScreen from './ExpensesScreen';
+
+import Menu from './Menu';
 
 class Navigator extends Component {
     static propTypes = {
         navigation: PropTypes.shape({
             page: PropTypes.string.isRequired,
         }).isRequired,
+        actions: PropTypes.object.isRequired,
     };
 
     constructor(props) {
         super(props);
 
         this.pages = {
-            menu: <MenuScreen />,
             balance: <BalanceScreen />,
-            addExpence: <AddExpenceScreen />,
+            addExpense: <AddExpenseScreen />,
+            planning: <PlanningScreen />,
+            expenses: <ExpensesScreen />,
         };
     }
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, actions } = this.props;
         const { page } = navigation;
 
         const component = this.pages[page];
@@ -40,6 +46,8 @@ class Navigator extends Component {
                 {component}
 
                 <StatusBar animated={true} barStyle='light-content' />
+
+                <Menu actions={actions} />
             </View>
         );
     }
@@ -48,6 +56,7 @@ class Navigator extends Component {
 const styles = StyleSheet.create({
     panel: {
         flex: 1,
+        paddingBottom: styleConstants.MENU_HEIGHT,
     },
 });
 

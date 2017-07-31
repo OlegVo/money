@@ -1,5 +1,5 @@
 
-const reducer = (state = {page: 'menu'}, action) => {
+const reducer = (state = {page: 'balance'}, action) => {
     switch (action.type) {
         case 'CHANGE_PAGE':
             return {

@@ -6,9 +6,34 @@ export const changePage = (page) => {
     };
 };
 
-export const addExpence = ({category, sum, comment, date}) => {
+export const calculateBalance = ({expenses}) => {
     return {
-        type: 'ADD_EXPENCE',
+        type: 'CALCULATE_BALANCE',
+        expenses,
+    };
+};
+
+export const setCategories = (categories) => {
+    console.log('setCategories', categories)
+
+    return {
+        type: 'SET_CATEGORIES',
+        categories,
+    };
+};
+
+export const setExpenses = (expenses) => {
+    console.log('setExpenses', expenses)
+
+    return {
+        type: 'SET_EXPENSES',
+        expenses,
+    };
+};
+
+export const addExpense = ({category, sum, comment, date}) => {
+    return {
+        type: 'ADD_EXPENSE',
         category, sum, comment, date,
     };
 };

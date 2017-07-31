@@ -1,6 +1,21 @@
 
-const reducer = (state = 3200.0, action) => {
+const totalIncome = 10000.0;
+
+const reducer = (state = 0, action) => {
     switch (action.type) {
+        // расчитываем текущий баланс (при старте приложения)
+        case 'CALCULATE_BALANCE':
+            let balance = totalIncome;
+            action.expenses.forEach(expense => {
+                balance -= expense.sum;
+            });
+
+            return balance;
+
+        case 'ADD_EXPENSE':
+            // TODO отнимать только если расход в текущем месяце
+            return (state - action.sum);
+
         default:
             return state;
     }

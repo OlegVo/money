@@ -10,9 +10,12 @@ import { connect } from 'react-redux';
 import actionCreators from '../actions';
 import * as styleConstants from '../constants/styles';
 
-class BalanceScreen extends Component {
+import ExpensesList from './ExpensesList';
+
+class ExpensesScreen extends Component {
     static propTypes = {
-        balance: PropTypes.number.isRequired,
+        expenses: PropTypes.array.isRequired,
+        categories: PropTypes.object.isRequired,
         currency: PropTypes.string.isRequired,
         actions: PropTypes.object.isRequired,
     };
@@ -28,13 +31,17 @@ class BalanceScreen extends Component {
     }
 
     render() {
-        const { balance, currency } = this.props;
+        const { expenses, categories, currency } = this.props;
 
         return (
             <View style={styles.container}>
-                <View style={styles.balance}>
-                    <Text style={styles.balanceText}>{balance} {currency}</Text>
-                </View>
+                {expenses &&
+                    <ExpensesList
+                        expenses={expenses}
+                        categories={categories.expenses}
+                        currency={currency}
+                    />
+                }
 
                 <TouchableOpacity style={[styles.button, styles.addExpenseButton]} onPress={this.addExpense}>
                     <Text style={styles.buttonText}>+</Text>
@@ -47,16 +54,8 @@ class BalanceScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: styleConstants.MENU_PADDING,
         backgroundColor: styleConstants.MAIN_BACKGROUND_COLOR,
-    },
-    balance: {
-        paddingBottom: 80,
-    },
-    balanceText: {
-        fontSize: 50,
-        color: '#fff',
     },
     button: {
         position: 'absolute',
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
         height: styleConstants.BUTTON_RADIUS,
         borderRadius: styleConstants.BUTTON_RADIUS / 2,
         borderWidth: 1,
-        borderColor: '#fff',
+        borderColor: styleConstants.BASE_FONT_COLOR,
     },
     addExpenseButton: {
         bottom: styleConstants.BUTTON_PADDING,
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         backgroundColor: 'transparent',
-        color: '#fff',
+        color: styleConstants.BASE_FONT_COLOR,
         fontSize: 34,
         textAlign: 'center',
     },
@@ -81,4 +80,4 @@ const styles = StyleSheet.create({
 export default connect(
     state => state,
     dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
-)(BalanceScreen);
+)(ExpensesScreen);
