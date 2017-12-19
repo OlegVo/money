@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions';
+import actionCreators, { IActions } from '../actions';
 
 import { AsyncStorage } from 'react-native';
 
 import { Navigator } from './Navigator';
+import { IAppState, IExpense } from '../interfaces';
 
-class Main extends React.Component<any, {}> {
-    // static propTypes = {
-    //     expenses: PropTypes.array,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    expenses: IExpense[];
+}
 
+type IProps = IPropsT & {actions: IActions};
+
+class Main extends React.PureComponent<IProps, {}> {
     componentDidMount() {
         const { actions } = this.props;
 
@@ -27,7 +29,7 @@ class Main extends React.Component<any, {}> {
             .catch(() => actions.setExpenses())
             .then(() => {
                 const { expenses } = this.props;
-                actions.calculateBalance({expenses});
+                actions.calculateBalance(expenses);
             });
     }
 
@@ -38,8 +40,16 @@ class Main extends React.Component<any, {}> {
     }
 }
 
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    expenses: state.expenses,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
+});
+
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(Main);
 export { connected as Main };

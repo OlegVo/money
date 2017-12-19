@@ -1,5 +1,6 @@
 import { ActionCreatorsMapObject } from 'redux';
 import * as actionsFunctions from './actions';
+import { ICategory, IExpense, Page } from '../interfaces';
 
 export interface IAction {
     type: string;
@@ -7,7 +8,11 @@ export interface IAction {
 }
 
 export interface IActions {
-    changePage: (page: any) => IAction;
+    changePage: (page: Page) => IAction;
+    calculateBalance: (expenses: IExpense[]) => IAction;
+    setCategories: (categories?: ICategory[]) => IAction;
+    setExpenses: (expenses?: IExpense[]) => IAction;
+    addExpense: (category: ICategory, sum: number, comment: string, date: string) => IAction;
 }
 
 export type IActionCreators = IActions & ActionCreatorsMapObject;

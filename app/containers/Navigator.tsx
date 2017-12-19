@@ -11,37 +11,45 @@ import * as styleConstants from '../constants/styles';
 
 import { BalanceScreen, AddExpenseScreen, PlanningScreen, ExpensesScreen } from '../containers';
 import { Menu } from '../components';
+import { IAppState, INavigationState, Page } from '../interfaces';
+import { IActions } from '../actions';
 
-class Navigator extends React.Component<any, {}> {
-    // static propTypes = {
-    //     navigation: PropTypes.shape({
-    //         page: PropTypes.string.isRequired,
-    //     }).isRequired,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    navigation: INavigationState;
+}
 
-    private pages;
+type IProps = IPropsT & {actions: IActions};
 
+class Navigator extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
-        this.pages = {
-            balance: <BalanceScreen />,
-            addExpense: <AddExpenseScreen />,
-            planning: <PlanningScreen />,
-            expenses: <ExpensesScreen />,
-        };
+        this.renderComponent = this.renderComponent.bind(this);
+    }
+
+    renderComponent() {
+        switch (this.props.navigation.page) {
+            case Page.Balance:
+                return <BalanceScreen />;
+
+            case Page.AddExpence:
+                return <AddExpenseScreen />;
+
+            case Page.Planning:
+                return <PlanningScreen />;
+
+            case Page.Expenses:
+                return <ExpensesScreen />;
+        }
     }
 
     render() {
-        const { navigation, actions } = this.props;
-        const { page } = navigation;
-
-        const component = this.pages[page];
+        const { actions } = this.props;
+        console.log('Navigator', this.props)
 
         return (
             <View style={styles.panel}>
-                {component}
+                {this.renderComponent()}
 
                 <StatusBar animated={true} barStyle='light-content' />
 
@@ -58,8 +66,16 @@ const styles = StyleSheet.create({
     },
 });
 
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    navigation: state.navigation,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
+});
+
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(Navigator);
 export { connected as Navigator };

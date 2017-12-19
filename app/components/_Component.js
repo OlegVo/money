@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
 
-export default class Component extends React.Component<any, {}> {
-    static propTypes = {
-    };
+interface IProps {
 
+}
+
+export default class Component extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <View style={styles.container}>

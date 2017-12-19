@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import * as moment from 'moment';
+import { Moment } from 'moment';
 
 const window = Dimensions.get('window');
 
@@ -15,12 +16,16 @@ const DAY_SIZE = (window.width - 20) / 7;
 
 const WEEK_DAYS = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
 
-export class DatePicker extends React.Component<any, any> {
-    // static propTypes = {
-    //     date: PropTypes.string.isRequired,
-    //     onSelectDate: PropTypes.func.isRequired,
-    // };
+interface IProps {
+    date: string;
+    onSelectDate: (date: Moment) => void;
+}
 
+interface IState {
+    date: Moment;
+}
+
+export class DatePicker extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
 

@@ -1,34 +1,39 @@
 import * as React from 'react';
 import {
-    TouchableHighlight,
     View,
-    Text,
     Dimensions,
     StyleSheet,
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
+import { MenuItem } from './MenuItem';
+import { IMenuItem, Page } from '../interfaces';
+import { IActions } from '../actions';
 
 const window = Dimensions.get('window');
 
 const menuItems = [
-    {text: 'Баланс', icon: '\u1F4B0', page: 'balance'},
-    {text: 'Расходы', page: 'expenses'},
-    {text: 'План', page: 'planning'},
-    {text: 'Графики', page: 'planning'},
+    {text: 'Баланс', icon: '\u1F4B0', page: Page.Balance},
+    {text: 'Расходы', page: Page.Expenses},
+    {text: 'План', page: Page.Planning},
+    {text: 'Графики', page: Page.Planning},
 ];
 
-export class Menu extends React.Component<any, any> {
-    // static propTypes = {
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IProps {
+    actions: IActions;
+}
 
+interface IState {
+    items: IMenuItem[];
+}
+
+export class Menu extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
 
         this.onPress = this.onPress.bind(this);
 
         this.state = {
-            items: menuItems
+            items: menuItems,
         };
     }
 
@@ -48,36 +53,7 @@ export class Menu extends React.Component<any, any> {
     }
 }
 
-class MenuItem extends React.Component<any, {}> {
-    // static propTypes = {
-    //     item: PropTypes.object.isRequired,
-    //     onPress: PropTypes.func.isRequired,
-    // };
-
-    constructor(props) {
-        super(props);
-
-        this.onPress = this.onPress.bind(this);
-    }
-
-    onPress() {
-        this.props.onPress(this.props.item);
-    }
-
-    render() {
-        const { text } = this.props.item;
-
-        return (
-            <TouchableHighlight underlayColor='rgba(0, 0, 0, .04)' onPress={this.onPress}>
-                <View style={styles.item}>
-                    <Text style={styles.itemText}>{text}</Text>
-                </View>
-            </TouchableHighlight>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     menu: {
         position: 'absolute',
         bottom: 0,

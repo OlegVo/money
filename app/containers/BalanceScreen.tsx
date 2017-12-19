@@ -9,14 +9,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
+import { IAppState, Page } from '../interfaces';
+import { IActions } from '../actions';
 
-class BalanceScreen extends React.Component<any, {}> {
-    // static propTypes = {
-    //     balance: PropTypes.number.isRequired,
-    //     currency: PropTypes.string.isRequired,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    balance: number;
+    currency: string;
+}
 
+type IProps = IPropsT & {actions: IActions};
+
+class BalanceScreen extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
@@ -24,7 +27,7 @@ class BalanceScreen extends React.Component<any, {}> {
     }
 
     addExpense() {
-        this.props.actions.changePage('addExpense');
+        this.props.actions.changePage(Page.AddExpence);
     }
 
     render() {
@@ -78,8 +81,17 @@ const styles = StyleSheet.create({
     },
 });
 
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    balance: state.balance,
+    currency: state.currency,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
+});
+
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(BalanceScreen);
 export { connected as BalanceScreen };

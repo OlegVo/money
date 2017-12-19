@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions/index';
+import actionCreators, { IActions } from '../actions/index';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
@@ -17,18 +17,27 @@ import * as moment from 'moment';
 const window = Dimensions.get('window');
 
 import { CategoriesList, DatePicker } from '../components';
+import { IAppState, ICategoriesState, ICategory, Page } from '../interfaces';
+import { Moment } from 'moment';
 
 const CONTENT_TOP = styleConstants.NAVIGATION_BAR_HEIGHT;
 const CONTENT_HEIGHT = window.height - CONTENT_TOP - styleConstants.MENU_HEIGHT;
 
-class AddExpenseScreen extends React.Component<any, any> {
-    // static propTypes = {
-    //     categories: PropTypes.shape({
-    //         expenses: PropTypes.array.isRequired,
-    //     }).isRequired,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    categories: ICategoriesState;
+}
 
+type IProps = IPropsT & {actions: IActions};
+
+interface IState {
+    category?: ICategory;
+    sum?: number;
+    comment: string;
+    date: string;
+    selectDate: boolean;
+}
+
+class AddExpenseScreen extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);
 
@@ -40,8 +49,8 @@ class AddExpenseScreen extends React.Component<any, any> {
         this.submit = this.submit.bind(this);
 
         this.state = {
-            category: null,
-            sum: '',
+            category: undefined,
+            sum: undefined,
             comment: '',
             date: moment().format(formats.DATE_FORMAT),
             selectDate: false,
@@ -49,7 +58,7 @@ class AddExpenseScreen extends React.Component<any, any> {
     }
 
     back() {
-        this.props.actions.changePage('balance');
+        this.props.actions.changePage(Page.Balance);
     }
 
     selectCategory(category) {
@@ -57,10 +66,10 @@ class AddExpenseScreen extends React.Component<any, any> {
     }
 
     clearCategory() {
-        this.setState({category: null});
+        this.setState({category: undefined});
     }
 
-    onSelectDate(date) {
+    onSelectDate(date: Moment) {
         this.setState({date: date.format(formats.DATE_FORMAT)});
         this.setState({selectDate: false});
     }
@@ -74,14 +83,17 @@ class AddExpenseScreen extends React.Component<any, any> {
         const { actions } = this.props;
         const { category, sum, comment, date } = this.state;
 
-        actions.addExpense({category, sum, comment, date});
+        if (!category || !sum) return;
 
-        actions.changePage('balance');
+        actions.addExpense(category, sum, comment, date);
+
+        actions.changePage(Page.Balance);
     }
 
     render() {
         const { categories } = this.props;
         const { category, sum, comment, date, selectDate } = this.state;
+        console.log('AddExpense', this.props)
 
         const d = moment(date, formats.DATE_FORMAT);
         const dateString = d.format('LL').replace(/,?\s?\d+\s?\D*$/, '');
@@ -115,7 +127,7 @@ class AddExpenseScreen extends React.Component<any, any> {
                         <View style={styles.field}>
                             <TextInput
                                 style={styles.input}
-                                value={sum}
+                                value={sum ? sum.toString() : ''}
                                 onChangeText={this.onChangeSum}
                                 autoFocus={true}
                                 selectionColor={styleConstants.BASE_FONT_COLOR}
@@ -258,11 +270,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: styleConstants.BASE_HORIZONTAL_PADDING,
         top: 10,
-    }
+    },
+});
+
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    categories: state.categories,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
 });
 
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(AddExpenseScreen);
 export { connected as AddExpenseScreen };

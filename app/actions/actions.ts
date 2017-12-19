@@ -1,19 +1,20 @@
+import { ICategory, IExpense, Page } from '../interfaces';
 
-export const changePage = (page) => {
+export const changePage = (page: Page) => {
     return {
         type: 'CHANGE_PAGE',
         page,
     };
 };
 
-export const calculateBalance = ({expenses}) => {
+export const calculateBalance = (expenses: IExpense[]) => {
     return {
         type: 'CALCULATE_BALANCE',
         expenses,
     };
 };
 
-export const setCategories = (categories) => {
+export const setCategories = (categories: ICategory[]) => {
     console.log('setCategories', categories)
 
     return {
@@ -22,7 +23,7 @@ export const setCategories = (categories) => {
     };
 };
 
-export const setExpenses = (expenses) => {
+export const setExpenses = (expenses: IExpense[]) => {
     console.log('setExpenses', expenses)
 
     return {
@@ -31,7 +32,7 @@ export const setExpenses = (expenses) => {
     };
 };
 
-export const addExpense = ({category, sum, comment, date}) => {
+export const addExpense = (category: ICategory, sum: number, comment: string, date: string) => {
     return {
         type: 'ADD_EXPENSE',
         category, sum, comment, date,

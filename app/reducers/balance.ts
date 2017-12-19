@@ -1,7 +1,7 @@
 
 const totalIncome = 10000.0;
 
-const reducer = (state = 0, action) => {
+const reducer = (state: number = 0, action): number => {
     switch (action.type) {
         // расчитываем текущий баланс (при старте приложения)
         case 'CALCULATE_BALANCE':

@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
+import { IExpense } from '../interfaces';
 
-const reducer = (state = [], action) => {
+const reducer = (state: IExpense[] = [], action): IExpense[] => {
     switch (action.type) {
         case 'SET_EXPENSES':
             return action.expenses || [];

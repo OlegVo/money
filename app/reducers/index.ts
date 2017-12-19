@@ -1,18 +1,22 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 
 import balance from './balance';
+import categories from './categories';
+import currency from './currency';
+import expenses from './expenses';
+import navigation from './navigation';
+
+import { IAppState } from '../interfaces/index';
 
 const reducers = {
     balance,
+    categories,
+    currency,
+    expenses,
+    navigation,
 };
 
-const rootReducer = combineReducers({
+const rootReducer: Reducer<IAppState> = combineReducers({
     ...reducers,
 });
 export default rootReducer;
-
-// export { default as balance } from './balance';
-// export { default as expenses } from './expenses';
-// export { default as categories } from './categories';
-// export { default as currency } from './currency';
-// export { default as navigation } from './navigation';

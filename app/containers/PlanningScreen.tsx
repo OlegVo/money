@@ -7,14 +7,17 @@ import {
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
+import { IAppState } from '../interfaces';
+import { IActions } from '../actions';
 
-class PlanningScreen extends React.Component<any, {}> {
-    // static propTypes = {
-    //     balance: PropTypes.number.isRequired,
-    //     currency: PropTypes.string.isRequired,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    balance: number;
+    currency: string;
+}
 
+type IProps = IPropsT & {actions: IActions};
+
+class PlanningScreen extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <View style={styles.container}>
@@ -33,8 +36,17 @@ const styles = StyleSheet.create({
     },
 });
 
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    balance: state.balance,
+    currency: state.currency,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
+});
+
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(PlanningScreen);
 export { connected as PlanningScreen };

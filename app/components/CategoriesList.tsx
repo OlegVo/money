@@ -7,6 +7,7 @@ import {
     Dimensions,
 } from 'react-native';
 import * as styleConstants from '../constants/styles';
+import { ICategory } from '../interfaces';
 
 const window = Dimensions.get('window');
 
@@ -14,11 +15,12 @@ const HORIZONTAL_PADDING = 10;
 const ITEM_SIZE = 60;
 const HORIZONTAL_MARGIN = Math.floor(((window.width - HORIZONTAL_PADDING*2) / 3 - ITEM_SIZE) / 2);
 
-export class CategoriesList extends React.Component<any, {}> {
-    // static propTypes = {
-    //     onPressCategory: PropTypes.func.isRequired,
-    // };
+interface IProps {
+    categories: ICategory[];
+    onPressCategory: (category: ICategory) => void;
+}
 
+export class CategoriesList extends React.PureComponent<IProps, {}> {
     render() {
         const { categories } = this.props;
 

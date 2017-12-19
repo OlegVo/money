@@ -9,26 +9,30 @@ import {
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
-import _ from 'lodash';
+import * as _ from 'lodash';
+import { ICategory, IExpense } from '../interfaces';
 
-export class ExpensesList extends React.Component<any, {}> {
-    // static propTypes = {
-    //     expenses: PropTypes.array.isRequired,
-    //     categories: PropTypes.array.isRequired,
-    //     currency: PropTypes.string.isRequired,
-    // };
+interface IProps {
+    expenses: IExpense[];
+    categories: ICategory[];
+    currency: string;
+}
 
+export class ExpensesList extends React.PureComponent<IProps, {}> {
     render() {
         const { categories, currency } = this.props;
-        console.log('categories', categories)
+        console.log('ExpensesList', this.props)
 
         const expenses = _.sortBy(this.props.expenses, expense => expense.date);
+        console.log('expenses')
 
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.list}>
                     {expenses.map((expense, i) => {
                         const category = categories.find(category => (category.id === expense.category));
+                        if (!category) return null;
+
                         const date = moment(expense.date, formats.DATE_FORMAT).format('LL').replace(/,?\s?\d+\s?\D*$/, '');
 
                         const sameDate = !!(expenses[i - 1] && expenses[i - 1].date === expense.date);

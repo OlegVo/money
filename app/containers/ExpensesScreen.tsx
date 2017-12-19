@@ -9,17 +9,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-
 import { ExpensesList } from '../components';
+import { IAppState, ICategoriesState, IExpense, Page } from '../interfaces';
+import { IActions } from '../actions';
 
-class ExpensesScreen extends React.Component<any, {}> {
-    // static propTypes = {
-    //     expenses: PropTypes.array.isRequired,
-    //     categories: PropTypes.object.isRequired,
-    //     currency: PropTypes.string.isRequired,
-    //     actions: PropTypes.object.isRequired,
-    // };
+interface IPropsT {
+    expenses: IExpense[];
+    categories: ICategoriesState;
+    currency: string;
+}
 
+type IProps = IPropsT & {actions: IActions};
+
+class ExpensesScreen extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
@@ -27,7 +29,7 @@ class ExpensesScreen extends React.Component<any, {}> {
     }
 
     addExpense() {
-        this.props.actions.changePage('addExpense');
+        this.props.actions.changePage(Page.AddExpence);
     }
 
     render() {
@@ -77,8 +79,18 @@ const styles = StyleSheet.create({
     },
 });
 
+const mapStateToProps = (state: IAppState): IPropsT => ({
+    expenses: state.expenses,
+    categories: state.categories,
+    currency: state.currency,
+});
+
+const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+    actions: bindActionCreators(actionCreators, dispatch),
+});
+
 const connected = connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
+    mapStateToProps,
+    mapDispatchToProps
 )(ExpensesScreen);
 export { connected as ExpensesScreen };

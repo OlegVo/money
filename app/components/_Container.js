@@ -10,10 +10,11 @@ import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
-class Container extends React.Component<any, {}> {
-    static propTypes = {
-    };
+interface IProps {
 
+}
+
+class Container extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <View style={styles.container}>
