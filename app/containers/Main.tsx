@@ -2,9 +2,7 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions';
-
 import { AsyncStorage } from 'react-native';
-
 import { Navigator } from './Navigator';
 import { IAppState, IExpense } from '../interfaces';
 

@@ -2,6 +2,7 @@ export interface IAppState {
     balance: number;
     categories: ICategoriesState;
     currency: string;
+    editingExpense: IExpenseValues;
     expenses: IExpense[];
     navigation: INavigationState;
 }
@@ -23,13 +24,21 @@ export interface IExpense {
     date: string;
 }
 
+export interface IExpenseValues {
+    category?: ICategory;
+    sum?: number;
+    comment?: string;
+    date?: string;
+}
+
 export interface INavigationState {
-    page: Page;
+    pages: Page[];
 }
 
 export enum Page {
     Balance = 'Balance',
-    AddExpence = 'AddExpence',
+    AddExpense = 'AddExpense',
+    SelectDate = 'SelectDate',
     Planning = 'Planning',
     Expenses = 'Expenses',
 }

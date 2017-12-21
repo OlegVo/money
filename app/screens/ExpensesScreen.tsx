@@ -1,17 +1,12 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-import { ExpensesList } from '../components';
-import { IAppState, ICategoriesState, IExpense, Page } from '../interfaces';
-import { IActions } from '../actions';
+import { ExpensesList } from '../components/index';
+import { IAppState, ICategoriesState, IExpense, Page } from '../interfaces/index';
+import { IActions } from '../actions/index';
 
 interface IPropsT {
     expenses: IExpense[];
@@ -29,7 +24,8 @@ class ExpensesScreen extends React.PureComponent<IProps, {}> {
     }
 
     addExpense() {
-        this.props.actions.changePage(Page.AddExpence);
+        this.props.actions.startEditingExpense();
+        this.props.actions.pushPage(Page.AddExpense);
     }
 
     render() {

@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';

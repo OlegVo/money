@@ -1,14 +1,10 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState } from '../interfaces';
-import { IActions } from '../actions';
+import { IAppState } from '../interfaces/index';
+import { IActions } from '../actions/index';
 
 interface IPropsT {
     balance: number;

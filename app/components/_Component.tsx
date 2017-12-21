@@ -1,20 +1,15 @@
 import * as React from 'react';
 import {
     View,
-    Text,
     StyleSheet,
-    TouchableOpacity,
 } from 'react-native';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 
 interface IProps {
-
+    balance: number;
 }
 
-class Container extends React.PureComponent<IProps, {}> {
+export default class Component extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <View style={styles.container}>
@@ -31,8 +26,3 @@ const styles = StyleSheet.create({
         backgroundColor: styleConstants.MAIN_BACKGROUND_COLOR,
     },
 });
-
-export default connect(
-    state => state,
-    dispatch => ({actions: bindActionCreators(actionCreators, dispatch)})
-)(Container);

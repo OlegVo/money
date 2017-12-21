@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import { ICategory } from '../interfaces';
+import { WHITE_FONT_COLOR } from '../constants/styles';
 
 const window = Dimensions.get('window');
 
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
     },
     categoryIconText: {
         fontSize: 40,
-        color: '#fff',
+        color: WHITE_FONT_COLOR,
         textAlign: 'center',
         lineHeight: ITEM_SIZE,
     },

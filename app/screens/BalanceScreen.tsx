@@ -1,16 +1,12 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-import { IAppState, Page } from '../interfaces';
-import { IActions } from '../actions';
+import { IAppState, Page } from '../interfaces/index';
+import { IActions } from '../actions/index';
+import { WHITE_BORDER_COLOR, WHITE_FONT_COLOR } from '../constants/styles';
 
 interface IPropsT {
     balance: number;
@@ -27,7 +23,8 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
     }
 
     addExpense() {
-        this.props.actions.changePage(Page.AddExpence);
+        this.props.actions.startEditingExpense();
+        this.props.actions.pushPage(Page.AddExpense);
     }
 
     render() {
@@ -59,7 +56,7 @@ const styles = StyleSheet.create({
     },
     balanceText: {
         fontSize: 50,
-        color: '#fff',
+        color: WHITE_FONT_COLOR,
     },
     button: {
         position: 'absolute',
@@ -67,7 +64,7 @@ const styles = StyleSheet.create({
         height: styleConstants.BUTTON_RADIUS,
         borderRadius: styleConstants.BUTTON_RADIUS / 2,
         borderWidth: 1,
-        borderColor: '#fff',
+        borderColor: WHITE_BORDER_COLOR,
     },
     addExpenseButton: {
         bottom: styleConstants.BUTTON_PADDING,
@@ -75,7 +72,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         backgroundColor: 'transparent',
-        color: '#fff',
+        color: WHITE_FONT_COLOR,
         fontSize: 34,
         textAlign: 'center',
     },

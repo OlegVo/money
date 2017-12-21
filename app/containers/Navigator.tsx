@@ -1,15 +1,10 @@
 import * as React from 'react';
-import {
-    View,
-    StyleSheet,
-    StatusBar,
-} from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-
-import { BalanceScreen, AddExpenseScreen, PlanningScreen, ExpensesScreen } from '../containers';
+import { BalanceScreen, AddExpenseScreen, PlanningScreen, ExpensesScreen, SelectDateScreen } from '../screens';
 import { Menu } from '../components';
 import { IAppState, INavigationState, Page } from '../interfaces';
 import { IActions } from '../actions';
@@ -28,18 +23,23 @@ class Navigator extends React.PureComponent<IProps, {}> {
     }
 
     renderComponent() {
-        switch (this.props.navigation.page) {
+        const pages = this.props.navigation.pages;
+
+        switch (pages[pages.length - 1]) {
             case Page.Balance:
                 return <BalanceScreen />;
 
-            case Page.AddExpence:
+            case Page.Expenses:
+                return <ExpensesScreen />;
+
+            case Page.AddExpense:
                 return <AddExpenseScreen />;
+
+            case Page.SelectDate:
+                return <SelectDateScreen />;
 
             case Page.Planning:
                 return <PlanningScreen />;
-
-            case Page.Expenses:
-                return <ExpensesScreen />;
         }
     }
 

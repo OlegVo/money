@@ -1,15 +1,9 @@
 import * as React from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-    Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-
+import { MAIN_BACKGROUND_COLOR } from '../constants/styles';
 const window = Dimensions.get('window');
 
 const DAY_SIZE = (window.width - 20) / 7;
@@ -173,7 +167,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     dayTextCurrent: {
-        color: '#fff',
+        color: MAIN_BACKGROUND_COLOR,
     },
     dayTextDisabled: {
         color: styleConstants.GRAY_FONT_COLOR,

@@ -1,0 +1,9 @@
+export const SET_PAGE = 'SET_PAGE';
+export const PUSH_PAGE = 'PUSH_PAGE';
+export const POP_PAGE = 'POP_PAGE';
+export const CALCULATE_BALANCE = 'CALCULATE_BALANCE';
+export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const SET_EXPENSES = 'SET_EXPENSES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const START_EDITING_EXPENSE = 'START_EDITING_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
