@@ -22,7 +22,8 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
 
         this.selectCategory = this.selectCategory.bind(this);
         this.showSelectDateScreen = this.showSelectDateScreen.bind(this);
-        this.onChangeSum = this.onChangeSum.bind(this);
+        this.changeSum = this.changeSum.bind(this);
+        this.changeComment = this.changeComment.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -34,9 +35,13 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
         this.props.actions.pushPage(Page.SelectDate);
     }
 
-    onChangeSum(value) {
-        const sum = value.replace(/\D/g, '');
-        this.setState({sum});
+    changeSum(value: string) {
+        const sum = parseInt(value.replace(/\D/g, ''), 10);
+        this.props.actions.editExpense({sum});
+    }
+
+    changeComment(comment: string) {
+        this.props.actions.editExpense({comment});
     }
 
     submit() {
@@ -53,7 +58,6 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
     render() {
         const { editingExpense, actions } = this.props;
         const { category, sum, comment, date } = editingExpense;
-        console.log('AddExpense', this.props)
 
         const d = moment(date, formats.DATE_FORMAT);
         const dateString = d.format('LL').replace(/,?\s?\d+\s?\D*$/, '');
@@ -79,7 +83,7 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
                             <TextInput
                                 style={styles.input}
                                 value={sum ? sum.toString() : ''}
-                                onChangeText={this.onChangeSum}
+                                onChangeText={this.changeSum}
                                 autoFocus={true}
                                 selectionColor={styleConstants.BASE_FONT_COLOR}
                                 placeholder='Сумма'
@@ -91,7 +95,7 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
                             <TextInput
                                 style={styles.input}
                                 value={comment}
-                                onChangeText={text => this.setState({comment: text})}
+                                onChangeText={this.changeComment}
                                 selectionColor={styleConstants.BASE_FONT_COLOR}
                                 placeholder='Комментарий'
                                 placeholderTextColor={styleConstants.GRAY_FONT_COLOR}
