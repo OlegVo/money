@@ -1,21 +1,16 @@
 import * as React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions/index';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
-import { CategoriesList } from '../components/index';
-import { IAppState, ICategoriesState, IExpenseValues, Page } from '../interfaces/index';
+import { NavigationBar } from '../components';
+import { IAppState, IExpenseValues, Page } from '../interfaces';
 import { WHITE_FONT_COLOR } from '../constants/styles';
-const window = Dimensions.get('window');
-
-const CONTENT_TOP = styleConstants.NAVIGATION_BAR_HEIGHT;
-const CONTENT_HEIGHT = window.height - CONTENT_TOP - styleConstants.MENU_HEIGHT;
 
 interface IPropsT {
-    categories: ICategoriesState;
     editingExpense: IExpenseValues;
 }
 
@@ -25,30 +20,14 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
-        this.back = this.back.bind(this);
         this.selectCategory = this.selectCategory.bind(this);
-        this.clearCategory = this.clearCategory.bind(this);
         this.showSelectDateScreen = this.showSelectDateScreen.bind(this);
         this.onChangeSum = this.onChangeSum.bind(this);
         this.submit = this.submit.bind(this);
     }
 
-    back() {
-        const { editingExpense, actions } = this.props;
-
-        if (editingExpense.category) {
-            this.clearCategory();
-        } else {
-            actions.popPage();
-        }
-    }
-
-    selectCategory(category) {
-        this.props.actions.editExpense({category});
-    }
-
-    clearCategory() {
-        this.props.actions.editExpense({category: undefined});
+    selectCategory() {
+        this.props.actions.pushPage(Page.Categories);
     }
 
     showSelectDateScreen() {
@@ -72,7 +51,7 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
     }
 
     render() {
-        const { categories, editingExpense } = this.props;
+        const { editingExpense, actions } = this.props;
         const { category, sum, comment, date } = editingExpense;
         console.log('AddExpense', this.props)
 
@@ -87,23 +66,14 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
 
         return (
             <View style={styles.container}>
-                <View style={styles.navigationBar}>
-                    <TouchableOpacity style={styles.backButton} onPress={this.back}>
-                        <Text style={styles.backButtonText}>Назад</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.submitButton} onPress={this.submit}>
-                        <Text style={styles.submitButtonText}>Готово</Text>
-                    </TouchableOpacity>
-                </View>
+                <NavigationBar submit={this.submit} actions={actions} />
 
                 {category &&
                     <View style={styles.addExpenseForm}>
-                        <TouchableOpacity style={[styles.field, styles.category, {backgroundColor: category.color}]} onPress={this.clearCategory}>
+                        <TouchableOpacity style={[styles.field, styles.category, {backgroundColor: category.color}]} onPress={this.selectCategory}>
                             <Text style={styles.categoryText}>{category.name}</Text>
                             <Text style={[styles.categoryText, styles.arrow]}>{'>'}</Text>
                         </TouchableOpacity>
-
 
                         <View style={styles.field}>
                             <TextInput
@@ -137,12 +107,6 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
                         </TouchableOpacity>
                     </View>
                 }
-
-                {!category &&
-                    <View style={styles.categoriesList}>
-                        <CategoriesList categories={categories.expenses} onPressCategory={this.selectCategory} />
-                    </View>
-                }
             </View>
         );
     }
@@ -152,46 +116,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-    },
-    navigationBar: {
-        backgroundColor: styleConstants.MAIN_BACKGROUND_COLOR,
-        paddingTop: styleConstants.MENU_PADDING,
-        height: styleConstants.NAVIGATION_BAR_HEIGHT,
-        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
-    },
-    button: {
-        width: styleConstants.BUTTON_RADIUS,
-        height: styleConstants.BUTTON_RADIUS,
-        borderRadius: styleConstants.BUTTON_RADIUS / 2,
-        borderWidth: 1,
-        borderColor: '#ccc',
-    },
-    backButton: {
-        marginTop: 10,
-        height: styleConstants.TOP_BUTTON_HEIGHT,
-        width: 80,
-    },
-    backButtonText: {
-        color: WHITE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
-    },
-    submitButton: {
-        position: 'absolute',
-        top: styleConstants.MENU_PADDING + 10,
-        right: styleConstants.BASE_HORIZONTAL_PADDING,
-        height: styleConstants.TOP_BUTTON_HEIGHT,
-        width: 80,
-    },
-    submitButtonText: {
-        color: WHITE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        textAlign: 'right',
-    },
-    categoriesList: {
-        position: 'absolute',
-        top: CONTENT_TOP,
-        width: window.width,
-        height: CONTENT_HEIGHT,
     },
     addExpenseForm: {
         paddingTop: 20,
@@ -243,7 +167,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
-    categories: state.categories,
     editingExpense: state.editingExpense,
 });
 

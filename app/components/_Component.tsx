@@ -1,15 +1,11 @@
 import * as React from 'react';
-import {
-    View,
-    StyleSheet,
-} from 'react-native';
-import * as styleConstants from '../constants/styles';
+import { View, StyleSheet } from 'react-native';
 
 interface IProps {
     balance: number;
 }
 
-export default class Component extends React.PureComponent<IProps, {}> {
+export class Component extends React.PureComponent<IProps, {}> {
     render() {
         return (
             <View style={styles.container}>
@@ -23,6 +19,5 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: styleConstants.MAIN_BACKGROUND_COLOR,
     },
 });

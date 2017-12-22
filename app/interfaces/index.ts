@@ -38,6 +38,7 @@ export interface INavigationState {
 export enum Page {
     Balance = 'Balance',
     AddExpense = 'AddExpense',
+    Categories = 'Categories',
     SelectDate = 'SelectDate',
     Planning = 'Planning',
     Expenses = 'Expenses',

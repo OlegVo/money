@@ -25,7 +25,7 @@ class ExpensesScreen extends React.PureComponent<IProps, {}> {
 
     addExpense() {
         this.props.actions.startEditingExpense();
-        this.props.actions.pushPage(Page.AddExpense);
+        this.props.actions.pushPage(Page.Categories);
     }
 
     render() {

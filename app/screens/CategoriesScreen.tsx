@@ -3,42 +3,46 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState, IExpenseValues } from '../interfaces';
+import { IAppState, ICategoriesState, IExpenseValues, Page } from '../interfaces';
 import { IActions } from '../actions';
-import { DatePicker, NavigationBar } from '../components';
-import * as formats from '../constants/formats';
-import { Moment } from 'moment';
+import { CategoriesList, NavigationBar } from '../components';
 
 interface IPropsT {
+    categories: ICategoriesState;
     editingExpense: IExpenseValues;
 }
 
 type IProps = IPropsT & { actions: IActions };
 
-class SelectDateScreen extends React.PureComponent<IProps, {}> {
+class CategoriesScreen extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
-        this.onSelectDate = this.onSelectDate.bind(this);
+        this.selectCategory = this.selectCategory.bind(this);
     }
 
-    onSelectDate(date: Moment) {
-        const { actions } = this.props;
+    selectCategory(category) {
+        const { editingExpense, actions } = this.props;
 
-        actions.editExpense({date: date.format(formats.DATE_FORMAT)});
-        actions.popPage();
+        const addAddExpenseScreen = !editingExpense.category;
+        actions.editExpense({category});
+        if (addAddExpenseScreen) {
+            actions.pushPage(Page.AddExpense);
+        } else {
+            actions.popPage();
+        }
     }
 
     render() {
-        const { editingExpense, actions } = this.props;
+        const { editingExpense, categories, actions } = this.props;
 
         if (!editingExpense.date) return null;
 
         return (
             <View style={styles.container}>
-                <NavigationBar actions={actions} />
+                <NavigationBar actions={actions}/>
 
-                <DatePicker date={editingExpense.date} onSelectDate={this.onSelectDate} />
+                <CategoriesList categories={categories.expenses} onPressCategory={this.selectCategory} />
             </View>
         );
     }
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
+    categories: state.categories,
     editingExpense: state.editingExpense,
 });
 
@@ -63,5 +68,5 @@ const mapDispatchToProps = (dispatch): {actions: IActions} => ({
 const connected = connect(
     mapStateToProps,
     mapDispatchToProps
-)(SelectDateScreen);
-export { connected as SelectDateScreen };
+)(CategoriesScreen);
+export { connected as CategoriesScreen };
