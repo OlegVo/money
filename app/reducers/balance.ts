@@ -1,5 +1,5 @@
 
-const totalIncome = 2600.0;
+const totalIncome = 5000.0;
 
 const reducer = (state: number = 0, action): number => {
     switch (action.type) {

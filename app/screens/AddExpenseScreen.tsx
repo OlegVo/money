@@ -3,12 +3,15 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-nativ
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions/index';
-import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
 import { NavigationBar } from '../components';
 import { IAppState, IExpenseValues, Page } from '../interfaces';
-import { WHITE_FONT_COLOR } from '../constants/styles';
+import {
+    BASE_FONT_COLOR, BASE_FONT_SIZE, BASE_HORIZONTAL_PADDING, GRAY_FONT_COLOR, LIST_BORDER_COLOR, MAIN_BACKGROUND_COLOR,
+    MENU_PADDING,
+    WHITE_FONT_COLOR
+} from '../constants/styles';
 
 interface IPropsT {
     editingExpense: IExpenseValues;
@@ -85,7 +88,7 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
                                 value={sum ? sum.toString() : ''}
                                 onChangeText={this.changeSum}
                                 autoFocus={true}
-                                selectionColor={styleConstants.BASE_FONT_COLOR}
+                                selectionColor={BASE_FONT_COLOR}
                                 placeholder='Сумма'
                                 keyboardType='numeric'
                             />
@@ -96,9 +99,9 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
                                 style={styles.input}
                                 value={comment}
                                 onChangeText={this.changeComment}
-                                selectionColor={styleConstants.BASE_FONT_COLOR}
+                                selectionColor={BASE_FONT_COLOR}
                                 placeholder='Комментарий'
-                                placeholderTextColor={styleConstants.GRAY_FONT_COLOR}
+                                placeholderTextColor={GRAY_FONT_COLOR}
                                 returnKeyType='done'
                                 onSubmitEditing={this.submit}
                             />
@@ -122,29 +125,29 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     addExpenseForm: {
-        paddingTop: 20,
+        paddingTop: MENU_PADDING,
     },
     field: {
-        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
+        paddingHorizontal: BASE_HORIZONTAL_PADDING,
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderColor: styleConstants.LIST_BORDER_COLOR,
+        borderColor: LIST_BORDER_COLOR,
     },
     fieldText: {
-        color: styleConstants.BASE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
+        color: BASE_FONT_COLOR,
+        fontSize: BASE_FONT_SIZE,
     },
     input: {
         height: 30,
-        color: styleConstants.BASE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
+        color: BASE_FONT_COLOR,
+        fontSize: BASE_FONT_SIZE,
     },
     category: {
         height: 50,
         borderBottomWidth: 0,
     },
     categoryText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
+        fontSize: BASE_FONT_SIZE,
         color: WHITE_FONT_COLOR,
         lineHeight: 30,
     },
@@ -153,19 +156,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
-        color: styleConstants.MAIN_BACKGROUND_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
+        color: MAIN_BACKGROUND_COLOR,
+        fontSize: BASE_FONT_SIZE,
         lineHeight: 30,
     },
     dateCommentText: {
         marginLeft: 8,
-        fontSize: styleConstants.BASE_FONT_SIZE - 2,
-        color: styleConstants.GRAY_FONT_COLOR,
+        fontSize: BASE_FONT_SIZE - 2,
+        color: GRAY_FONT_COLOR,
         lineHeight: 30,
     },
     arrow: {
         position: 'absolute',
-        right: styleConstants.BASE_HORIZONTAL_PADDING,
+        right: BASE_HORIZONTAL_PADDING,
         top: 10,
     },
 });

@@ -18,7 +18,7 @@ export interface ICategory {
 }
 
 export interface IExpense {
-    category: ICategory;
+    category: number;
     sum: number;
     comment: string;
     date: string;

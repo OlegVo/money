@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState, ICategoriesState, IExpenseValues, Page } from '../interfaces';
+import { IAppState, ICategoriesState, ICategory, IExpenseValues, Page } from '../interfaces';
 import { IActions } from '../actions';
 import { CategoriesList, NavigationBar } from '../components';
 
@@ -21,7 +21,7 @@ class CategoriesScreen extends React.PureComponent<IProps, {}> {
         this.selectCategory = this.selectCategory.bind(this);
     }
 
-    selectCategory(category) {
+    selectCategory(category: ICategory) {
         const { editingExpense, actions } = this.props;
 
         const addAddExpenseScreen = !editingExpense.category;

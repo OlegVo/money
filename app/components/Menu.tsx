@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     item: {
         width: Math.ceil(window.width / menuItems.length),
         height: styleConstants.MENU_HEIGHT,
-        borderRightWidth: .5,
+        // borderRightWidth: .5,
         borderColor: WHITE_BORDER_COLOR,
     },
     itemText: {

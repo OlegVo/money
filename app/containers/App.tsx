@@ -16,7 +16,6 @@ const enhancer = compose(
     /*eslint-enable */
 );
 const store = createStore(rootReducer, initialState, enhancer);
-console.log('store', store.getState())
 
 moment.locale('ru');
 

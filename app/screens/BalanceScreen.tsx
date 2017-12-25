@@ -2,11 +2,15 @@ import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions/index';
+import actionCreators from '../actions';
 import * as styleConstants from '../constants/styles';
-import { IAppState, Page } from '../interfaces/index';
-import { IActions } from '../actions/index';
-import { WHITE_BORDER_COLOR, WHITE_FONT_COLOR } from '../constants/styles';
+import { IAppState, Page } from '../interfaces';
+import { IActions } from '../actions';
+import {
+    BASE_FONT_COLOR, BASE_FONT_SIZE, BLUE_FONT_COLOR, BUTTON_BORDER_COLOR, GRAY_BACKGROUND_COLOR, MENU_PADDING,
+    BASE_HORIZONTAL_PADDING,
+} from '../constants/styles';
+import { CategoriesList } from '../components';
 
 interface IPropsT {
     balance: number;
@@ -32,8 +36,10 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
 
         return (
             <View style={styles.container}>
+                <Text style={styles.caption}>Баланс</Text>
+
                 <View style={styles.balance}>
-                    <Text style={styles.balanceText}>{balance} {currency}</Text>
+                    <Text style={styles.balanceText}>{balance} </Text><Text style={styles.currencyText}>{currency}</Text>
                 </View>
 
                 <TouchableOpacity style={[styles.button, styles.addExpenseButton]} onPress={this.addExpense}>
@@ -47,16 +53,25 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: styleConstants.MAIN_BACKGROUND_COLOR,
+        paddingTop: MENU_PADDING,
+        paddingHorizontal: BASE_HORIZONTAL_PADDING,
+    },
+    caption: {
+        fontSize: BASE_FONT_SIZE,
+        color: BASE_FONT_COLOR,
     },
     balance: {
-        paddingBottom: 80,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
     },
     balanceText: {
-        fontSize: 50,
-        color: WHITE_FONT_COLOR,
+        fontSize: 40,
+        color: BLUE_FONT_COLOR,
+    },
+    currencyText: {
+        fontSize: 26,
+        marginBottom: 3,
+        color: BLUE_FONT_COLOR,
     },
     button: {
         position: 'absolute',
@@ -64,7 +79,8 @@ const styles = StyleSheet.create({
         height: styleConstants.BUTTON_RADIUS,
         borderRadius: styleConstants.BUTTON_RADIUS / 2,
         borderWidth: 1,
-        borderColor: WHITE_BORDER_COLOR,
+        borderColor: BUTTON_BORDER_COLOR,
+        backgroundColor: GRAY_BACKGROUND_COLOR,
     },
     addExpenseButton: {
         bottom: styleConstants.BUTTON_PADDING,
@@ -72,7 +88,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         backgroundColor: 'transparent',
-        color: WHITE_FONT_COLOR,
+        color: BASE_FONT_COLOR,
         fontSize: 34,
         textAlign: 'center',
     },

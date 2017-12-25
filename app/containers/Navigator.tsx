@@ -48,7 +48,6 @@ class Navigator extends React.PureComponent<IProps, {}> {
 
     render() {
         const { actions } = this.props;
-        console.log('Navigator', this.props)
 
         return (
             <View style={styles.panel}>
