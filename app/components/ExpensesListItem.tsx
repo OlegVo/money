@@ -19,7 +19,7 @@ export class ExpensesListItem extends React.PureComponent<IProps, {}> {
         const category = categories.find(category => (category.id === expense.category));
         if (!category) return null;
 
-        let date = '';
+        let date;
         if (displayDate) {
             date = moment(expense.date, formats.DATE_FORMAT).format('LL').replace(/,?\s?\d+\s?\D*$/, '');
         }

@@ -41,6 +41,7 @@
 
     // tslint-react
     "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
 
     "no-namespace": "allow-decalarations"
   }

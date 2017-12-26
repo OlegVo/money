@@ -4,17 +4,18 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
 import * as styleConstants from '../constants/styles';
-import { IAppState, Page } from '../interfaces';
+import { IAppState, ICategoriesState, IExpense, Page } from '../interfaces';
 import { IActions } from '../actions';
 import {
-    BASE_FONT_COLOR, BASE_FONT_SIZE, BLUE_FONT_COLOR, BUTTON_BORDER_COLOR, GRAY_BACKGROUND_COLOR, MENU_PADDING,
-    BASE_HORIZONTAL_PADDING,
+    BASE_FONT_COLOR, BASE_FONT_SIZE, BLUE_FONT_COLOR, MENU_PADDING, BASE_HORIZONTAL_PADDING,
 } from '../constants/styles';
-import { CategoriesList } from '../components';
+import { ExpensesList } from '../components';
 
 interface IPropsT {
     balance: number;
     currency: string;
+    expenses: IExpense[];
+    categories: ICategoriesState;
 }
 
 type IProps = IPropsT & {actions: IActions};
@@ -32,19 +33,29 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
     }
 
     render() {
-        const { balance, currency } = this.props;
+        const { balance, currency, expenses, categories } = this.props;
 
         return (
             <View style={styles.container}>
-                <Text style={styles.caption}>Баланс</Text>
+                <View style={styles.balanceLine}>
+                    <Text style={styles.caption}>Баланс</Text>
 
-                <View style={styles.balance}>
-                    <Text style={styles.balanceText}>{balance} </Text><Text style={styles.currencyText}>{currency}</Text>
+                    <View style={styles.balance}>
+                        <Text style={styles.balanceText}>{balance} </Text><Text style={styles.currencyText}>{currency}</Text>
+                    </View>
+
+                    <TouchableOpacity style={[styles.button, styles.addExpenseButton]} onPress={this.addExpense}>
+                        <Text style={styles.buttonText}>+</Text>
+                    </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={[styles.button, styles.addExpenseButton]} onPress={this.addExpense}>
-                    <Text style={styles.buttonText}>+</Text>
-                </TouchableOpacity>
+                {expenses &&
+                    <ExpensesList
+                        expenses={expenses}
+                        categories={categories.expenses}
+                        currency={currency}
+                    />
+                }
             </View>
         );
     }
@@ -54,7 +65,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: MENU_PADDING,
+    },
+    balanceLine: {
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
+        paddingBottom: 8,
     },
     caption: {
         fontSize: BASE_FONT_SIZE,
@@ -79,16 +93,16 @@ const styles = StyleSheet.create({
         height: styleConstants.BUTTON_RADIUS,
         borderRadius: styleConstants.BUTTON_RADIUS / 2,
         borderWidth: 1,
-        borderColor: BUTTON_BORDER_COLOR,
-        backgroundColor: GRAY_BACKGROUND_COLOR,
+        borderColor: BLUE_FONT_COLOR,
+        backgroundColor: '#fff',
     },
     addExpenseButton: {
-        bottom: styleConstants.BUTTON_PADDING,
-        right: styleConstants.BUTTON_PADDING,
+        top: 10,
+        right: BASE_HORIZONTAL_PADDING,
     },
     buttonText: {
         backgroundColor: 'transparent',
-        color: BASE_FONT_COLOR,
+        color: BLUE_FONT_COLOR,
         fontSize: 34,
         textAlign: 'center',
     },
@@ -97,6 +111,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state: IAppState): IPropsT => ({
     balance: state.balance,
     currency: state.currency,
+    expenses: state.expenses,
+    categories: state.categories,
 });
 
 const mapDispatchToProps = (dispatch): {actions: IActions} => ({

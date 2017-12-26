@@ -24,7 +24,7 @@ class Main extends React.PureComponent<IProps, {}> {
         AsyncStorage.getItem('expenses')
             .then(json => JSON.parse(json))
             .then(actions.setExpenses)
-            .catch(() => actions.setExpenses())
+            // .catch(() => actions.setExpenses())
             .then(() => {
                 const { expenses } = this.props;
                 actions.calculateBalance(expenses);
