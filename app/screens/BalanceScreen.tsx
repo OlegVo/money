@@ -10,6 +10,7 @@ import {
     BASE_FONT_COLOR, BASE_FONT_SIZE, BLUE_FONT_COLOR, MENU_PADDING, BASE_HORIZONTAL_PADDING,
 } from '../constants/styles';
 import { ExpensesList } from '../components';
+import { addThinSpaces } from '../helpers/string';
 
 interface IPropsT {
     balance: number;
@@ -41,7 +42,7 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
                     <Text style={styles.caption}>Баланс</Text>
 
                     <View style={styles.balance}>
-                        <Text style={styles.balanceText}>{balance} </Text><Text style={styles.currencyText}>{currency}</Text>
+                        <Text style={styles.balanceText}>{addThinSpaces(balance)} </Text><Text style={styles.currencyText}>{currency}</Text>
                     </View>
 
                     <TouchableOpacity style={[styles.button, styles.addExpenseButton]} onPress={this.addExpense}>
