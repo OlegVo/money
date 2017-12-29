@@ -6,6 +6,10 @@ import * as formats from '../constants/formats';
 const reducer = (state: IExpenseValues = {}, action): IExpenseValues => {
     switch (action.type) {
         case START_EDITING_EXPENSE:
+            if (action.expense) {
+                return action.expense;
+            }
+
             return {
                 category: undefined,
                 sum: undefined,

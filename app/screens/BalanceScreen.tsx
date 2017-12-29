@@ -33,7 +33,7 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
     }
 
     render() {
-        const { balance, currency, expenses, categories } = this.props;
+        const { balance, currency, expenses, categories, actions } = this.props;
 
         return (
             <View style={styles.container}>
@@ -54,6 +54,7 @@ class BalanceScreen extends React.PureComponent<IProps, {}> {
                         expenses={expenses}
                         categories={categories.expenses}
                         currency={currency}
+                        actions={actions}
                     />
                 }
             </View>

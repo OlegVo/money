@@ -1,23 +1,19 @@
-import { AsyncStorage } from 'react-native';
 import { IExpense } from '../interfaces';
+import { IAddExpenseAction } from '../actions/actions';
 
-const reducer = (state: IExpense[] = [], action): IExpense[] => {
+type ExpensesState = IExpense[];
+
+function addExpense(action: IAddExpenseAction): ExpensesState {
+    return action.expenses;
+}
+
+const reducer = (state: ExpensesState = [], action): ExpensesState => {
     switch (action.type) {
         case 'SET_EXPENSES':
             return action.expenses || [];
 
         case 'ADD_EXPENSE':
-            const { category, sum, comment, date } = action;
-
-            const expense = { category: category.id, sum, comment, date };
-
-            const expenses = [...state, expense];
-
-            // TODO отсортировать по дате (вставить в правильное место)
-
-            AsyncStorage.setItem('expenses', JSON.stringify(expenses));
-
-            return expenses;
+            return addExpense(action);
 
         default:
             return state;

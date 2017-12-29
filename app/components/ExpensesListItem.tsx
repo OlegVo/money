@@ -10,13 +10,25 @@ interface IProps {
     categories: ICategory[];
     currency: string;
     displayDate: boolean;
+    onPress: (expense: IExpense) => void;
 }
 
 export class ExpensesListItem extends React.PureComponent<IProps, {}> {
+    constructor(props) {
+        super(props);
+
+        this.onPress = this.onPress.bind(this);
+    }
+
+    onPress() {
+        const { expense, onPress } = this.props;
+        onPress(expense);
+    }
+
     render() {
         const { expense, categories, currency, displayDate } = this.props;
 
-        const category = categories.find(category => (category.id === expense.category));
+        const category = categories.find(c => (c === expense.category));
         if (!category) return null;
 
         let date;
@@ -32,7 +44,7 @@ export class ExpensesListItem extends React.PureComponent<IProps, {}> {
                     </View>
                 }
 
-                <TouchableOpacity style={styles.expense} activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY}>
+                <TouchableOpacity style={styles.expense} activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
                     <View style={styles.category}>
                         <View style={[styles.categoryColor, {backgroundColor: category.color}]} />
                         <Text style={styles.categoryText}>{category.name}</Text>

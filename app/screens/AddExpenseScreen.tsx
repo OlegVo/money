@@ -53,7 +53,7 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
 
         if (!category || !sum || comment === undefined || !date) return;
 
-        actions.addExpense(category, sum, comment, date);
+        actions.addExpense({ category, sum, comment, date });
 
         actions.setPage(Page.Balance);
     }

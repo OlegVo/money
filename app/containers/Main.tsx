@@ -2,7 +2,6 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions';
-import { AsyncStorage } from 'react-native';
 import { Navigator } from './Navigator';
 import { IAppState, IExpense } from '../interfaces';
 
@@ -14,21 +13,7 @@ type IProps = IPropsT & {actions: IActions};
 
 class Main extends React.PureComponent<IProps, {}> {
     componentDidMount() {
-        const { actions } = this.props;
-
-        AsyncStorage.getItem('categories')
-            .then(json => JSON.parse(json))
-            .catch(() => actions.setCategories())
-            .then(actions.setCategories);
-
-        AsyncStorage.getItem('expenses')
-            .then(json => JSON.parse(json))
-            .then(actions.setExpenses)
-            // .catch(() => actions.setExpenses())
-            .then(() => {
-                const { expenses } = this.props;
-                actions.calculateBalance(expenses);
-            });
+        this.props.actions.loadApplicationData();
     }
 
     render() {

@@ -7,6 +7,7 @@ const expensesCategories: ICategory[] = [
     { id: 3, name: 'Автомобиль', color: '#FFCB40' },
     { id: 4, name: 'Фастфуд', color: '#BF7E30' },
     { id: 5, name: 'Медицина', color: '#FF6B40' },
+    { id: 6, name: 'Работа (др и пр.)', color: '#b44bff' },
 ];
 
 const defaultCategories = {

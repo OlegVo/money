@@ -17,8 +17,15 @@ export interface ICategory {
     color: string;
 }
 
+export interface IExpenseData {
+    category: number; //TODO переименовать в categoryId
+    sum: number;
+    comment: string;
+    date: string;
+}
+
 export interface IExpense {
-    category: number;
+    category: ICategory;
     sum: number;
     comment: string;
     date: string;
