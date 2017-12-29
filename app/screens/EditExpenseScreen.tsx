@@ -20,7 +20,7 @@ interface IPropsT {
 
 type IProps = IPropsT & {actions: IActions};
 
-class AddExpenseScreen extends React.PureComponent<IProps, {}> {
+class EditExpenseScreen extends React.PureComponent<IProps, {}> {
     constructor(props) {
         super(props);
 
@@ -52,10 +52,16 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
         const { actions, editingExpense } = this.props;
         const { category, sum, comment, date } = editingExpense;
 
-        if (!category || !sum || comment === undefined || !date) return;
+        if (editingExpense.id) {
+            actions.saveEditedExpense();
+        } else {
+            if (!category || !sum || comment === undefined || !date) {
+                throw new Error('invalid expense data');
+            }
 
-        const id = editingExpense.id || generateId();
-        actions.addExpense({ id, category, sum, comment, date });
+            actions.addExpense({ id: generateId(), category, sum, comment, date });
+        }
+        actions.saveExpenses();
 
         actions.setPage(Page.Balance);
     }
@@ -186,5 +192,5 @@ const mapDispatchToProps = (dispatch): {actions: IActions} => ({
 const connected = connect(
     mapStateToProps,
     mapDispatchToProps
-)(AddExpenseScreen);
-export { connected as AddExpenseScreen };
+)(EditExpenseScreen);
+export { connected as EditExpenseScreen };

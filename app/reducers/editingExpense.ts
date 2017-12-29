@@ -1,5 +1,5 @@
 import { IExpenseValues } from '../interfaces';
-import { ADD_EXPENSE, EDIT_EXPENSE, START_EDITING_EXPENSE } from '../actions/types';
+import { ADD_EXPENSE, EDIT_EXPENSE, SAVE_EDITED_EXPENSE, START_EDITING_EXPENSE } from '../actions/types';
 import * as moment from 'moment';
 import * as formats from '../constants/formats';
 
@@ -24,6 +24,7 @@ const reducer = (state: IExpenseValues = {}, action): IExpenseValues => {
             };
 
         case ADD_EXPENSE:
+        case SAVE_EDITED_EXPENSE:
             return {};
 
         default:

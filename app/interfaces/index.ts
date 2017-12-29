@@ -47,7 +47,7 @@ export interface INavigationState {
 
 export enum Page {
     Balance = 'Balance',
-    AddExpense = 'AddExpense',
+    EditExpense = 'EditExpense',
     Categories = 'Categories',
     SelectDate = 'SelectDate',
     Planning = 'Planning',

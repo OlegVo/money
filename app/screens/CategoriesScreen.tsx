@@ -24,10 +24,10 @@ class CategoriesScreen extends React.PureComponent<IProps, {}> {
     selectCategory(category: ICategory) {
         const { editingExpense, actions } = this.props;
 
-        const addAddExpenseScreen = !editingExpense.category;
+        const addEditExpenseScreen = !editingExpense.category;
         actions.editExpense({category});
-        if (addAddExpenseScreen) {
-            actions.pushPage(Page.AddExpense);
+        if (addEditExpenseScreen) {
+            actions.pushPage(Page.EditExpense);
         } else {
             actions.popPage();
         }

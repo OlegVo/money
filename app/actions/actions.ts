@@ -1,6 +1,8 @@
 import { ICategory, IExpense, IExpenseData, IExpenseValues, Page } from '../interfaces';
 import {
-    ADD_EXPENSE, CALCULATE_BALANCE, EDIT_EXPENSE, POP_PAGE, PUSH_PAGE, SET_CATEGORIES, SET_EXPENSES, SET_PAGE,
+    ADD_EXPENSE, CALCULATE_BALANCE, EDIT_EXPENSE, POP_PAGE, PUSH_PAGE, SAVE_EDITED_EXPENSE, SAVE_EXPENSES,
+    SET_CATEGORIES,
+    SET_EXPENSES, SET_PAGE,
     START_EDITING_EXPENSE
 } from './types';
 import { AsyncAction } from './index';
@@ -67,7 +69,6 @@ export const setExpenses = (expensesData: IExpenseData[], categories: ICategory[
 
 export interface IAddExpenseAction {
     type: string;
-    newExpense: IExpense;
     expenses: IExpense[];
 }
 
@@ -75,24 +76,8 @@ export function addExpense(expense: IExpense): AsyncAction {
     return async (dispatch, getState) => {
         const expenses = getState().expenses.concat([expense]);
 
-        const { categories } = getState();
-        const expensesData: IExpenseData[] = expenses.map(e => {
-            const category = categories.expenses.find(c => c === e.category);
-            if (!category) throw new Error(`No category ${e.category}`);
-
-            return {
-                id: e.id,
-                categoryId: category.id,
-                sum: e.sum,
-                comment: e.comment,
-                date: e.date,
-            };
-        });
-        AsyncStorage.setItem('expenses', JSON.stringify(expensesData));
-
         dispatch({
             type: ADD_EXPENSE,
-            newExpense: expense,
             expenses,
         });
     };
@@ -111,6 +96,62 @@ export const editExpense = (values: IExpenseValues) => {
         values,
     };
 };
+
+export interface ISaveEditedExpenseAction {
+    type: string;
+    expenses: IExpense[];
+}
+
+export function saveEditedExpense(): AsyncAction {
+    return async (dispatch, getState) => {
+        const { expenses, editingExpense } = getState();
+
+        if (!editingExpense.id) {
+            throw new Error(`No id`);
+        }
+
+        const index = expenses.findIndex(e => e.id === editingExpense.id);
+        if (!index) {
+            throw new Error(`Expense not found`);
+        }
+
+        const newExpenses = [
+            ...expenses.slice(0, index),
+            editingExpense,
+            ...expenses.slice(index + 1),
+        ];
+
+        dispatch({
+            type: SAVE_EDITED_EXPENSE,
+            expenses: newExpenses,
+        });
+    };
+}
+
+export function saveExpenses(): AsyncAction {
+    return async (dispatch, getState) => {
+        const { expenses, categories } = getState();
+
+        const expensesData: IExpenseData[] = expenses.map(e => {
+            const category = categories.expenses.find(c => c === e.category);
+            if (!category) throw new Error(`No category ${e.category}`);
+
+            return {
+                id: e.id,
+                categoryId: category.id,
+                sum: e.sum,
+                comment: e.comment,
+                date: e.date,
+            };
+        });
+        AsyncStorage.setItem('expenses', JSON.stringify(expensesData));
+
+        dispatch({
+            type: SAVE_EXPENSES,
+            expenses,
+        });
+    };
+}
 
 export function loadCategories(): AsyncAction {
     return async (dispatch) => {

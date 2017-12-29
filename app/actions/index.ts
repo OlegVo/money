@@ -20,6 +20,8 @@ export interface IActions {
     addExpense: (expense: IExpense) => AsyncAction;
     startEditingExpense: (expense?: IExpense) => IAction;
     editExpense: (values: IExpenseValues) => IAction;
+    saveEditedExpense: () => AsyncAction;
+    saveExpenses: () => AsyncAction;
     loadApplicationData: () => AsyncAction;
 }
 
