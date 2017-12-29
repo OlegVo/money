@@ -22,7 +22,6 @@ export class ExpensesList extends React.PureComponent<IProps, {}> {
     }
 
     editExpense(expense: IExpense) {
-        console.log('editExpense', expense)
         const { actions } = this.props;
         actions.startEditingExpense(expense);
         actions.pushPage(Page.EditExpense);

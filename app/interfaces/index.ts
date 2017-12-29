@@ -51,7 +51,6 @@ export enum Page {
     Categories = 'Categories',
     SelectDate = 'SelectDate',
     Planning = 'Planning',
-    Expenses = 'Expenses',
 }
 
 export interface IMenuItem {
