@@ -31,7 +31,7 @@ export class ExpensesList extends React.PureComponent<IProps, {}> {
     render() {
         const { categories, currency } = this.props;
 
-        const expenses: IExpense[] = _.sortBy(this.props.expenses, expense => -moment(expense.date, DATE_FORMAT).format('YYYY-MM-DD'));
+        const expenses: IExpense[] = _.sortBy(this.props.expenses, expense => -moment(expense.date, DATE_FORMAT).valueOf());
 
         return (
             <View style={styles.container}>
