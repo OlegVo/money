@@ -12,6 +12,7 @@ import {
     MENU_PADDING,
     WHITE_FONT_COLOR
 } from '../constants/styles';
+import { generateId } from '../helpers/id';
 
 interface IPropsT {
     editingExpense: IExpenseValues;
@@ -53,7 +54,8 @@ class AddExpenseScreen extends React.PureComponent<IProps, {}> {
 
         if (!category || !sum || comment === undefined || !date) return;
 
-        actions.addExpense({ category, sum, comment, date });
+        const id = editingExpense.id || generateId();
+        actions.addExpense({ id, category, sum, comment, date });
 
         actions.setPage(Page.Balance);
     }

@@ -12,19 +12,21 @@ export interface ICategoriesState {
 }
 
 export interface ICategory {
-    id: number;
+    id: string;
     name: string;
     color: string;
 }
 
 export interface IExpenseData {
-    category: number; //TODO переименовать в categoryId
+    id: string;
+    categoryId: string;
     sum: number;
     comment: string;
     date: string;
 }
 
 export interface IExpense {
+    id: string;
     category: ICategory;
     sum: number;
     comment: string;
@@ -32,6 +34,7 @@ export interface IExpense {
 }
 
 export interface IExpenseValues {
+    id?: string;
     category?: ICategory;
     sum?: number;
     comment?: string;

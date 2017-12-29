@@ -40,12 +40,18 @@ export const setCategories = (categories: ICategory[]) => {
     };
 };
 
-export const setExpenses = (expensesData: IExpenseData[], categories: ICategory[]) => {
+interface ISetExpensesAction {
+    expenses: IExpense[];
+    type: string;
+}
+
+export const setExpenses = (expensesData: IExpenseData[], categories: ICategory[]): ISetExpensesAction => {
     const expenses = expensesData.map(e => {
-        const category = categories.find(c => c.id === e.category);
-        if (!category) throw new Error(`No category ${e.category}`);
+        const category = categories.find(c => c.id === e.categoryId);
+        if (!category) throw new Error(`No category ${e.categoryId}`);
 
         return {
+            id: e.id,
             category,
             sum: e.sum,
             comment: e.comment,
@@ -75,7 +81,8 @@ export function addExpense(expense: IExpense): AsyncAction {
             if (!category) throw new Error(`No category ${e.category}`);
 
             return {
-                category: category.id,
+                id: e.id,
+                categoryId: category.id,
                 sum: e.sum,
                 comment: e.comment,
                 date: e.date,
