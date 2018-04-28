@@ -95,7 +95,7 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
                                 style={styles.input}
                                 value={sum ? sum.toString() : ''}
                                 onChangeText={this.changeSum}
-                                autoFocus={true}
+                                autoFocus={!editingExpense.id}
                                 selectionColor={BASE_FONT_COLOR}
                                 placeholder='Сумма'
                                 keyboardType='numeric'
