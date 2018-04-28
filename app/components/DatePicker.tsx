@@ -48,7 +48,7 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
 
         const month: any[] = [];
         const firstDayOfMonth = moment(date).date(1);
-        const firstDayOfMonthWeekDay = firstDayOfMonth.day()
+        const firstDayOfMonthWeekDay = firstDayOfMonth.day() || 7; // делаем пн - 1, вс - 7
         // считать надо до дня недели первого дня в месяце
         for (let i = 1; i < firstDayOfMonthWeekDay; i++) {
             month.push('');
