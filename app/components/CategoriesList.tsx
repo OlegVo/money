@@ -18,9 +18,9 @@ export class CategoriesList extends React.PureComponent<IProps> {
         return (
             <View style={styles.container}>
                 <View style={styles.list}>
-                    {categories.map((category, i) => (
+                    {categories.map((category, i) =>
                         <CategoriesListItem key={i} category={category} onPress={onPressCategory} />
-                    ))}
+                    )}
                 </View>
             </View>
         );

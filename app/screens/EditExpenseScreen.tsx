@@ -28,6 +28,7 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
         this.showSelectDateScreen = this.showSelectDateScreen.bind(this);
         this.changeSum = this.changeSum.bind(this);
         this.changeComment = this.changeComment.bind(this);
+        this.back = this.back.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -48,19 +49,32 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
         this.props.actions.editExpense({comment});
     }
 
+    back() {
+        const { actions, editingExpense } = this.props;
+
+        if (editingExpense.id) {
+            actions.saveEditedExpense();
+            actions.saveExpenses();
+        } else {
+            actions.editExpense({category: undefined});
+        }
+
+        actions.popPage();
+    }
+
     submit() {
         const { actions, editingExpense } = this.props;
         const { category, sum, comment, date } = editingExpense;
 
         if (editingExpense.id) {
-            actions.saveEditedExpense();
-        } else {
-            if (!category || !sum || comment === undefined || !date) {
-                throw new Error('invalid expense data');
-            }
-
-            actions.addExpense({ id: generateId(), category, sum, comment, date });
+            throw new Error('no submit for expense editing');
         }
+
+        if (!category || !sum || comment === undefined || !date) {
+            throw new Error('invalid expense data');
+        }
+
+        actions.addExpense({ id: generateId(), category, sum, comment, date });
         actions.saveExpenses();
 
         actions.setPage(Page.Balance);
@@ -79,9 +93,11 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
             dateComment = d.format('dddd');
         }
 
+        const submit = editingExpense.id ? undefined : this.submit;
+
         return (
             <View style={styles.container}>
-                <NavigationBar submit={this.submit} actions={actions} />
+                <NavigationBar back={this.back} submit={submit} actions={actions} />
 
                 {category &&
                     <View style={styles.addExpenseForm}>
