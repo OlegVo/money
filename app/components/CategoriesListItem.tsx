@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import * as styleConstants from '../constants/styles';
+import { TouchableOpacity } from 'react-native';
 import { ICategory } from '../interfaces';
+import { ListItem } from './common/ListItem';
+import * as styleConstants from '../constants/styles';
 
 interface IProps {
     category: ICategory;
@@ -24,35 +25,9 @@ export class CategoriesListItem extends React.PureComponent<IProps> {
         const { category } = this.props;
 
         return (
-            <TouchableOpacity style={styles.category} onPress={this.onPress}>
-                <View style={[styles.categoryColor, {backgroundColor: category.color}]} />
-
-                <Text style={styles.text}>{category.name}</Text>
+            <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
+                <ListItem text={category.name} circleColor={category.color} />
             </TouchableOpacity>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    category: {
-        paddingVertical: 15,
-        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
-        borderBottomWidth: 1,
-        borderColor: styleConstants.LIST_BORDER_COLOR,
-
-        flexDirection: 'row',
-        minHeight: 20,
-    },
-
-    categoryColor: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginTop: 5,
-        marginRight: 5,
-    },
-    text: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
-    },
-});

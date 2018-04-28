@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
-import * as moment from 'moment';
 import { ICategory, IExpense } from '../interfaces';
+import { ListItem } from './common/ListItem';
 
 interface IProps {
     expense: IExpense;
@@ -13,7 +14,7 @@ interface IProps {
     onPress: (expense: IExpense) => void;
 }
 
-export class ExpensesListItem extends React.PureComponent<IProps, {}> {
+export class ExpensesListItem extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -44,16 +45,13 @@ export class ExpensesListItem extends React.PureComponent<IProps, {}> {
                     </View>
                 }
 
-                <TouchableOpacity style={styles.expense} activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
-                    <View style={styles.category}>
-                        <View style={[styles.categoryColor, {backgroundColor: category.color}]} />
-                        <Text style={styles.categoryText}>{category.name}</Text>
-                    </View>
-
-                    <View style={styles.sum}>
-                        <Text style={styles.sumText}>{expense.sum}</Text>
-                        <Text style={styles.currencyText}>{currency}</Text>
-                    </View>
+                <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
+                    <ListItem text={category.name} circleColor={category.color}>
+                        <View style={styles.sum}>
+                            <Text style={styles.sumText}>{expense.sum}</Text>
+                            <Text style={styles.currencyText}>{currency}</Text>
+                        </View>
+                    </ListItem>
                 </TouchableOpacity>
             </View>
         );
@@ -61,27 +59,6 @@ export class ExpensesListItem extends React.PureComponent<IProps, {}> {
 }
 
 const styles = StyleSheet.create({
-    expense: {
-        paddingVertical: 15,
-        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
-        borderBottomWidth: 1,
-        borderColor: styleConstants.LIST_BORDER_COLOR,
-    },
-    category: {
-        flexDirection: 'row',
-        minHeight: 20,
-    },
-    categoryColor: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        marginTop: 5,
-        marginRight: 5,
-    },
-    categoryText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
-    },
     date: {
         backgroundColor: styleConstants.GRAY_BACKGROUND_COLOR,
         paddingVertical: 6,
