@@ -1,6 +1,6 @@
 import { ADD_EXPENSE, CALCULATE_BALANCE, SAVE_EDITED_EXPENSE } from '../actions/types';
 
-const totalIncome = 5000.0;
+const totalIncome = 125000.0;
 
 const reducer = (state: number = 0, action): number => {
     switch (action.type) {

@@ -1,6 +1,6 @@
 import { IExpense } from '../interfaces';
-import { IAddExpenseAction, ISaveEditedExpenseAction } from '../actions/actions';
-import { ADD_EXPENSE, SAVE_EDITED_EXPENSE, SET_EXPENSES } from '../actions/types';
+import { IAddExpenseAction, IDeleteExpenseAction, ISaveEditedExpenseAction } from '../actions/actions';
+import { ADD_EXPENSE, DELETE_EXPENSE, SAVE_EDITED_EXPENSE, SET_EXPENSES } from '../actions/types';
 
 type ExpensesState = IExpense[];
 
@@ -9,6 +9,10 @@ function addExpense(action: IAddExpenseAction): ExpensesState {
 }
 
 function saveEditedExpense(action: ISaveEditedExpenseAction): ExpensesState {
+    return action.expenses;
+}
+
+function deleteExpense(action: IDeleteExpenseAction): ExpensesState {
     return action.expenses;
 }
 
@@ -22,6 +26,9 @@ const reducer = (state: ExpensesState = [], action): ExpensesState => {
 
         case SAVE_EDITED_EXPENSE:
             return saveEditedExpense(action);
+
+        case DELETE_EXPENSE:
+            return deleteExpense(action);
 
         default:
             return state;

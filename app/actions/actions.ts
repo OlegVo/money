@@ -1,8 +1,16 @@
 import { ICategory, IExpense, IExpenseData, IExpenseValues, Page } from '../interfaces';
 import {
-    ADD_EXPENSE, CALCULATE_BALANCE, EDIT_EXPENSE, POP_PAGE, PUSH_PAGE, SAVE_EDITED_EXPENSE, SAVE_EXPENSES,
+    ADD_EXPENSE,
+    CALCULATE_BALANCE,
+    DELETE_EXPENSE,
+    EDIT_EXPENSE,
+    POP_PAGE,
+    PUSH_PAGE,
+    SAVE_EDITED_EXPENSE,
+    SAVE_EXPENSES,
     SET_CATEGORIES,
-    SET_EXPENSES, SET_PAGE,
+    SET_EXPENSES,
+    SET_PAGE,
     START_EDITING_EXPENSE
 } from './types';
 import { AsyncAction } from './index';
@@ -78,6 +86,22 @@ export function addExpense(expense: IExpense): AsyncAction {
 
         dispatch({
             type: ADD_EXPENSE,
+            expenses,
+        });
+    };
+}
+
+export interface IDeleteExpenseAction {
+    type: string;
+    expenses: IExpense[];
+}
+
+export function deleteExpense(expenseId: string): AsyncAction {
+    return async (dispatch, getState) => {
+        const expenses = getState().expenses.filter(e => e.id !== expenseId);
+
+        dispatch({
+            type: DELETE_EXPENSE,
             expenses,
         });
     };

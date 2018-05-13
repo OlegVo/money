@@ -1,6 +1,7 @@
 
 // базовые стили
 export const BASE_HORIZONTAL_PADDING = 15;
+export const LIST_VERTICAL_PADDING = 15;
 export const BASE_FONT_COLOR = '#222';
 export const GRAY_FONT_COLOR = '#ccc';
 export const BLUE_FONT_COLOR = '#086ca2';

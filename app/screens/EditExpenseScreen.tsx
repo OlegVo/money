@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions/index';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
-import { NavigationBar } from '../components';
 import { IAppState, IExpenseValues, Page } from '../interfaces';
 import {
     BASE_FONT_COLOR, BASE_FONT_SIZE, BASE_HORIZONTAL_PADDING, GRAY_FONT_COLOR, LIST_BORDER_COLOR, MAIN_BACKGROUND_COLOR,
@@ -13,6 +12,7 @@ import {
     WHITE_FONT_COLOR
 } from '../constants/styles';
 import { generateId } from '../helpers/id';
+import { NavigationBar, IButton } from '../components/NavigationBar';
 
 interface IPropsT {
     editingExpense: IExpenseValues;
@@ -30,6 +30,7 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
         this.changeComment = this.changeComment.bind(this);
         this.back = this.back.bind(this);
         this.submit = this.submit.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     selectCategory() {
@@ -80,6 +81,21 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
         actions.setPage(Page.Balance);
     }
 
+    delete() {
+        const { actions, editingExpense } = this.props;
+
+        if (!editingExpense.id) {
+            throw new Error('no delete for expense editing');
+        }
+
+        // TODO добавить конфирмейшен
+
+        actions.deleteExpense(editingExpense.id);
+        actions.saveExpenses();
+
+        actions.setPage(Page.Balance);
+    }
+
     render() {
         const { editingExpense, actions } = this.props;
         const { category, sum, comment, date } = editingExpense;
@@ -93,11 +109,13 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
             dateComment = d.format('dddd');
         }
 
-        const submit = editingExpense.id ? undefined : this.submit;
+        const rightButton: IButton = editingExpense.id
+            ? { text: 'Удалить', onPress: this.delete }
+            : { text: 'Готово', onPress: this.submit };
 
         return (
             <View style={styles.container}>
-                <NavigationBar back={this.back} submit={submit} actions={actions} />
+                <NavigationBar back={this.back} rightButton={rightButton} actions={actions} />
 
                 {category &&
                     <View style={styles.addExpenseForm}>

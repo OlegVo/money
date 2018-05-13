@@ -21,6 +21,7 @@ export interface IActions {
     startEditingExpense: (expense?: IExpense) => IAction;
     editExpense: (values: IExpenseValues) => IAction;
     saveEditedExpense: () => AsyncAction;
+    deleteExpense: (expenseId: string) => AsyncAction;
     saveExpenses: () => AsyncAction;
     loadApplicationData: () => AsyncAction;
 }

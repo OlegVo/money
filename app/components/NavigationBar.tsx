@@ -5,9 +5,13 @@ import { WHITE_FONT_COLOR } from '../constants/styles';
 import { IActions } from '../actions';
 const window = Dimensions.get('window');
 
+export interface IButton {
+    text: string;
+    onPress: () => void;
+}
 interface IProps {
     back?: () => void;
-    submit?: () => void;
+    rightButton?: IButton;
     actions: IActions;
 }
 
@@ -29,7 +33,7 @@ export class NavigationBar extends React.PureComponent<IProps, {}> {
     }
 
     render() {
-        const { submit } = this.props;
+        const { rightButton } = this.props;
 
         return (
             <View style={styles.container}>
@@ -37,9 +41,9 @@ export class NavigationBar extends React.PureComponent<IProps, {}> {
                     <Text style={styles.backButtonText}>Назад</Text>
                 </TouchableOpacity>
 
-                {submit &&
-                    <TouchableOpacity style={styles.submitButton} onPress={submit}>
-                        <Text style={styles.submitButtonText}>Готово</Text>
+                {rightButton &&
+                    <TouchableOpacity style={styles.submitButton} onPress={rightButton.onPress}>
+                        <Text style={styles.submitButtonText}>{rightButton.text}</Text>
                     </TouchableOpacity>
                 }
             </View>

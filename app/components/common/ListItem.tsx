@@ -27,7 +27,7 @@ export class ListItem extends React.PureComponent<IProps> {
 
 const styles = StyleSheet.create({
     listItem: {
-        paddingVertical: 15,
+        paddingVertical: styleConstants.LIST_VERTICAL_PADDING,
         paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
         borderBottomWidth: 1,
         borderColor: styleConstants.LIST_BORDER_COLOR,

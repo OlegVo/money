@@ -46,7 +46,7 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
                 }
 
                 <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
-                    <ListItem text={category.name} circleColor={category.color}>
+                    <ListItem text={expense.comment || category.name} circleColor={category.color}>
                         <View style={styles.sum}>
                             <Text style={styles.sumText}>{expense.sum}</Text>
                             <Text style={styles.currencyText}>{currency}</Text>
