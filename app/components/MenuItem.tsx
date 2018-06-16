@@ -8,7 +8,7 @@ interface IProps {
     onPress: (item: IMenuItem) => void;
 }
 
-export class MenuItem extends React.PureComponent<IProps, {}> {
+export class MenuItem extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
 import * as styleConstants from '../constants/styles';
-import { WHITE_FONT_COLOR } from '../constants/styles';
+import { fonts, WHITE_FONT_COLOR } from '../constants/styles';
 import { IActions } from '../actions';
 const window = Dimensions.get('window');
 
@@ -15,7 +15,7 @@ interface IProps {
     actions: IActions;
 }
 
-export class NavigationBar extends React.PureComponent<IProps, {}> {
+export class NavigationBar extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
         width: 80,
     },
     backButtonText: {
+        ...fonts.base,
         color: WHITE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
     },
     submitButton: {
         position: 'absolute',
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
         width: 80,
     },
     submitButtonText: {
+        ...fonts.base,
         color: WHITE_FONT_COLOR,
-        fontSize: styleConstants.BASE_FONT_SIZE,
         textAlign: 'right',
     },
 });

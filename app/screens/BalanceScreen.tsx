@@ -7,7 +7,7 @@ import * as styleConstants from '../constants/styles';
 import { IAppState, ICategoriesState, IExpense, Page } from '../interfaces';
 import { IActions } from '../actions';
 import {
-    BASE_FONT_COLOR, BASE_FONT_SIZE, BLUE_FONT_COLOR, MENU_PADDING, BASE_HORIZONTAL_PADDING,
+    BLUE_FONT_COLOR, MENU_PADDING, BASE_HORIZONTAL_PADDING, fonts,
 } from '../constants/styles';
 import { ExpensesList } from '../components';
 import { addThinSpaces } from '../helpers/string';
@@ -21,7 +21,7 @@ interface IPropsT {
 
 type IProps = IPropsT & {actions: IActions};
 
-class BalanceScreen extends React.PureComponent<IProps, {}> {
+class BalanceScreen extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -73,8 +73,7 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
     },
     caption: {
-        fontSize: BASE_FONT_SIZE,
-        color: BASE_FONT_COLOR,
+        ...fonts.base,
     },
     balance: {
         flexDirection: 'row',

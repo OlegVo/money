@@ -1,26 +1,42 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import * as moment from 'moment';
+import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import { IAppState } from '../interfaces/index';
 import { IActions } from '../actions/index';
 import {
-    BASE_HORIZONTAL_PADDING, fonts,
-    MENU_PADDING
+    BASE_HORIZONTAL_PADDING,
+    MENU_PADDING,
 } from '../constants/styles';
+import { ExpensesReport } from '../components';
+import { ICategoriesState, IExpense } from '../interfaces';
 
 interface IPropsT {
+    categories: ICategoriesState;
+    expenses: IExpense[];
     currency: string;
 }
 
 type IProps = IPropsT & {actions: IActions};
 
-class PlanningScreen extends React.PureComponent<IProps> {
+class ReportsScreen extends React.PureComponent<IProps> {
     render() {
+        const { expenses, categories, currency } = this.props;
+
+        const startDate = moment().startOf('month');
+        const endDate = moment().endOf('month');
+
         return (
             <View style={styles.container}>
-                <Text style={styles.caption}>TODO Планирование</Text>
+                <ExpensesReport
+                    startDate={startDate}
+                    endDate={endDate}
+                    expenses={expenses}
+                    categories={categories.expenses}
+                    currency={currency}
+                />
             </View>
         );
     }
@@ -32,12 +48,11 @@ const styles = StyleSheet.create({
         paddingTop: MENU_PADDING,
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
     },
-    caption: {
-        ...fonts.base,
-    },
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
+    categories: state.categories,
+    expenses: state.expenses,
     currency: state.currency,
 });
 
@@ -48,5 +63,5 @@ const mapDispatchToProps = (dispatch): {actions: IActions} => ({
 const connected = connect(
     mapStateToProps,
     mapDispatchToProps
-)(PlanningScreen);
-export { connected as PlanningScreen };
+)(ReportsScreen);
+export { connected as ReportsScreen };

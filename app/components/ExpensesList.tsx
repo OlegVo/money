@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import * as _ from 'lodash';
 import { ICategory, IExpense, Page } from '../interfaces';
 import { ExpensesListItem } from './ExpensesListItem';
-import moment = require('moment');
+    import moment = require('moment');
 import { DATE_FORMAT } from '../constants/formats';
 import { IActions } from '../actions';
 
@@ -14,7 +14,7 @@ interface IProps {
     actions: IActions;
 }
 
-export class ExpensesList extends React.PureComponent<IProps, {}> {
+export class ExpensesList extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 

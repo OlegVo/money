@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-import { BalanceScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen } from '../screens';
+import { BalanceScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen, ReportsScreen } from '../screens';
 import { Menu } from '../components';
 import { IAppState, INavigationState, Page } from '../interfaces';
 import { IActions } from '../actions';
@@ -15,7 +15,7 @@ interface IPropsT {
 
 type IProps = IPropsT & {actions: IActions};
 
-class Navigator extends React.PureComponent<IProps, {}> {
+class Navigator extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -40,6 +40,9 @@ class Navigator extends React.PureComponent<IProps, {}> {
 
             case Page.Planning:
                 return <PlanningScreen />;
+
+            case Page.Reports:
+                return <ReportsScreen />;
         }
     }
 

@@ -7,7 +7,11 @@ import * as formats from '../constants/formats';
 import * as moment from 'moment';
 import { IAppState, IExpenseValues, Page } from '../interfaces';
 import {
-    BASE_FONT_COLOR, BASE_FONT_SIZE, BASE_HORIZONTAL_PADDING, GRAY_FONT_COLOR, LIST_BORDER_COLOR, MAIN_BACKGROUND_COLOR,
+    BASE_HORIZONTAL_PADDING, colors,
+    fonts,
+    GRAY_FONT_COLOR,
+    LIST_BORDER_COLOR,
+    MAIN_BACKGROUND_COLOR,
     MENU_PADDING,
     WHITE_FONT_COLOR
 } from '../constants/styles';
@@ -20,7 +24,7 @@ interface IPropsT {
 
 type IProps = IPropsT & {actions: IActions};
 
-class EditExpenseScreen extends React.PureComponent<IProps, {}> {
+class EditExpenseScreen extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -130,7 +134,7 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
                                 value={sum ? sum.toString() : ''}
                                 onChangeText={this.changeSum}
                                 autoFocus={!editingExpense.id}
-                                selectionColor={BASE_FONT_COLOR}
+                                selectionColor={colors.baseFont}
                                 placeholder='Сумма'
                                 keyboardType='numeric'
                             />
@@ -141,7 +145,7 @@ class EditExpenseScreen extends React.PureComponent<IProps, {}> {
                                 style={styles.input}
                                 value={comment}
                                 onChangeText={this.changeComment}
-                                selectionColor={BASE_FONT_COLOR}
+                                selectionColor={colors.baseFont}
                                 placeholder='Комментарий'
                                 placeholderTextColor={GRAY_FONT_COLOR}
                                 returnKeyType='done'
@@ -176,20 +180,18 @@ const styles = StyleSheet.create({
         borderColor: LIST_BORDER_COLOR,
     },
     fieldText: {
-        color: BASE_FONT_COLOR,
-        fontSize: BASE_FONT_SIZE,
+        ...fonts.base,
     },
     input: {
         height: 30,
-        color: BASE_FONT_COLOR,
-        fontSize: BASE_FONT_SIZE,
+        ...fonts.base,
     },
     category: {
         height: 50,
         borderBottomWidth: 0,
     },
     categoryText: {
-        fontSize: BASE_FONT_SIZE,
+        ...fonts.base,
         color: WHITE_FONT_COLOR,
         lineHeight: 30,
     },
@@ -198,13 +200,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     dateText: {
+        ...fonts.base,
         color: MAIN_BACKGROUND_COLOR,
-        fontSize: BASE_FONT_SIZE,
         lineHeight: 30,
     },
     dateCommentText: {
         marginLeft: 8,
-        fontSize: BASE_FONT_SIZE - 2,
+        fontSize: fonts.base.fontSize - 2,
         color: GRAY_FONT_COLOR,
         lineHeight: 30,
     },

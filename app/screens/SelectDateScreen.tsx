@@ -15,7 +15,7 @@ interface IPropsT {
 
 type IProps = IPropsT & { actions: IActions };
 
-class SelectDateScreen extends React.PureComponent<IProps, {}> {
+class SelectDateScreen extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 

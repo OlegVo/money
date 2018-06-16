@@ -4,7 +4,8 @@ import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import { ICategory, IExpense } from '../interfaces';
-import { ListItem } from './common/ListItem';
+import { fonts } from '../constants/styles';
+import { ListItemWithSum } from './common/ListItemWithSum';
 
 interface IProps {
     expense: IExpense;
@@ -46,12 +47,12 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
                 }
 
                 <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
-                    <ListItem text={expense.comment || category.name} circleColor={category.color}>
-                        <View style={styles.sum}>
-                            <Text style={styles.sumText}>{expense.sum}</Text>
-                            <Text style={styles.currencyText}>{currency}</Text>
-                        </View>
-                    </ListItem>
+                    <ListItemWithSum
+                        text={expense.comment || category.name}
+                        sum={expense.sum}
+                        currency={currency}
+                        circleColor={category.color}
+                    />
                 </TouchableOpacity>
             </View>
         );
@@ -67,23 +68,6 @@ const styles = StyleSheet.create({
         borderColor: styleConstants.LIST_BORDER_COLOR,
     },
     dateText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
-    },
-    sum: {
-        position: 'absolute',
-        top: 15,
-        right: styleConstants.BASE_HORIZONTAL_PADDING,
-        flex: 1,
-        flexDirection: 'row',
-    },
-    sumText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
-    },
-    currencyText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.LIST_BORDER_COLOR,
-        paddingLeft: 3,
+        ...fonts.base,
     },
 });

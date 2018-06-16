@@ -7,3 +7,5 @@ export { ExpensesList } from './ExpensesList';
 export { ExpensesListItem } from './ExpensesListItem';
 export { Menu } from './Menu';
 export { NavigationBar } from './NavigationBar';
+
+export { ExpensesReport } from './reports/ExpensesReport';

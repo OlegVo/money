@@ -14,7 +14,7 @@ interface IPropsT {
 
 type IProps = IPropsT & { actions: IActions };
 
-class CategoriesScreen extends React.PureComponent<IProps, {}> {
+class CategoriesScreen extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 

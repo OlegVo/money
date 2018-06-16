@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-nati
 import * as styleConstants from '../constants/styles';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { MAIN_BACKGROUND_COLOR } from '../constants/styles';
+import { fonts, MAIN_BACKGROUND_COLOR } from '../constants/styles';
 const window = Dimensions.get('window');
 
 const DAY_SIZE = (window.width - 20) / 7;
@@ -140,8 +140,7 @@ const styles = StyleSheet.create({
         borderColor: styleConstants.LIST_BORDER_COLOR,
     },
     monthLabelText: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
+        ...fonts.base,
     },
     monthDays: {
         paddingVertical: 8,
@@ -162,8 +161,7 @@ const styles = StyleSheet.create({
     dayText: {
         textAlign: 'center',
         lineHeight: DAY_SIZE,
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
+        ...fonts.base,
         backgroundColor: 'transparent',
     },
     dayTextCurrent: {

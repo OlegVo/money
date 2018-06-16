@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import * as styleConstants from '../../constants/styles';
+import { fonts } from '../../constants/styles';
 
 interface IProps {
     text: string;
@@ -43,7 +44,6 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     text: {
-        fontSize: styleConstants.BASE_FONT_SIZE,
-        color: styleConstants.BASE_FONT_COLOR,
+        ...fonts.base,
     },
 });

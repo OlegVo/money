@@ -11,7 +11,7 @@ interface IPropsT {
 
 type IProps = IPropsT & {actions: IActions};
 
-class Main extends React.PureComponent<IProps, {}> {
+class Main extends React.PureComponent<IProps> {
     componentDidMount() {
         this.props.actions.loadApplicationData();
     }

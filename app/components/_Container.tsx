@@ -13,7 +13,7 @@ interface IPropsT {
 
 type IProps = IPropsT & { actions: IActions };
 
-class Container extends React.PureComponent<IProps, {}> {
+class Container extends React.PureComponent<IProps> {
     render() {
         return (
             <View style={styles.container}>
