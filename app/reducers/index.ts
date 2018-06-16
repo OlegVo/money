@@ -6,8 +6,9 @@ import currency from './currency';
 import editingExpense from './editingExpense';
 import expenses from './expenses';
 import navigation from './navigation';
+import planning from './planning';
 
-import { IAppState } from '../interfaces/index';
+import { IAppState } from '../interfaces';
 
 const reducers = {
     balance,
@@ -16,6 +17,7 @@ const reducers = {
     editingExpense,
     expenses,
     navigation,
+    planning,
 };
 
 const rootReducer: Reducer<IAppState> = combineReducers({

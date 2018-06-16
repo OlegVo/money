@@ -1,4 +1,4 @@
-import { ICategory, IExpense, IExpenseData, IExpenseValues, Page } from '../interfaces';
+import { ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../interfaces';
 import {
     ADD_EXPENSE,
     CALCULATE_BALANCE,
@@ -11,6 +11,7 @@ import {
     SET_CATEGORIES,
     SET_EXPENSES,
     SET_PAGE,
+    SET_PLANS,
     START_EDITING_EXPENSE
 } from './types';
 import { AsyncAction } from './index';
@@ -36,9 +37,15 @@ export const popPage = () => {
     };
 };
 
-export const calculateBalance = (expenses: IExpense[]) => {
+export interface ICalculateBalanceAction {
+    planning: IPlanning;
+    expenses: IExpense[];
+    type: string;
+}
+export const calculateBalance = (planning: IPlanning, expenses: IExpense[]) => {
     return {
         type: CALCULATE_BALANCE,
+        planning,
         expenses,
     };
 };
@@ -177,6 +184,17 @@ export function saveExpenses(): AsyncAction {
     };
 }
 
+export interface ISetPlans {
+    planning: IPlanning;
+    type: string;
+}
+export const setPlans = (planning: IPlanning): ISetPlans => {
+    return {
+        type: SET_PLANS,
+        planning,
+    };
+};
+
 export function loadCategories(): AsyncAction {
     return async (dispatch) => {
         const json = await AsyncStorage.getItem('categories');
@@ -190,13 +208,30 @@ export function loadExpenses(): AsyncAction {
         const json = await AsyncStorage.getItem('expenses');
         const expenses: IExpenseData[] = JSON.parse(json);
         dispatch(setExpenses(expenses, getState().categories.expenses));
-        dispatch(calculateBalance(getState().expenses));
+        dispatch(calculateBalance(getState().planning, getState().expenses));
+    };
+}
+
+export function loadPlans(): AsyncAction {
+    return async (dispatch) => {
+        const planning = {
+            monthPlans: [{
+                month: '06.18',
+                incomes: [
+                    { sum: 95000.0, date: '14.06.2018' },
+                    { sum: 30000.0, date: '29.06.2018' },
+                ],
+            }],
+        };
+
+        dispatch(setPlans(planning));
     };
 }
 
 export function loadApplicationData(): AsyncAction {
     return async (dispatch) => {
         await dispatch(loadCategories());
+        await dispatch(loadPlans());
         await dispatch(loadExpenses());
     };
 }

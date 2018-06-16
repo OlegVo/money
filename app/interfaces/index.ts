@@ -5,6 +5,7 @@ export interface IAppState {
     editingExpense: IExpenseValues;
     expenses: IExpense[];
     navigation: INavigationState;
+    planning: IPlanning;
 }
 
 export interface ICategoriesState {
@@ -41,6 +42,13 @@ export interface IExpenseValues {
     date?: string;
 }
 
+export interface IIncome {
+    id?: string;
+    sum?: number;
+    comment?: string;
+    date?: string;
+}
+
 export interface INavigationState {
     pages: Page[];
 }
@@ -58,4 +66,13 @@ export interface IMenuItem {
     page: Page;
     text: string;
     icon?: string;
+}
+
+export interface IPlanning {
+    monthPlans: IMonthPlan[];
+}
+
+export interface IMonthPlan {
+    month: string;
+    incomes: IIncome[];
 }
