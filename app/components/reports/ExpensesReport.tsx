@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { addThinSpaces } from '../../helpers/string';
-import { BLUE_FONT_COLOR, fonts } from '../../constants/styles';
+import { BASE_HORIZONTAL_PADDING, BLUE_FONT_COLOR, fonts } from '../../constants/styles';
 import { Moment } from 'moment';
 import { ICategory, IExpense } from '../../interfaces';
 import { formatRange } from '../../helpers/date';
 import * as formats from '../../constants/formats';
 import moment = require('moment');
 import { ListItemWithSum } from '../common/ListItemWithSum';
+import * as styleConstants from '../../constants/styles';
+
+interface ISumByCategory {
+    category: ICategory;
+    sum: number;
+}
 
 interface IProps {
     startDate: Moment;
@@ -26,9 +32,22 @@ export class ExpensesReport extends React.PureComponent<IProps> {
             const date = moment(e.date, formats.DATE_FORMAT);
             return date.valueOf() >= startDate.valueOf() && date.valueOf() <= endDate.valueOf();
         });
-        console.log('rangeExpenses', rangeExpenses)
 
-        // TODO суммировать расходы по категориям в новую структуру, записать туда ссылки на категории или названия
+        const sumsByCategory: ISumByCategory[] = [];
+        const sumsByCategoryMap: { [i: string]: ISumByCategory } = {};
+        rangeExpenses.forEach(expense => {
+            if (sumsByCategoryMap[expense.category.id]) {
+                sumsByCategoryMap[expense.category.id].sum += expense.sum;
+            } else {
+                const newSum = {
+                    sum: expense.sum,
+                    category: expense.category,
+                };
+                sumsByCategory.push(newSum);
+                sumsByCategoryMap[expense.category.id] = newSum;
+            }
+        });
+        sumsByCategory.sort((a, b) => a.sum > b.sum ? -1 : 1);
 
         const total = rangeExpenses.reduce((sum, e) => sum + e.sum, 0);
 
@@ -45,15 +64,19 @@ export class ExpensesReport extends React.PureComponent<IProps> {
                     </View>
                 </View>
 
-                {rangeExpenses.map((expense, i) => (
-                    <ListItemWithSum
-                        key={i}
-                        text='Категория'
-                        sum={expense.sum}
-                        currency={currency}
-                        circleColor='red'
-                    />
-                ))}
+                <View style={styles.list}>
+                    <ScrollView>
+                        {sumsByCategory.map((sumByCategory, i) => (
+                            <ListItemWithSum
+                                key={i}
+                                text={sumByCategory.category.name}
+                                sum={sumByCategory.sum}
+                                currency={currency}
+                                circleColor={sumByCategory.category.color}
+                            />
+                        ))}
+                    </ScrollView>
+                </View>
             </View>
         );
     }
@@ -65,11 +88,18 @@ const styles = StyleSheet.create({
     },
     title: {
         ...fonts.base, // TODO надо другой шрифт
+        paddingHorizontal: BASE_HORIZONTAL_PADDING,
     },
     subtitle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end',
+        paddingHorizontal: BASE_HORIZONTAL_PADDING,
+        paddingBottom: 10,
+    },
+    list: {
+        borderTopWidth: 1,
+        borderColor: styleConstants.LIST_BORDER_COLOR,
     },
     text: {
         ...fonts.base,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import { ICategory } from '../interfaces';
 import { CategoriesListItem } from './CategoriesListItem';
@@ -18,9 +18,11 @@ export class CategoriesList extends React.PureComponent<IProps> {
         return (
             <View style={styles.container}>
                 <View style={styles.list}>
-                    {categories.map((category, i) =>
-                        <CategoriesListItem key={i} category={category} onPress={onPressCategory} />
-                    )}
+                    <ScrollView>
+                        {categories.map((category, i) =>
+                            <CategoriesListItem key={i} category={category} onPress={onPressCategory} />
+                        )}
+                    </ScrollView>
                 </View>
             </View>
         );

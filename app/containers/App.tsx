@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStore, compose, applyMiddleware } from 'redux';
-// import devTools from 'remote-redux-devtools';
+import devTools from 'remote-redux-devtools';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import * as moment from 'moment';
@@ -12,9 +12,9 @@ import { Main } from './Main';
 const initialState = {};
 
 const enhancer = compose(
-    applyMiddleware(thunk)
+    applyMiddleware(thunk),
     /*eslint-disable */
-    // __DEV__ ? devTools() : f => f
+    __DEV__ ? devTools() : f => f
     /*eslint-enable */
 );
 const store = createStore(rootReducer, initialState, enhancer);

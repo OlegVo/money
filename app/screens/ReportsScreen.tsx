@@ -7,7 +7,6 @@ import actionCreators from '../actions/index';
 import { IAppState } from '../interfaces/index';
 import { IActions } from '../actions/index';
 import {
-    BASE_HORIZONTAL_PADDING,
     MENU_PADDING,
 } from '../constants/styles';
 import { ExpensesReport } from '../components';
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: MENU_PADDING,
-        paddingHorizontal: BASE_HORIZONTAL_PADDING,
     },
 });
 

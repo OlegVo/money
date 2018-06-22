@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, CALCULATE_BALANCE, SAVE_EDITED_EXPENSE } from '../actions/types';
+import { CALCULATE_BALANCE } from '../actions/types';
 import { ICalculateBalanceAction } from '../actions/actions';
 
 function calculateBalance(action: ICalculateBalanceAction): number {
@@ -21,8 +21,6 @@ const reducer = (state: number = 0, action): number => {
     switch (action.type) {
         // расчитываем текущий баланс (при старте приложения)
         case CALCULATE_BALANCE:
-        case ADD_EXPENSE:
-        case SAVE_EDITED_EXPENSE:
             return calculateBalance(action);
 
         default:

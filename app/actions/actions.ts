@@ -95,6 +95,12 @@ export function addExpense(expense: IExpense): AsyncAction {
             type: ADD_EXPENSE,
             expenses,
         });
+
+        dispatch({
+            type: CALCULATE_BALANCE,
+            expenses,
+            planning: getState().planning,
+        });
     };
 }
 
@@ -155,6 +161,12 @@ export function saveEditedExpense(): AsyncAction {
         dispatch({
             type: SAVE_EDITED_EXPENSE,
             expenses: newExpenses,
+        });
+
+        dispatch({
+            type: CALCULATE_BALANCE,
+            expenses: newExpenses,
+            planning: getState().planning,
         });
     };
 }
