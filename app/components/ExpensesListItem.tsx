@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
 import * as formats from '../constants/formats';
 import { ICategory, IExpense } from '../interfaces';
-import { fonts } from '../constants/styles';
 import { ListItemWithSum } from './common/ListItemWithSum';
+import { ListSectionTitle } from './common/ListSectionTitle';
 
 interface IProps {
     expense: IExpense;
@@ -41,9 +41,7 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
         return (
             <View>
                 {date &&
-                    <View style={styles.date}>
-                        <Text style={styles.dateText}>{date}</Text>
-                    </View>
+                    <ListSectionTitle text={date} />
                 }
 
                 <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
@@ -58,16 +56,3 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    date: {
-        backgroundColor: styleConstants.GRAY_BACKGROUND_COLOR,
-        paddingVertical: 6,
-        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
-        borderBottomWidth: 1,
-        borderColor: styleConstants.LIST_BORDER_COLOR,
-    },
-    dateText: {
-        ...fonts.base,
-    },
-});

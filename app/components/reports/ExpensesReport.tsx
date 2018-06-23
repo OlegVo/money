@@ -9,6 +9,7 @@ import * as formats from '../../constants/formats';
 import moment = require('moment');
 import { ListItemWithSum } from '../common/ListItemWithSum';
 import * as styleConstants from '../../constants/styles';
+import { ListSectionTitle } from '../common/ListSectionTitle';
 
 interface ISumByCategory {
     category: ICategory;
@@ -58,7 +59,9 @@ export class ExpensesReport extends React.PureComponent<IProps> {
                 {/* TODO Постоянные расходы */}
 
                 <View style={styles.subtitle}>
-                    <Text style={styles.text}>Обычные расходы</Text>
+                    <View style={styles.left}>
+                        <Text style={styles.subtitleText}>Обычные расходы</Text>
+                    </View>
                     <View style={styles.total}>
                         <Text style={styles.sumText}>{addThinSpaces(total)}</Text><Text style={styles.currencyText}>{currency}</Text>
                     </View>
@@ -88,21 +91,29 @@ const styles = StyleSheet.create({
     },
     title: {
         ...fonts.base, // TODO надо другой шрифт
+        paddingTop: 10,
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
+        fontSize: 22,
+        lineHeight: 40,
     },
     subtitle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-end',
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
-        paddingBottom: 10,
+        paddingVertical: 5,
+        borderTopWidth: 1,
+        borderColor: styleConstants.LIST_BORDER_COLOR,
     },
     list: {
         borderTopWidth: 1,
         borderColor: styleConstants.LIST_BORDER_COLOR,
     },
-    text: {
+    left: {
+        paddingTop: 10,
+    },
+    subtitleText: {
         ...fonts.base,
+        fontSize: 18,
     },
     total: {
         flexDirection: 'row',
@@ -114,7 +125,6 @@ const styles = StyleSheet.create({
     },
     currencyText: {
         fontSize: 22,
-        // marginBottom: 3,
         color: BLUE_FONT_COLOR,
     },
 });

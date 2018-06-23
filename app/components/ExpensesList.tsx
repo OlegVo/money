@@ -3,9 +3,10 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import * as _ from 'lodash';
 import { ICategory, IExpense, Page } from '../interfaces';
 import { ExpensesListItem } from './ExpensesListItem';
-    import moment = require('moment');
+import moment = require('moment');
 import { DATE_FORMAT } from '../constants/formats';
 import { IActions } from '../actions';
+import * as styleConstants from '../constants/styles';
 
 interface IProps {
     expenses: IExpense[];
@@ -59,5 +60,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        borderTopWidth: 1,
+        borderColor: styleConstants.LIST_BORDER_COLOR,
     },
 });
