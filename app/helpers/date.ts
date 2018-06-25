@@ -1,4 +1,6 @@
 import { Moment } from 'moment';
+import * as formats from '../constants/formats';
+const moment = require('moment');
 
 export function formatRange(start: Moment, end: Moment) {
     // 1 - 31 мая 2018
@@ -8,4 +10,12 @@ export function formatRange(start: Moment, end: Moment) {
 
     // 1 апреля 2018 - 31 мая 2018
     return `${start.format('LL')} - ${end.format('LL')}`;
+}
+
+export function getStartAndEndOfMonth(month: string) {
+    const date = moment(`01.${month}`, formats.DATE_FORMAT).startOf('month');
+    return {
+        startDate: date,
+        endDate: moment(date).endOf('month'),
+    };
 }

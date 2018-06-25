@@ -7,9 +7,13 @@ import moment = require('moment');
 import { DATE_FORMAT } from '../constants/formats';
 import { IActions } from '../actions';
 import * as styleConstants from '../constants/styles';
+import { Moment } from 'moment';
+import { filterExpensesByDates } from '../helpers/expenses';
 
 interface IProps {
     expenses: IExpense[];
+    startDate: Moment;
+    endDate: Moment;
     categories: ICategory[];
     currency: string;
     actions: IActions;
@@ -29,9 +33,10 @@ export class ExpensesList extends React.PureComponent<IProps> {
     }
 
     render() {
-        const { categories, currency } = this.props;
+        const { categories, startDate, endDate, currency } = this.props;
 
-        const expenses: IExpense[] = _.sortBy(this.props.expenses, expense => -moment(expense.date, DATE_FORMAT).valueOf());
+        let expenses: IExpense[] = filterExpensesByDates(this.props.expenses, startDate, endDate);
+        expenses = _.sortBy(expenses, expense => -moment(expense.date, DATE_FORMAT).valueOf());
 
         return (
             <View style={styles.container}>

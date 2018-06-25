@@ -228,10 +228,10 @@ export function loadPlans(): AsyncAction {
     return async (dispatch) => {
         const planning = {
             monthPlans: [{
-                month: '06.18',
+                month: '06.2018',
                 incomes: [
-                    { sum: 95000.0, date: '14.06.2018' },
-                    { sum: 30000.0, date: '29.06.2018' },
+                    { id: '1', sum: 95000.0, date: '14.06.2018', comment: '' },
+                    { id: '2', sum: 30000.0, date: '29.06.2018', comment: '' },
                 ],
             }],
         };

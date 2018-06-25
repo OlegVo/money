@@ -5,11 +5,9 @@ import { BASE_HORIZONTAL_PADDING, BLUE_FONT_COLOR, fonts } from '../../constants
 import { Moment } from 'moment';
 import { ICategory, IExpense } from '../../interfaces';
 import { formatRange } from '../../helpers/date';
-import * as formats from '../../constants/formats';
-import moment = require('moment');
 import { ListItemWithSum } from '../common/ListItemWithSum';
 import * as styleConstants from '../../constants/styles';
-import { ListSectionTitle } from '../common/ListSectionTitle';
+import { filterExpensesByDates } from '../../helpers/expenses';
 
 interface ISumByCategory {
     category: ICategory;
@@ -26,13 +24,9 @@ interface IProps {
 
 export class ExpensesReport extends React.PureComponent<IProps> {
     render() {
-        console.log('ExpensesReport', this.props)
         const { startDate, endDate, expenses, currency } = this.props;
 
-        const rangeExpenses = expenses.filter((e) => {
-            const date = moment(e.date, formats.DATE_FORMAT);
-            return date.valueOf() >= startDate.valueOf() && date.valueOf() <= endDate.valueOf();
-        });
+        const rangeExpenses = filterExpensesByDates(expenses, startDate, endDate);
 
         const sumsByCategory: ISumByCategory[] = [];
         const sumsByCategoryMap: { [i: string]: ISumByCategory } = {};

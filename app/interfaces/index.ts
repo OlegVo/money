@@ -43,10 +43,10 @@ export interface IExpenseValues {
 }
 
 export interface IIncome {
-    id?: string;
-    sum?: number;
-    comment?: string;
-    date?: string;
+    id: string;
+    sum: number;
+    date: string;
+    comment: string;
 }
 
 export interface INavigationState {

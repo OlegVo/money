@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as moment from 'moment';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -36,6 +37,9 @@ class BalanceScreen extends React.PureComponent<IProps> {
     render() {
         const { balance, currency, expenses, categories, actions } = this.props;
 
+        const startDate = moment().startOf('month');
+        const endDate = moment().endOf('month');
+
         return (
             <View style={styles.container}>
                 <View style={styles.balanceLine}>
@@ -53,6 +57,8 @@ class BalanceScreen extends React.PureComponent<IProps> {
                 {expenses &&
                     <ExpensesList
                         expenses={expenses}
+                        startDate={startDate}
+                        endDate={endDate}
                         categories={categories.expenses}
                         currency={currency}
                         actions={actions}
