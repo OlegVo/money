@@ -50,11 +50,9 @@ export class ExpensesReport extends React.PureComponent<IProps> {
             <View style={styles.container}>
                 <Text style={styles.title}>{formatRange(startDate, endDate)}</Text>
 
-                {/* TODO Постоянные расходы */}
-
                 <View style={styles.subtitle}>
                     <View style={styles.left}>
-                        <Text style={styles.subtitleText}>Обычные расходы</Text>
+                        <Text style={styles.subtitleText}>Расходы</Text>
                     </View>
                     <View style={styles.total}>
                         <Text style={styles.sumText}>{addThinSpaces(total)}</Text><Text style={styles.currencyText}>{currency}</Text>

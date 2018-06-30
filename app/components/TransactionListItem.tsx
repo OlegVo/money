@@ -2,20 +2,21 @@ import * as React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
+import { colors } from '../constants/styles';
 import * as formats from '../constants/formats';
-import { ICategory, IExpense } from '../interfaces';
+import { ICategory, IExpense, IIncome } from '../interfaces';
 import { ListItemWithSum } from './common/ListItemWithSum';
 import { ListSectionTitle } from './common/ListSectionTitle';
 
 interface IProps {
-    expense: IExpense;
+    transaction: IExpense | IIncome;
     categories: ICategory[];
     currency: string;
     displayDate: boolean;
-    onPress: (expense: IExpense) => void;
+    onPress?: (transaction: IExpense | IIncome) => void;
 }
 
-export class ExpensesListItem extends React.PureComponent<IProps> {
+export class TransactionListItem extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -23,19 +24,20 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
     }
 
     onPress() {
-        const { expense, onPress } = this.props;
-        onPress(expense);
+        const { transaction, onPress } = this.props;
+        if (onPress) {
+            onPress(transaction);
+        }
     }
 
     render() {
-        const { expense, categories, currency, displayDate } = this.props;
+        const { transaction, categories, currency, displayDate } = this.props;
 
-        const category = categories.find(c => (c === expense.category));
-        if (!category) return null;
+        const category = transaction.type === 'expense' ? categories.find(c => (c === transaction.category)) : undefined;
 
         let date;
         if (displayDate) {
-            date = moment(expense.date, formats.DATE_FORMAT).format('LL').replace(/,?\s?\d+\s?\D*$/, '');
+            date = moment(transaction.date, formats.DATE_FORMAT).format('LL').replace(/,?\s?\d+\s?\D*$/, '');
         }
 
         return (
@@ -46,10 +48,12 @@ export class ExpensesListItem extends React.PureComponent<IProps> {
 
                 <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
                     <ListItemWithSum
-                        text={expense.comment || category.name}
-                        sum={expense.sum}
+                        text={transaction.comment || category && category.name || ''}
+                        sum={transaction.sum}
                         currency={currency}
-                        circleColor={category.color}
+                        circleColor={category && category.color}
+                        textColor={transaction.type === 'income' ? colors.incomeGreen : undefined}
+                        plusSign={transaction.type === 'income'}
                     />
                 </TouchableOpacity>
             </View>

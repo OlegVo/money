@@ -9,6 +9,7 @@ export const LIST_BORDER_COLOR = '#ccc';
 // цвета
 export const colors = {
     baseFont: '#222',
+    incomeGreen: '#5bb13b',
 };
 
 // шрифты

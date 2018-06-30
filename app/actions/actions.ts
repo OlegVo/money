@@ -68,6 +68,7 @@ export const setExpenses = (expensesData: IExpenseData[], categories: ICategory[
         if (!category) throw new Error(`No category ${e.categoryId}`);
 
         return {
+            type: 'expense' as 'expense',
             id: e.id,
             category,
             sum: e.sum,
@@ -218,7 +219,14 @@ export function loadCategories(): AsyncAction {
 export function loadExpenses(): AsyncAction {
     return async (dispatch, getState) => {
         const json = await AsyncStorage.getItem('expenses');
-        const expenses: IExpenseData[] = JSON.parse(json);
+        let expenses: IExpenseData[] = [];
+        if (json) {
+            try {
+                expenses = JSON.parse(json);
+            } catch (_e) {
+                // nothing
+            }
+        }
         dispatch(setExpenses(expenses, getState().categories.expenses));
         dispatch(calculateBalance(getState().planning, getState().expenses));
     };
@@ -230,8 +238,8 @@ export function loadPlans(): AsyncAction {
             monthPlans: [{
                 month: '06.2018',
                 incomes: [
-                    { id: '1', sum: 95000.0, date: '14.06.2018', comment: '' },
-                    { id: '2', sum: 30000.0, date: '29.06.2018', comment: '' },
+                    { type: 'income' as 'income', id: '1', sum: 95000.0, date: '14.06.2018', comment: '' },
+                    { type: 'income' as 'income', id: '2', sum: 30000.0, date: '29.06.2018', comment: '' },
                 ],
             }],
         };

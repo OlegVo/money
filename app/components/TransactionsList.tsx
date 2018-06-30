@@ -1,25 +1,21 @@
 import * as React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import * as _ from 'lodash';
-import { ICategory, IExpense, Page } from '../interfaces';
-import { ExpensesListItem } from './ExpensesListItem';
+import { ICategory, IExpense, IIncome, Page } from '../interfaces';
+import { TransactionListItem } from './TransactionListItem';
 import moment = require('moment');
 import { DATE_FORMAT } from '../constants/formats';
 import { IActions } from '../actions';
 import * as styleConstants from '../constants/styles';
-import { Moment } from 'moment';
-import { filterExpensesByDates } from '../helpers/expenses';
 
 interface IProps {
     expenses: IExpense[];
-    startDate: Moment;
-    endDate: Moment;
+    incomes: IIncome[];
     categories: ICategory[];
     currency: string;
     actions: IActions;
 }
 
-export class ExpensesList extends React.PureComponent<IProps> {
+export class TransactionsList extends React.PureComponent<IProps> {
     constructor(props) {
         super(props);
 
@@ -33,25 +29,25 @@ export class ExpensesList extends React.PureComponent<IProps> {
     }
 
     render() {
-        const { categories, startDate, endDate, currency } = this.props;
+        const { expenses, incomes, categories, currency } = this.props;
 
-        let expenses: IExpense[] = filterExpensesByDates(this.props.expenses, startDate, endDate);
-        expenses = _.sortBy(expenses, expense => -moment(expense.date, DATE_FORMAT).valueOf());
+        const transactions = [...expenses, ...incomes].sort((a, b) =>
+            moment(a.date, DATE_FORMAT) < moment(b.date, DATE_FORMAT) ? 1 : -1);
 
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    {expenses.map((expense, i) => {
-                        const sameDate = !!(expenses[i - 1] && expenses[i - 1].date === expense.date);
+                    {transactions.map((transaction, i) => {
+                        const sameDate = !!(transactions[i - 1] && transactions[i - 1].date === transaction.date);
 
                         return (
-                            <ExpensesListItem
-                                key={i}
-                                expense={expense}
+                            <TransactionListItem
+                                key={transaction.id}
+                                transaction={transaction}
                                 categories={categories}
                                 currency={currency}
                                 displayDate={!sameDate}
-                                onPress={this.editExpense}
+                                onPress={transaction.type === 'expense' ? this.editExpense : undefined}
                             />
                         );
                     })}

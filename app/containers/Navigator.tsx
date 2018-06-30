@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
-import { BalanceScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen, ReportsScreen } from '../screens';
+import { MainScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen, ReportsScreen } from '../screens';
 import { Menu } from '../components';
 import { IAppState, INavigationState, Page } from '../interfaces';
 import { IActions } from '../actions';
@@ -27,7 +27,7 @@ class Navigator extends React.PureComponent<IProps> {
 
         switch (pages[pages.length - 1]) {
             case Page.Balance:
-                return <BalanceScreen />;
+                return <MainScreen />;
 
             case Page.EditExpense:
                 return <EditExpenseScreen />;

@@ -1,4 +1,4 @@
-export { BalanceScreen } from '../screens/BalanceScreen';
+export { MainScreen } from '../screens/MainScreen';
 export { CategoriesScreen } from '../screens/CategoriesScreen';
 export { EditExpenseScreen } from './EditExpenseScreen';
 export { PlanningScreen } from '../screens/PlanningScreen';

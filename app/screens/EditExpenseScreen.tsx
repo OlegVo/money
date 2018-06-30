@@ -12,7 +12,6 @@ import {
     GRAY_FONT_COLOR,
     LIST_BORDER_COLOR,
     MAIN_BACKGROUND_COLOR,
-    MENU_PADDING,
     WHITE_FONT_COLOR
 } from '../constants/styles';
 import { generateId } from '../helpers/id';
@@ -79,7 +78,7 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
             throw new Error('invalid expense data');
         }
 
-        actions.addExpense({ id: generateId(), category, sum, comment, date });
+        actions.addExpense({ type: 'expense', id: generateId(), category, sum, comment, date });
         actions.saveExpenses();
 
         actions.setPage(Page.Balance);
@@ -123,14 +122,9 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
 
                 {category &&
                     <View style={styles.addExpenseForm}>
-                        <TouchableOpacity style={[styles.field, styles.category, {backgroundColor: category.color}]} onPress={this.selectCategory}>
-                            <Text style={styles.categoryText}>{category.name}</Text>
-                            <Text style={[styles.categoryText, styles.arrow]}>{'>'}</Text>
-                        </TouchableOpacity>
-
                         <View style={styles.field}>
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, styles.sumInput]}
                                 value={sum ? sum.toString() : ''}
                                 onChangeText={this.changeSum}
                                 autoFocus={!editingExpense.id}
@@ -139,6 +133,11 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
                                 keyboardType='numeric'
                             />
                         </View>
+
+                        <TouchableOpacity style={[styles.field, styles.category, {backgroundColor: category.color}]} onPress={this.selectCategory}>
+                            <Text style={styles.categoryText}>{category.name}</Text>
+                            <Text style={[styles.categoryText, styles.arrow]}>{'>'}</Text>
+                        </TouchableOpacity>
 
                         <View style={styles.field}>
                             <TextInput
@@ -171,7 +170,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     addExpenseForm: {
-        paddingTop: MENU_PADDING,
     },
     field: {
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
@@ -185,6 +183,10 @@ const styles = StyleSheet.create({
     input: {
         height: 30,
         ...fonts.base,
+    },
+    sumInput: {
+        height: 35,
+        fontSize: 22,
     },
     category: {
         height: 50,

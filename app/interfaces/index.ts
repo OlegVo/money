@@ -26,12 +26,17 @@ export interface IExpenseData {
     date: string;
 }
 
-export interface IExpense {
+export interface ITransaction {
+    type: 'expense' | 'income';
     id: string;
-    category: ICategory;
     sum: number;
     comment: string;
     date: string;
+}
+
+export interface IExpense extends ITransaction {
+    type: 'expense';
+    category: ICategory;
 }
 
 export interface IExpenseValues {
@@ -42,11 +47,8 @@ export interface IExpenseValues {
     date?: string;
 }
 
-export interface IIncome {
-    id: string;
-    sum: number;
-    date: string;
-    comment: string;
+export interface IIncome extends ITransaction {
+    type: 'income';
 }
 
 export interface INavigationState {

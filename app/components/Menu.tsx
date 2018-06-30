@@ -9,8 +9,8 @@ import { WHITE_BORDER_COLOR, WHITE_FONT_COLOR } from '../constants/styles';
 const window = Dimensions.get('window');
 
 const menuItems = [
-    {text: 'Расходы', icon: '\u1F4B0', page: Page.Balance},
-    {text: 'План', page: Page.Planning},
+    {text: 'Сводка', icon: '\u1F4B0', page: Page.Balance},
+    // {text: 'План', page: Page.Planning},
     {text: 'Отчёты', page: Page.Reports},
 ];
 
