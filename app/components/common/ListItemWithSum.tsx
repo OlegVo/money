@@ -12,11 +12,13 @@ interface IProps {
     circleColor?: string;
     textColor?: string;
     plusSign?: boolean;
+    lineColor?: string;
+    lineWidth?: number;
 }
 
 export class ListItemWithSum extends React.PureComponent<IProps> {
     render() {
-        const { text, sum, currency, circleColor, textColor, plusSign } = this.props;
+        const { text, sum, currency, circleColor, textColor, plusSign, lineColor, lineWidth } = this.props;
 
         const sumTextStyle: any = [ styles.sumText ];
         const currencyTextStyle: any = [ styles.currencyText ];
@@ -26,7 +28,7 @@ export class ListItemWithSum extends React.PureComponent<IProps> {
         }
 
         return (
-            <ListItem text={text} circleColor={circleColor}>
+            <ListItem text={text} circleColor={circleColor} lineColor={lineColor} lineWidth={lineWidth}>
                 <View style={styles.sum}>
                     <Text style={sumTextStyle}>{plusSign ? ' +\u2009' : ''}{addThinSpaces(sum)}</Text>
                     <Text style={currencyTextStyle}>{currency}</Text>
@@ -43,13 +45,13 @@ const styles = StyleSheet.create({
         right: styleConstants.BASE_HORIZONTAL_PADDING,
         flex: 1,
         flexDirection: 'row',
+        backgroundColor: 'transparent',
     },
     sumText: {
         ...fonts.base,
     },
     currencyText: {
         ...fonts.base,
-        color: styleConstants.LIST_BORDER_COLOR,
         paddingLeft: 3,
     },
 });

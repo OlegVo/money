@@ -45,6 +45,7 @@ export class ExpensesReport extends React.PureComponent<IProps> {
         sumsByCategory.sort((a, b) => a.sum > b.sum ? -1 : 1);
 
         const total = rangeExpenses.reduce((sum, e) => sum + e.sum, 0);
+        const maxSum = Math.max(...rangeExpenses.map(e => e.sum));
 
         return (
             <View style={styles.container}>
@@ -61,15 +62,20 @@ export class ExpensesReport extends React.PureComponent<IProps> {
 
                 <View style={styles.list}>
                     <ScrollView>
-                        {sumsByCategory.map((sumByCategory, i) => (
-                            <ListItemWithSum
-                                key={i}
-                                text={sumByCategory.category.name}
-                                sum={sumByCategory.sum}
-                                currency={currency}
-                                circleColor={sumByCategory.category.color}
-                            />
-                        ))}
+                        {sumsByCategory.map((sumByCategory, i) => {
+                            const percent = Math.ceil(sumByCategory.sum * 100 / maxSum);
+
+                            return (
+                                <ListItemWithSum
+                                    key={i}
+                                    text={sumByCategory.category.name}
+                                    sum={sumByCategory.sum}
+                                    currency={currency}
+                                    lineColor={sumByCategory.category.color}
+                                    lineWidth={percent}
+                                />
+                            );
+                        })}
                     </ScrollView>
                 </View>
             </View>
