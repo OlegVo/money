@@ -6,6 +6,7 @@ import actionCreators from '../actions/index';
 import { IAppState, ICategoriesState, ICategory, IExpenseValues, Page } from '../interfaces';
 import { IActions } from '../actions';
 import { CategoriesList, NavigationBar } from '../components';
+import { AddCategoryButton } from '../components/AddCategoryButton';
 
 interface IPropsT {
     categories: ICategoriesState;
@@ -25,7 +26,7 @@ class CategoriesScreen extends React.PureComponent<IProps> {
         const { editingExpense, actions } = this.props;
 
         const addEditExpenseScreen = !editingExpense.category;
-        actions.editExpense({category});
+        actions.editExpense({ category });
         if (addEditExpenseScreen) {
             actions.pushPage(Page.EditExpense);
         } else {
@@ -40,7 +41,9 @@ class CategoriesScreen extends React.PureComponent<IProps> {
 
         return (
             <View style={styles.container}>
-                <NavigationBar actions={actions}/>
+                <NavigationBar actions={actions} />
+
+                <AddCategoryButton actions={actions} />
 
                 <CategoriesList categories={categories.expenses} onPressCategory={this.selectCategory} />
             </View>
@@ -61,12 +64,12 @@ const mapStateToProps = (state: IAppState): IPropsT => ({
     editingExpense: state.editingExpense,
 });
 
-const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+const mapDispatchToProps = (dispatch): { actions: IActions } => ({
     actions: bindActionCreators(actionCreators, dispatch),
 });
 
 const connected = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(CategoriesScreen);
 export { connected as CategoriesScreen };
