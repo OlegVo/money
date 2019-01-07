@@ -1,48 +1,41 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-react"
-  ],
-  "rulesDirectory": [
-    "node_modules/tslint-eslint-rules/dist/rules"
-  ],
-  "rules": {
-    "arrow-parens": false,
-    "curly": false,
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "object-literal-sort-keys": false,
-    "max-line-length": false,
-    "no-shadowed-variable": false,
-    "one-variable-per-declaration": false,
+    "extends": ["tslint:recommended", "tslint-react"],
+    "rulesDirectory": ["node_modules/tslint-eslint-rules/dist/rules"],
+    "rules": {
+        "arrow-parens": false,
+        "curly": false,
+        "quotemark": [true, "single"],
+        "object-literal-sort-keys": false,
+        "max-line-length": false,
+        "no-shadowed-variable": false,
+        "one-variable-per-declaration": false,
+        "semicolon": [true, "always", "ignore-bound-class-methods"],
 
-    "member-access": false,
-    "no-var-requires": false,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": {
-          "objects": "always",
-          "arrays": "always",
-          "functions": "never",
-          "typeLiterals": "ignore"
-        }
-      }
-    ],
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore"
-    ],
-    "ordered-imports": false,
+        "member-access": false,
+        "no-var-requires": false,
+        "trailing-comma": [
+            true,
+            {
+                "multiline": {
+                    "objects": "always",
+                    "arrays": "always",
+                    "functions": "never",
+                    "typeLiterals": "ignore"
+                }
+            }
+        ],
+        "variable-name": [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore"
+        ],
+        "ordered-imports": false,
 
-    // tslint-react
-    "jsx-no-multiline-js": false,
-    "jsx-wrap-multiline": false,
+        // tslint-react
+        "jsx-no-multiline-js": false,
+        "jsx-wrap-multiline": false,
 
-    "no-namespace": "allow-decalarations"
-  }
+        "no-namespace": "allow-decalarations"
+    }
 }
