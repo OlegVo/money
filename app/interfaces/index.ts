@@ -59,6 +59,7 @@ export enum Page {
     Balance = 'Balance',
     EditExpense = 'EditExpense',
     Categories = 'Categories',
+    EditCategory = 'EditCategory',
     SelectDate = 'SelectDate',
     Planning = 'Planning',
     Reports = 'Reports',

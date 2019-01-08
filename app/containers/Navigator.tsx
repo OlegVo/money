@@ -8,12 +8,13 @@ import { MainScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, Catego
 import { Menu } from '../components';
 import { IAppState, INavigationState, Page } from '../interfaces';
 import { IActions } from '../actions';
+import { EditCategoryScreen } from '../screens/EditCategoryScreen';
 
 interface IPropsT {
     navigation: INavigationState;
 }
 
-type IProps = IPropsT & {actions: IActions};
+type IProps = IPropsT & { actions: IActions };
 
 class Navigator extends React.PureComponent<IProps> {
     constructor(props) {
@@ -34,6 +35,9 @@ class Navigator extends React.PureComponent<IProps> {
 
             case Page.Categories:
                 return <CategoriesScreen />;
+
+            case Page.EditCategory:
+                return <EditCategoryScreen />;
 
             case Page.SelectDate:
                 return <SelectDateScreen />;
@@ -72,12 +76,12 @@ const mapStateToProps = (state: IAppState): IPropsT => ({
     navigation: state.navigation,
 });
 
-const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+const mapDispatchToProps = (dispatch): { actions: IActions } => ({
     actions: bindActionCreators(actionCreators, dispatch),
 });
 
 const connected = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(Navigator);
 export { connected as Navigator };
