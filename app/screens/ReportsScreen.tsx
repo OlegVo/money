@@ -10,10 +10,10 @@ import {
     MENU_PADDING,
 } from '../constants/styles';
 import { ExpensesReport } from '../components';
-import { ICategoriesState, IExpense } from '../interfaces';
+import { ICategories, IExpense } from '../interfaces';
 
 interface IPropsT {
-    categories: ICategoriesState;
+    categories: ICategories;
     expenses: IExpense[];
     currency: string;
 }

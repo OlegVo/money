@@ -1,6 +1,6 @@
 export interface IAppState {
     balance: number;
-    categories: ICategoriesState;
+    categories: ICategories;
     currency: string;
     editingExpense: IExpenseValues;
     expenses: IExpense[];
@@ -8,7 +8,7 @@ export interface IAppState {
     planning: IPlanning;
 }
 
-export interface ICategoriesState {
+export interface ICategories {
     expenses: ICategory[];
 }
 

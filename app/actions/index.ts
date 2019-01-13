@@ -8,7 +8,7 @@ export interface IAction {
     [data: string]: any;
 }
 
-export type AsyncAction = ThunkAction<Promise<any>, IAppState, any>;
+export type AsyncAction = ThunkAction<Promise<any>, IAppState, any, IAction>;
 
 export interface IActions {
     setPage: (page: Page) => IAction;
@@ -16,6 +16,7 @@ export interface IActions {
     popPage: () => IAction;
     calculateBalance: (planning: IPlanning, monthPlansexpenses: IExpense[]) => IAction;
     setCategories: (categories: ICategory[]) => IAction;
+    addCategory: (category: ICategory) => AsyncAction;
     setExpenses: (expensesData: IExpenseData[], categories: ICategory[]) => IAction;
     addExpense: (expense: IExpense) => AsyncAction;
     startEditingExpense: (expense?: IExpense) => IAction;

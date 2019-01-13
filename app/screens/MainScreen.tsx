@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
-import { IAppState, ICategoriesState, IExpense, IIncome, IPlanning } from '../interfaces';
+import { IAppState, ICategories, IExpense, IIncome, IPlanning } from '../interfaces';
 import { IActions } from '../actions';
 import {
     MENU_PADDING,
@@ -20,7 +20,7 @@ interface IPropsT {
     currency: string;
     expenses: IExpense[];
     planning: IPlanning;
-    categories: ICategoriesState;
+    categories: ICategories;
 }
 
 type IProps = IPropsT & {actions: IActions};

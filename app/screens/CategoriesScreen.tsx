@@ -3,13 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState, ICategoriesState, ICategory, IExpenseValues, Page } from '../interfaces';
+import { IAppState, ICategories, ICategory, IExpenseValues, Page } from '../interfaces';
 import { IActions } from '../actions';
 import { CategoriesList, NavigationBar } from '../components';
 import { AddCategoryButton } from '../components/AddCategoryButton';
 
 interface IPropsT {
-    categories: ICategoriesState;
+    categories: ICategories;
     editingExpense: IExpenseValues;
 }
 

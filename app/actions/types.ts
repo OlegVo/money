@@ -3,6 +3,7 @@ export const PUSH_PAGE = 'PUSH_PAGE';
 export const POP_PAGE = 'POP_PAGE';
 export const CALCULATE_BALANCE = 'CALCULATE_BALANCE';
 export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const SET_EXPENSES = 'SET_EXPENSES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const SAVE_EXPENSES = 'SAVE_EXPENSES';

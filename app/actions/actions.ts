@@ -1,5 +1,6 @@
-import { ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../interfaces';
+import { ICategories, ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../interfaces';
 import {
+    ADD_CATEGORY,
     ADD_EXPENSE,
     CALCULATE_BALANCE,
     DELETE_EXPENSE,
@@ -12,10 +13,11 @@ import {
     SET_EXPENSES,
     SET_PAGE,
     SET_PLANS,
-    START_EDITING_EXPENSE
+    START_EDITING_EXPENSE,
 } from './types';
 import { AsyncAction } from './index';
 import { AsyncStorage } from 'react-native';
+import { api } from '../api';
 
 export const setPage = (page: Page) => {
     return {
@@ -50,10 +52,35 @@ export const calculateBalance = (planning: IPlanning, expenses: IExpense[]) => {
     };
 };
 
-export const setCategories = (categories: ICategory[]) => {
+export interface ISetCategoriesAction {
+    type: string;
+    categories: ICategories;
+}
+export const setCategories = (categories: ICategories): ISetCategoriesAction => {
     return {
         type: SET_CATEGORIES,
         categories,
+    };
+};
+
+export interface IAddCategoryAction {
+    type: string;
+    category: ICategory;
+    categories: ICategories;
+}
+export const addCategory = (category: ICategory): AsyncAction => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const categories = {
+            ...state.categories,
+            expenses: state.categories.expenses.concat([category]),
+        };
+
+        // сначала добавляем категорию, чтобы она сразу появилась в списке
+        dispatch({ type: ADD_CATEGORY, category, categories });
+
+        // потом пытаемся синхронизировать
+        await api.saveCategories(categories);
     };
 };
 
@@ -153,11 +180,7 @@ export function saveEditedExpense(): AsyncAction {
             throw new Error(`Expense not found`);
         }
 
-        const newExpenses = [
-            ...expenses.slice(0, index),
-            editingExpense,
-            ...expenses.slice(index + 1),
-        ];
+        const newExpenses = [...expenses.slice(0, index), editingExpense, ...expenses.slice(index + 1)];
 
         dispatch({
             type: SAVE_EDITED_EXPENSE,
@@ -209,10 +232,11 @@ export const setPlans = (planning: IPlanning): ISetPlans => {
 };
 
 export function loadCategories(): AsyncAction {
-    return async (dispatch) => {
-        const json = await AsyncStorage.getItem('categories');
-        const categories: ICategory[] = JSON.parse(json);
-        dispatch(setCategories(categories));
+    return async dispatch => {
+        const categories: ICategories | undefined = await api.loadCategories();
+        if (categories) {
+            dispatch(setCategories(categories));
+        }
     };
 }
 
@@ -233,15 +257,17 @@ export function loadExpenses(): AsyncAction {
 }
 
 export function loadPlans(): AsyncAction {
-    return async (dispatch) => {
+    return async dispatch => {
         const planning = {
-            monthPlans: [{
-                month: '06.2018',
-                incomes: [
-                    { type: 'income' as 'income', id: '1', sum: 95000.0, date: '14.06.2018', comment: '' },
-                    { type: 'income' as 'income', id: '2', sum: 30000.0, date: '29.06.2018', comment: '' },
-                ],
-            }],
+            monthPlans: [
+                {
+                    month: '06.2018',
+                    incomes: [
+                        { type: 'income' as 'income', id: '1', sum: 95000.0, date: '14.06.2018', comment: '' },
+                        { type: 'income' as 'income', id: '2', sum: 30000.0, date: '29.06.2018', comment: '' },
+                    ],
+                },
+            ],
         };
 
         dispatch(setPlans(planning));
@@ -249,7 +275,7 @@ export function loadPlans(): AsyncAction {
 }
 
 export function loadApplicationData(): AsyncAction {
-    return async (dispatch) => {
+    return async dispatch => {
         await dispatch(loadCategories());
         await dispatch(loadPlans());
         await dispatch(loadExpenses());
