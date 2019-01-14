@@ -35,6 +35,6 @@ export function getRandomCategoryColor() {
     return colors[index];
 }
 
-export function makeCategory({ name }: { name: string }): ICategory {
-    return { id: generateId(), name, color: getRandomCategoryColor() };
+export function makeCategory({ name, color }: { name: string; color?: string }): ICategory {
+    return { id: generateId(), name, color: color || getRandomCategoryColor() };
 }

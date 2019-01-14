@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import { NavigationBar } from '../components';
 import { IAppState, IExpenseValues } from '../interfaces';
 import { IActions } from '../actions';
@@ -7,15 +7,16 @@ import { bindActionCreators } from 'redux';
 import actionCreators from '../actions';
 import { connect } from 'react-redux';
 import { IButton } from '../components/NavigationBar';
-import { BASE_HORIZONTAL_PADDING, colors, fonts, LIST_BORDER_COLOR } from '../constants/styles';
-import { makeCategory } from '../helpers/categories';
+import { BASE_HORIZONTAL_PADDING, colors, fonts, LIST_BORDER_COLOR, WHITE_FONT_COLOR } from '../constants/styles';
+import { getRandomCategoryColor, makeCategory } from '../helpers/categories';
 
 interface IPropsT {
-    editingExpense: IExpenseValues; // TODO
+    editingExpense: IExpenseValues; // TODO не нужно
 }
 
 interface IState {
     categoryName: string;
+    color: string;
 }
 
 type IProps = IPropsT & { actions: IActions };
@@ -23,6 +24,7 @@ type IProps = IPropsT & { actions: IActions };
 class EditCategoryScreen extends React.PureComponent<IProps, IState> {
     state: IState = {
         categoryName: '',
+        color: getRandomCategoryColor(),
     };
 
     back = () => {
@@ -34,15 +36,20 @@ class EditCategoryScreen extends React.PureComponent<IProps, IState> {
         this.setState({ categoryName: value });
     };
 
+    changeColor = () => {
+        this.setState({ color: getRandomCategoryColor() });
+    };
+
     addCategory = () => {
         const { actions } = this.props;
-        actions.addCategory(makeCategory({ name: this.state.categoryName }));
+        const { categoryName, color } = this.state;
+        actions.addCategory(makeCategory({ name: categoryName, color }));
         actions.popPage();
     };
 
     render() {
         const { actions } = this.props;
-        const { categoryName } = this.state;
+        const { categoryName, color } = this.state;
 
         const rightButton: IButton | undefined = categoryName ? { text: 'Готово', onPress: this.addCategory } : undefined;
 
@@ -61,6 +68,12 @@ class EditCategoryScreen extends React.PureComponent<IProps, IState> {
                             placeholder='Название'
                         />
                     </View>
+
+                    <TouchableWithoutFeedback onPress={this.changeColor}>
+                        <View style={[styles.field, { backgroundColor: color }]}>
+                            <Text style={styles.colorFieldText}>Цвет</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         );
@@ -77,8 +90,8 @@ const styles = StyleSheet.create({
     field: {
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
         paddingVertical: 10,
-        borderBottomWidth: 1,
         borderColor: LIST_BORDER_COLOR,
+        borderBottomWidth: 0,
     },
     fieldText: {
         ...fonts.base,
@@ -91,10 +104,15 @@ const styles = StyleSheet.create({
         height: 35,
         fontSize: 22,
     },
+    colorFieldText: {
+        ...fonts.base,
+        color: WHITE_FONT_COLOR,
+        lineHeight: 30,
+    },
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
-    editingExpense: state.editingExpense, //TODO
+    editingExpense: state.editingExpense, //TODO не нужно
 });
 
 const mapDispatchToProps = (dispatch): { actions: IActions } => ({
