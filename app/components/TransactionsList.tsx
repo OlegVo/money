@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ICategory, IExpense, IIncome, Page } from '../interfaces';
 import { TransactionListItem } from './TransactionListItem';
 import moment = require('moment');
@@ -36,22 +36,20 @@ export class TransactionsList extends React.PureComponent<IProps> {
 
         return (
             <View style={styles.container}>
-                <ScrollView>
-                    {transactions.map((transaction, i) => {
-                        const sameDate = !!(transactions[i - 1] && transactions[i - 1].date === transaction.date);
+                {transactions.map((transaction, i) => {
+                    const sameDate = !!(transactions[i - 1] && transactions[i - 1].date === transaction.date);
 
-                        return (
-                            <TransactionListItem
-                                key={transaction.id}
-                                transaction={transaction}
-                                categories={categories}
-                                currency={currency}
-                                displayDate={!sameDate}
-                                onPress={transaction.type === 'expense' ? this.editExpense : undefined}
-                            />
-                        );
-                    })}
-                </ScrollView>
+                    return (
+                        <TransactionListItem
+                            key={transaction.id}
+                            transaction={transaction}
+                            categories={categories}
+                            currency={currency}
+                            displayDate={!sameDate}
+                            onPress={transaction.type === 'expense' ? this.editExpense : undefined}
+                        />
+                    );
+                })}
             </View>
         );
     }

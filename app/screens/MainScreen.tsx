@@ -1,19 +1,18 @@
 import * as React from 'react';
 import * as moment from 'moment';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
 import { IAppState, ICategories, IExpense, IIncome, IPlanning } from '../interfaces';
 import { IActions } from '../actions';
-import {
-    MENU_PADDING,
-} from '../constants/styles';
+import { MENU_PADDING } from '../constants/styles';
 import { TransactionsList } from '../components';
 import { filterExpensesByDates, filterIncomesByDates } from '../helpers/expenses';
 import { getMonthPlan } from '../helpers/planning';
 import { Balance } from '../components/Balance';
 import { AddTransactionButton } from '../components/AddTransactionButton';
+import { MonthSwitcher } from '../components/MonthSwitcher';
 
 interface IPropsT {
     balance: number;
@@ -23,7 +22,7 @@ interface IPropsT {
     categories: ICategories;
 }
 
-type IProps = IPropsT & {actions: IActions};
+type IProps = IPropsT & { actions: IActions };
 
 class MainScreen extends React.PureComponent<IProps> {
     render() {
@@ -43,13 +42,17 @@ class MainScreen extends React.PureComponent<IProps> {
 
                 <AddTransactionButton actions={actions} />
 
-                <TransactionsList
-                    expenses={monthExpenses}
-                    incomes={monthIncomes}
-                    categories={categories.expenses}
-                    currency={currency}
-                    actions={actions}
-                />
+                <ScrollView>
+                    <MonthSwitcher actions={actions} />
+
+                    <TransactionsList
+                        expenses={monthExpenses}
+                        incomes={monthIncomes}
+                        categories={categories.expenses}
+                        currency={currency}
+                        actions={actions}
+                    />
+                </ScrollView>
             </View>
         );
     }
@@ -71,12 +74,12 @@ const mapStateToProps = (state: IAppState): IPropsT => ({
     categories: state.categories,
 });
 
-const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+const mapDispatchToProps = (dispatch): { actions: IActions } => ({
     actions: bindActionCreators(actionCreators, dispatch),
 });
 
 const connected = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(MainScreen);
 export { connected as MainScreen };

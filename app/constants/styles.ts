@@ -1,7 +1,7 @@
 
 // базовые стили
 export const BASE_HORIZONTAL_PADDING = 15;
-export const LIST_VERTICAL_PADDING = 15;
+export const LIST_VERTICAL_PADDING = 12;
 export const GRAY_FONT_COLOR = '#ccc';
 export const BLUE_FONT_COLOR = '#086ca2';
 export const LIST_BORDER_COLOR = '#ccc';
@@ -40,3 +40,20 @@ export const BUTTON_RADIUS = 50;
 
 export const NAVIGATION_BAR_HEIGHT = 65;
 export const TOP_BUTTON_HEIGHT = 30;
+
+export const list = {
+    item: {
+        height: 50,
+    },
+    arrow: {
+        horizontalPadding: 15,
+    },
+};
+
+export const report = {
+    linePadding: 10,
+};
+
+export const monthSwitcher = {
+    height: 44,
+};

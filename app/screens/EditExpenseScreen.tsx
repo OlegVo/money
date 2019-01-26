@@ -7,21 +7,24 @@ import * as formats from '../constants/formats';
 import * as moment from 'moment';
 import { IAppState, IExpenseValues, Page } from '../interfaces';
 import {
-    BASE_HORIZONTAL_PADDING, colors,
+    BASE_HORIZONTAL_PADDING,
+    colors,
     fonts,
     GRAY_FONT_COLOR,
+    list,
     LIST_BORDER_COLOR,
     MAIN_BACKGROUND_COLOR,
-    WHITE_FONT_COLOR
+    WHITE_FONT_COLOR,
 } from '../constants/styles';
 import { generateId } from '../helpers/id';
 import { NavigationBar, IButton } from '../components/NavigationBar';
+import { Arrow } from '../components/common/Arrow';
 
 interface IPropsT {
     editingExpense: IExpenseValues;
 }
 
-type IProps = IPropsT & {actions: IActions};
+type IProps = IPropsT & { actions: IActions };
 
 class EditExpenseScreen extends React.PureComponent<IProps> {
     constructor(props) {
@@ -46,11 +49,11 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
 
     changeSum(value: string) {
         const sum = parseInt(value.replace(/\D/g, ''), 10);
-        this.props.actions.editExpense({sum});
+        this.props.actions.editExpense({ sum });
     }
 
     changeComment(comment: string) {
-        this.props.actions.editExpense({comment});
+        this.props.actions.editExpense({ comment });
     }
 
     back() {
@@ -60,7 +63,7 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
             actions.saveEditedExpense();
             actions.saveExpenses();
         } else {
-            actions.editExpense({category: undefined});
+            actions.editExpense({ category: undefined });
         }
 
         actions.popPage();
@@ -120,7 +123,7 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
             <View style={styles.container}>
                 <NavigationBar back={this.back} rightButton={rightButton} actions={actions} />
 
-                {category &&
+                {category && (
                     <View style={styles.addExpenseForm}>
                         <View style={styles.field}>
                             <TextInput
@@ -134,9 +137,12 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
                             />
                         </View>
 
-                        <TouchableOpacity style={[styles.field, styles.category, {backgroundColor: category.color}]} onPress={this.selectCategory}>
+                        <TouchableOpacity
+                            style={[styles.field, styles.category, { backgroundColor: category.color }]}
+                            onPress={this.selectCategory}
+                        >
                             <Text style={styles.categoryText}>{category.name}</Text>
-                            <Text style={[styles.categoryText, styles.arrow]}>{'>'}</Text>
+                            <Arrow height={list.item.height} color={WHITE_FONT_COLOR} />
                         </TouchableOpacity>
 
                         <View style={styles.field}>
@@ -155,10 +161,10 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
                         <TouchableOpacity style={[styles.field, styles.date]} onPress={this.showSelectDateScreen}>
                             <Text style={styles.dateText}>{dateString}</Text>
                             <Text style={styles.dateCommentText}>{dateComment}</Text>
-                            <Text style={[styles.dateText, styles.arrow]}>{'>'}</Text>
+                            <Arrow height={list.item.height} color={MAIN_BACKGROUND_COLOR} />
                         </TouchableOpacity>
                     </View>
-                }
+                )}
             </View>
         );
     }
@@ -169,8 +175,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    addExpenseForm: {
-    },
+    addExpenseForm: {},
     field: {
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
         paddingVertical: 10,
@@ -189,7 +194,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
     },
     category: {
-        height: 50,
+        height: list.item.height,
         borderBottomWidth: 0,
     },
     categoryText: {
@@ -198,7 +203,7 @@ const styles = StyleSheet.create({
         lineHeight: 30,
     },
     date: {
-        height: 50,
+        height: list.item.height,
         flexDirection: 'row',
     },
     dateText: {
@@ -212,23 +217,18 @@ const styles = StyleSheet.create({
         color: GRAY_FONT_COLOR,
         lineHeight: 30,
     },
-    arrow: {
-        position: 'absolute',
-        right: BASE_HORIZONTAL_PADDING,
-        top: 10,
-    },
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
     editingExpense: state.editingExpense,
 });
 
-const mapDispatchToProps = (dispatch): {actions: IActions} => ({
+const mapDispatchToProps = (dispatch): { actions: IActions } => ({
     actions: bindActionCreators(actionCreators, dispatch),
 });
 
 const connected = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(EditExpenseScreen);
 export { connected as EditExpenseScreen };

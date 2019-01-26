@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import * as styleConstants from '../../constants/styles';
-import { fonts } from '../../constants/styles';
+import { fonts, report } from '../../constants/styles';
 
 const window = Dimensions.get('window');
 
@@ -18,7 +18,7 @@ export class ListItem extends React.PureComponent<IProps> {
 
         let width = 0;
         if (lineWidth) {
-            width = Math.ceil((window.width - 2 * styleConstants.BASE_HORIZONTAL_PADDING) * lineWidth / 100);
+            width = Math.ceil((window.width - 2 * report.linePadding) * lineWidth / 100);
         }
 
         return (
@@ -52,14 +52,13 @@ const styles = StyleSheet.create({
         minHeight: 20,
 
         position: 'relative',
-        marginRight: 7,
     },
     line: {
         position: 'absolute',
-        left: styleConstants.BASE_HORIZONTAL_PADDING,
+        left: report.linePadding,
         top: 10,
         width: 5,
-        height: 30,
+        height: 24,
         borderRadius: 3,
     },
     circle: {
