@@ -1,4 +1,4 @@
-import { IExpense, IIncome } from '../interfaces';
+import { IExpense, IIncome } from '../types';
 import { Moment } from 'moment';
 import moment = require('moment');
 import * as formats from '../constants/formats';

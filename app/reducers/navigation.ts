@@ -1,4 +1,4 @@
-import { INavigationState, Page } from '../interfaces';
+import { INavigationState, Page } from '../types';
 import { POP_PAGE, PUSH_PAGE, SET_PAGE } from '../actions/types';
 
 const reducer = (state: INavigationState = {pages: [Page.Balance]}, action): INavigationState => {

@@ -1,4 +1,4 @@
-import { IExpense } from '../interfaces';
+import { IExpense } from '../types';
 import { IAddExpenseAction, IDeleteExpenseAction, ISaveEditedExpenseAction } from '../actions/actions';
 import { ADD_EXPENSE, DELETE_EXPENSE, SAVE_EDITED_EXPENSE, SET_EXPENSES } from '../actions/types';
 

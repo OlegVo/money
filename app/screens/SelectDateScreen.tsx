@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState, IExpenseValues } from '../interfaces';
+import { IAppState, IExpenseValues } from '../types';
 import { IActions } from '../actions';
 import { DatePicker, NavigationBar } from '../components';
 import * as formats from '../constants/formats';

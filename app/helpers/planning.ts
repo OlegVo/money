@@ -1,4 +1,4 @@
-import { IMonthPlan, IPlanning } from '../interfaces';
+import { IMonthPlan, IPlanning } from '../types';
 import { Moment } from 'moment';
 
 export function getMonthPlan(planning: IPlanning, date: Moment): IMonthPlan | undefined {

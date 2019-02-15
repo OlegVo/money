@@ -1,5 +1,5 @@
 import { generateId } from './id';
-import { ICategory } from '../interfaces';
+import { ICategory } from '../types';
 
 const colors: string[] = [
     '#88b1d0',

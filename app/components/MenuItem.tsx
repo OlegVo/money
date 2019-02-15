@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TouchableHighlight, View, Text } from 'react-native';
-import { IMenuItem } from '../interfaces';
+import { IMenuItem } from '../types';
 import { styles } from './Menu';
 
 interface IProps {

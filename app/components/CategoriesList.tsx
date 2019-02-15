@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import * as styleConstants from '../constants/styles';
-import { ICategory } from '../interfaces';
+import { ICategory } from '../types';
 import { CategoriesListItem } from './CategoriesListItem';
 
 const window = Dimensions.get('window');

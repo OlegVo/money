@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Dimensions, StyleSheet } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import { MenuItem } from './MenuItem';
-import { IMenuItem, Page } from '../interfaces';
+import { IMenuItem, Page } from '../types';
 import { IActions } from '../actions';
 import { WHITE_BORDER_COLOR, WHITE_FONT_COLOR } from '../constants/styles';
 

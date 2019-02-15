@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { BASE_HORIZONTAL_PADDING, BLUE_FONT_COLOR } from '../constants/styles';
 import * as styleConstants from '../constants/styles';
 import { IActions } from '../actions';
-import { Page } from '../interfaces';
+import { Page } from '../types';
 
 interface IProps {
     actions: IActions;

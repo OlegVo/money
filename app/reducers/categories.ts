@@ -1,4 +1,4 @@
-import { ICategories } from '../interfaces';
+import { ICategories } from '../types';
 import { ADD_CATEGORY, SET_CATEGORIES } from '../actions/types';
 import { IAddCategoryAction, ISetCategoriesAction } from '../actions/actions';
 

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { addThinSpaces } from '../../helpers/string';
 import { BASE_HORIZONTAL_PADDING, BLUE_FONT_COLOR, fonts } from '../../constants/styles';
 import { Moment } from 'moment';
-import { ICategory, IExpense } from '../../interfaces';
+import { ICategory, IExpense } from '../../types';
 import { formatRange } from '../../helpers/date';
 import { ListItemWithSum } from '../common/ListItemWithSum';
 import * as styleConstants from '../../constants/styles';

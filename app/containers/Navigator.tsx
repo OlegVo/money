@@ -6,7 +6,7 @@ import actionCreators from '../actions/index';
 import * as styleConstants from '../constants/styles';
 import { MainScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen, ReportsScreen } from '../screens';
 import { Menu } from '../components';
-import { IAppState, INavigationState, Page } from '../interfaces';
+import { IAppState, INavigationState, Page } from '../types';
 import { IActions } from '../actions';
 import { EditCategoryScreen } from '../screens/EditCategoryScreen';
 

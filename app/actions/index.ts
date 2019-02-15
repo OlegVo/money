@@ -1,7 +1,7 @@
 import { ActionCreatorsMapObject } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import * as actionsFunctions from './actions';
-import { IAppState, ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../interfaces';
+import { IAppState, ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../types';
 
 export interface IAction {
     type: string;

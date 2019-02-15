@@ -1,4 +1,4 @@
-import { IPlanning } from '../interfaces';
+import { IPlanning } from '../types';
 import { ISetPlans } from '../actions/actions';
 import { SET_PLANS } from '../actions/types';
 

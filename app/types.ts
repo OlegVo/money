@@ -6,6 +6,12 @@ export interface IAppState {
     expenses: IExpense[];
     navigation: INavigationState;
     planning: IPlanning;
+    currentPeriod: IPeriod;
+}
+
+export interface IPeriod {
+    startDate: string;
+    endDate: string;
 }
 
 export interface ICategories {

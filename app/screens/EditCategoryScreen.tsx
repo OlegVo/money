@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import { NavigationBar } from '../components';
-import { IAppState, IExpenseValues } from '../interfaces';
+import { IAppState, IExpenseValues } from '../types';
 import { IActions } from '../actions';
 import { bindActionCreators } from 'redux';
 import actionCreators from '../actions';

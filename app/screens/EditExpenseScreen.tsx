@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions/index';
 import * as formats from '../constants/formats';
 import * as moment from 'moment';
-import { IAppState, IExpenseValues, Page } from '../interfaces';
+import { IAppState, IExpenseValues, Page } from '../types';
 import {
     BASE_HORIZONTAL_PADDING,
     colors,

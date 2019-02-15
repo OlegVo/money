@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators, { IActions } from '../actions';
 import { Navigator } from './Navigator';
-import { IAppState, IExpense } from '../interfaces';
+import { IAppState, IExpense } from '../types';
 
 interface IPropsT {
     expenses: IExpense[];

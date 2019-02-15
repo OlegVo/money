@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import { ListItem } from './common/ListItem';
 import { IActions } from '../actions';
-import { Page } from '../interfaces';
+import { Page } from '../types';
 
 interface IProps {
     actions: IActions;

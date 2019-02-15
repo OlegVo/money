@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ICategory, IExpense, IIncome, Page } from '../interfaces';
+import { ICategory, IExpense, IIncome, Page } from '../types';
 import { TransactionListItem } from './TransactionListItem';
 import moment = require('moment');
 import { DATE_FORMAT } from '../constants/formats';

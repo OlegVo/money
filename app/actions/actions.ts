@@ -1,4 +1,4 @@
-import { ICategories, ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../interfaces';
+import { ICategories, ICategory, IExpense, IExpenseData, IExpenseValues, IPlanning, Page } from '../types';
 import {
     ADD_CATEGORY,
     ADD_EXPENSE,

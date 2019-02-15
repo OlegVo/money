@@ -3,14 +3,14 @@ import * as moment from 'moment';
 import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions/index';
-import { IAppState } from '../interfaces/index';
-import { IActions } from '../actions/index';
+import actionCreators from '../actions';
+import { IAppState } from '../types';
+import { IActions } from '../actions';
 import {
     MENU_PADDING,
 } from '../constants/styles';
 import { ExpensesReport } from '../components';
-import { ICategories, IExpense } from '../interfaces';
+import { ICategories, IExpense } from '../types';
 
 interface IPropsT {
     categories: ICategories;

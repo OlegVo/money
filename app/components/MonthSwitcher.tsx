@@ -1,21 +1,32 @@
 import * as React from 'react';
 import { IActions } from '../actions';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import * as styleConstants from '../constants/styles';
 import { Arrow } from './common/Arrow';
 import { fonts, monthSwitcher } from '../constants/styles';
+import { IPeriod } from '../types';
+const moment = require('moment');
+import { DATE_FORMAT } from '../constants/formats';
+import { formatRange } from '../helpers/date';
 
 interface IProps {
+    period: IPeriod;
     actions: IActions;
 }
 
 export class MonthSwitcher extends React.PureComponent<IProps> {
     render() {
+        const { period } = this.props;
+
+        const startDate = moment(period.startDate, DATE_FORMAT).startOf('day');
+        const endDate = moment(period.endDate, DATE_FORMAT).endOf('day');
+        const periodName = formatRange(startDate, endDate);
+
         return (
             <View style={s.container}>
                 <Arrow height={monthSwitcher.height} left={true} onPress={this.previousMonth} />
 
-                <Text style={s.text}>Январь</Text>
+                <Text style={s.text}>{periodName}</Text>
 
                 <Arrow height={monthSwitcher.height} onPress={this.nextMonth} />
             </View>

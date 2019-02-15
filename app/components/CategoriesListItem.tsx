@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { ICategory } from '../interfaces';
+import { ICategory } from '../types';
 import { ListItem } from './common/ListItem';
 import * as styleConstants from '../constants/styles';
 

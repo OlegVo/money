@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
 import { colors } from '../constants/styles';
 import * as formats from '../constants/formats';
-import { ICategory, IExpense, IIncome } from '../interfaces';
+import { ICategory, IExpense, IIncome } from '../types';
 import { ListItemWithSum } from './common/ListItemWithSum';
 import { ListSectionTitle } from './common/ListSectionTitle';
 

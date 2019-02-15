@@ -2,9 +2,9 @@ import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from '../actions/index';
-import { IAppState } from '../interfaces/index';
-import { IActions } from '../actions/index';
+import actionCreators from '../actions';
+import { IAppState } from '../types';
+import { IActions } from '../actions';
 import {
     BASE_HORIZONTAL_PADDING, fonts,
     MENU_PADDING

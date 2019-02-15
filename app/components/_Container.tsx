@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState } from '../interfaces';
+import { IAppState } from '../types';
 import { IActions } from '../actions';
 import { MAIN_BACKGROUND_COLOR } from '../constants/styles';
 
