@@ -12,8 +12,8 @@ import {
     SET_CATEGORIES,
     SET_EXPENSES,
     SET_PAGE,
-    SET_PLANS,
-    START_EDITING_EXPENSE,
+    SET_PLANS, SET_RANGE,
+    START_EDITING_EXPENSE
 } from './types';
 import { AsyncAction } from './index';
 import { AsyncStorage } from 'react-native';
@@ -281,3 +281,16 @@ export function loadApplicationData(): AsyncAction {
         await dispatch(loadExpenses());
     };
 }
+
+export interface ISetRangeAction {
+    startDate: string;
+    endDate: string;
+    type: string;
+}
+export const setRange = (startDate: string, endDate: string): ISetRangeAction => {
+    return {
+        type: SET_RANGE,
+        startDate,
+        endDate,
+    };
+};

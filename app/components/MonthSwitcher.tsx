@@ -33,9 +33,24 @@ export class MonthSwitcher extends React.PureComponent<IProps> {
         );
     }
 
-    previousMonth = () => {};
+    previousMonth = () => {
+        const { period, actions } = this.props;
+        const startDate = moment(period.startDate, DATE_FORMAT)
+            .startOf('month')
+            .subtract(1, 'day')
+            .startOf('month');
+        const endDate = moment(startDate).endOf('month');
+        actions.setRange(startDate.format(DATE_FORMAT), endDate.format(DATE_FORMAT));
+    };
 
-    nextMonth = () => {};
+    nextMonth = () => {
+        const { period, actions } = this.props;
+        const startDate = moment(period.startDate, DATE_FORMAT)
+            .endOf('month')
+            .add(1, 'day');
+        const endDate = moment(startDate).endOf('month');
+        actions.setRange(startDate.format(DATE_FORMAT), endDate.format(DATE_FORMAT));
+    };
 }
 
 const s = StyleSheet.create({

@@ -12,3 +12,4 @@ export const EDIT_EXPENSE = 'EDIT_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const SAVE_EDITED_EXPENSE = 'SAVE_EDITED_EXPENSE';
 export const SET_PLANS = 'SET_PLANS';
+export const SET_RANGE = 'SET_RANGE';

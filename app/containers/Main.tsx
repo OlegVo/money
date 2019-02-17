@@ -13,6 +13,7 @@ type IProps = IPropsT & {actions: IActions};
 
 class Main extends React.PureComponent<IProps> {
     componentDidMount() {
+        this.props.
         this.props.actions.loadApplicationData();
     }
 
