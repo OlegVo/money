@@ -13,7 +13,7 @@ type IProps = IPropsT & {actions: IActions};
 
 class Main extends React.PureComponent<IProps> {
     componentDidMount() {
-        this.props.
+        this.props.actions.setCurrentMonth();
         this.props.actions.loadApplicationData();
     }
 

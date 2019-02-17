@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
-import { IAppState, ICategories, IExpense, IIncome, IPeriod, IPlanning } from '../types';
+import { IAppState, ICategories, IExpense, IIncome, IPlanning } from '../types';
 import { IActions } from '../actions';
 import { MENU_PADDING } from '../constants/styles';
 import { TransactionsList } from '../components';
@@ -21,7 +21,7 @@ interface IPropsT {
     expenses: IExpense[];
     planning: IPlanning;
     categories: ICategories;
-    currentPeriod: IPeriod;
+    currentPeriod: IAppState['currentPeriod'];
 }
 
 type IProps = IPropsT & { actions: IActions };
@@ -29,6 +29,10 @@ type IProps = IPropsT & { actions: IActions };
 class MainScreen extends React.PureComponent<IProps> {
     render() {
         const { balance, currency, expenses, categories, planning, currentPeriod, actions } = this.props;
+
+        if (!currentPeriod) {
+            return null;
+        }
 
         const startDate = moment(currentPeriod.startDate, DATE_FORMAT).startOf('day');
         const endDate = moment(currentPeriod.endDate, DATE_FORMAT).endOf('day');

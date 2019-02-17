@@ -27,6 +27,7 @@ export interface IActions {
     saveExpenses: () => AsyncAction;
     loadApplicationData: () => AsyncAction;
     setRange: (startDate: string, endDate: string) => ISetRangeAction;
+    setCurrentMonth: () => ISetRangeAction;
 }
 
 export type IActionCreators = IActions & ActionCreatorsMapObject;
