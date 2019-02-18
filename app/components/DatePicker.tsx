@@ -4,6 +4,9 @@ import * as styleConstants from '../constants/styles';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { fonts, MAIN_BACKGROUND_COLOR } from '../constants/styles';
+import { monthSwitcher } from '../constants/styles';
+import { Arrow } from './common/Arrow';
+import { DATE_FORMAT, MONTH_FORMAT } from '../constants/formats';
 const window = Dimensions.get('window');
 
 const DAY_SIZE = (window.width - 20) / 7;
@@ -17,6 +20,7 @@ interface IProps {
 
 interface IState {
     date: Moment;
+    month: string;
 }
 
 export class DatePicker extends React.PureComponent<IProps, IState> {
@@ -24,40 +28,60 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
         super(props);
 
         this.onPressDate = this.onPressDate.bind(this);
+        const date = moment(props.date, DATE_FORMAT);
 
         this.state = {
-            date: moment(props.date, 'DD.MM.YYYY'),
+            date,
+            month: date.format(MONTH_FORMAT),
         };
     }
 
     onPressDate(day) {
-        const { date } = this.state;
+        const { month } = this.state;
 
-        const newDate = moment(date);
+        const newDate = moment(month, MONTH_FORMAT);
         newDate.date(day);
 
-        this.setState({date: newDate});
+        this.setState({ date: newDate });
 
         this.props.onSelectDate(newDate);
     }
 
+    previousMonth = () => {
+        const { month } = this.state;
+        const prevMonth = moment(month, MONTH_FORMAT)
+            .startOf('month')
+            .subtract(1, 'day')
+            .format(MONTH_FORMAT);
+        this.setState({ month: prevMonth });
+    };
+
+    nextMonth = () => {
+        const { month } = this.state;
+        const nextMonth = moment(month, MONTH_FORMAT)
+            .endOf('month')
+            .add(1, 'day')
+            .format(MONTH_FORMAT);
+        this.setState({ month: nextMonth });
+    };
+
     render() {
-        const { date } = this.state;
+        const { date, month } = this.state;
 
         const monthDay = date.date();
 
-        const month: any[] = [];
-        const firstDayOfMonth = moment(date).date(1);
+        const monthDays: any[] = [];
+        const firstDayOfMonth = moment(month, MONTH_FORMAT).date(1);
         const firstDayOfMonthWeekDay = firstDayOfMonth.day() || 7; // делаем пн - 1, вс - 7
         // считать надо до дня недели первого дня в месяце
         for (let i = 1; i < firstDayOfMonthWeekDay; i++) {
-            month.push('');
+            monthDays.push('');
         }
-        for (let i = 1; i <= date.daysInMonth(); i++) {
-            month.push(i);
+        for (let i = 1; i <= firstDayOfMonth.daysInMonth(); i++) {
+            monthDays.push(i);
         }
 
-        let monthLabel = date.format('MMMM YYYY')
+        let monthLabel = moment(month, MONTH_FORMAT).format('MMMM YYYY');
         monthLabel = monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1);
 
         const today = moment();
@@ -74,17 +98,23 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
                     </View>
 
                     <View style={styles.monthLabel}>
+                        <Arrow height={monthSwitcher.height} left={true} onPress={this.previousMonth} />
+
                         <Text style={styles.monthLabelText}>{monthLabel}</Text>
+
+                        {date.format(MONTH_FORMAT) !== month && firstDayOfMonth.diff(date) < 0 && (
+                            <Arrow height={monthSwitcher.height} onPress={this.nextMonth} />
+                        )}
                     </View>
 
                     <View style={styles.monthDays}>
-                        {month.map((day, i) => {
+                        {monthDays.map((day, i) => {
                             const dayStyle = [styles.day];
                             const daytTextStyle = [styles.dayText];
-                            if (day === monthDay) {
+                            if (date.format(MONTH_FORMAT) === month && day === monthDay) {
                                 dayStyle.push(styles.dayCurrent);
                                 daytTextStyle.push(styles.dayTextCurrent);
-                            } else if (day > today.date()) {
+                            } else if ((date.format(MONTH_FORMAT) === month && day > today.date()) || firstDayOfMonth.diff(date) > 0) {
                                 daytTextStyle.push(styles.dayTextDisabled);
                             }
 
@@ -95,9 +125,7 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
                                     onPress={() => this.onPressDate(day)}
                                     activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY}
                                 >
-                                    {!!day &&
-                                        <Text style={daytTextStyle}>{day}</Text>
-                                    }
+                                    {!!day && <Text style={daytTextStyle}>{day}</Text>}
                                 </TouchableOpacity>
                             );
                         })}
@@ -133,14 +161,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     monthLabel: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         borderColor: styleConstants.LIST_BORDER_COLOR,
+        alignItems: 'center',
     },
     monthLabelText: {
         ...fonts.base,
+        lineHeight: monthSwitcher.height,
     },
     monthDays: {
         paddingVertical: 8,
