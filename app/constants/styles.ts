@@ -1,4 +1,3 @@
-
 // базовые стили
 export const BASE_HORIZONTAL_PADDING = 15;
 export const LIST_VERTICAL_PADDING = 12;
@@ -28,7 +27,7 @@ export const WHITE_FONT_COLOR = '#fff';
 export const WHITE_BORDER_COLOR = '#fff';
 export const GRAY_BACKGROUND_COLOR = '#ddd';
 
-export const TOUCHABLE_ACTIVE_OPACITY = .4;
+export const TOUCHABLE_ACTIVE_OPACITY = 0.4;
 
 // на сколько отступать сверху
 export const MENU_PADDING = 22;
@@ -56,4 +55,9 @@ export const report = {
 
 export const monthSwitcher = {
     height: 44,
+};
+
+export const wideButton = {
+    horizontalPadding: 10,
+    textColor: BLUE_FONT_COLOR,
 };

@@ -57,7 +57,6 @@ const s = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        // paddingVertical: styleConstants.LIST_VERTICAL_PADDING,
         paddingHorizontal: styleConstants.BASE_HORIZONTAL_PADDING,
         borderTopWidth: 1,
         borderColor: styleConstants.LIST_BORDER_COLOR,

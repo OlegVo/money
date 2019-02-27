@@ -6,7 +6,7 @@ import actionCreators from '../actions/index';
 import { IAppState, ICategories, ICategory, IExpenseValues, Page } from '../types';
 import { IActions } from '../actions';
 import { CategoriesList, NavigationBar } from '../components';
-import { AddCategoryButton } from '../components/AddCategoryButton';
+import { WideButton } from '../components/WideButton';
 
 interface IPropsT {
     categories: ICategories;
@@ -34,6 +34,11 @@ class CategoriesScreen extends React.PureComponent<IProps> {
         }
     }
 
+    addCategory = () => {
+        const { actions } = this.props;
+        actions.pushPage(Page.EditCategory);
+    };
+
     render() {
         const { editingExpense, categories, actions } = this.props;
 
@@ -43,7 +48,7 @@ class CategoriesScreen extends React.PureComponent<IProps> {
             <View style={styles.container}>
                 <NavigationBar actions={actions} />
 
-                <AddCategoryButton actions={actions} />
+                <WideButton text='Добавить категорию' onPress={this.addCategory} actions={actions} />
 
                 <CategoriesList categories={categories.expenses} onPressCategory={this.selectCategory} />
             </View>
@@ -54,8 +59,6 @@ class CategoriesScreen extends React.PureComponent<IProps> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 });
 

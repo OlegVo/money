@@ -4,14 +4,14 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions';
-import { IAppState, ICategories, IExpense, IIncome, IPlanning } from '../types';
+import { IAppState, ICategories, IExpense, IIncome, IPlanning, Page } from '../types';
 import { IActions } from '../actions';
 import { MENU_PADDING } from '../constants/styles';
 import { TransactionsList } from '../components';
 import { filterExpensesByDates, filterIncomesByDates } from '../helpers/expenses';
 import { getMonthPlan } from '../helpers/planning';
 import { Balance } from '../components/Balance';
-import { AddTransactionButton } from '../components/AddTransactionButton';
+import { WideButton } from '../components/WideButton';
 import { MonthSwitcher } from '../components/MonthSwitcher';
 import { DATE_FORMAT } from '../constants/formats';
 
@@ -27,6 +27,11 @@ interface IPropsT {
 type IProps = IPropsT & { actions: IActions };
 
 class MainScreen extends React.PureComponent<IProps> {
+    addExpense = () => {
+        this.props.actions.startEditingExpense();
+        this.props.actions.pushPage(Page.Categories);
+    };
+
     render() {
         const { balance, currency, expenses, categories, planning, currentPeriod, actions } = this.props;
 
@@ -46,7 +51,7 @@ class MainScreen extends React.PureComponent<IProps> {
             <View style={styles.container}>
                 {false && <Balance balance={balance} currency={currency} />}
 
-                <AddTransactionButton actions={actions} />
+                <WideButton text='Добавить расходы' onPress={this.addExpense} actions={actions} />
 
                 <ScrollView>
                     <MonthSwitcher period={currentPeriod} actions={actions} />
