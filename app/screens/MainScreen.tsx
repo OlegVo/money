@@ -44,7 +44,7 @@ class MainScreen extends React.PureComponent<IProps> {
 
         return (
             <View style={styles.container}>
-                <Balance balance={balance} currency={currency} />
+                {false && <Balance balance={balance} currency={currency} />}
 
                 <AddTransactionButton actions={actions} />
 
