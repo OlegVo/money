@@ -3,7 +3,6 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import * as styleConstants from '../constants/styles';
 import { MainScreen, EditExpenseScreen, PlanningScreen, SelectDateScreen, CategoriesScreen, ReportsScreen } from '../screens';
 import { Menu } from '../components';
 import { IAppState, INavigationState, Page } from '../types';
@@ -59,7 +58,7 @@ class Navigator extends React.PureComponent<IProps> {
 
                 <StatusBar animated={true} barStyle='light-content' />
 
-                <Menu actions={actions} />
+                {false && <Menu actions={actions} />}
             </View>
         );
     }
@@ -68,7 +67,7 @@ class Navigator extends React.PureComponent<IProps> {
 const styles = StyleSheet.create({
     panel: {
         flex: 1,
-        paddingBottom: styleConstants.MENU_HEIGHT,
+        // paddingBottom: styleConstants.MENU_HEIGHT,
     },
 });
 

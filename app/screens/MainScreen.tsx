@@ -14,6 +14,7 @@ import { Balance } from '../components/Balance';
 import { WideButton } from '../components/WideButton';
 import { MonthSwitcher } from '../components/MonthSwitcher';
 import { DATE_FORMAT } from '../constants/formats';
+import { TransactionsTotal } from '../components/TransactionsTotal';
 
 interface IPropsT {
     balance: number;
@@ -54,7 +55,11 @@ class MainScreen extends React.PureComponent<IProps> {
                 <WideButton text='Добавить транзакцию' onPress={this.addExpense} actions={actions} />
 
                 <ScrollView>
-                    <MonthSwitcher period={currentPeriod} actions={actions} />
+                    <View style={styles.monthSwitcher}>
+                        <MonthSwitcher period={currentPeriod} actions={actions} />
+                    </View>
+
+                    <TransactionsTotal startDate={startDate} endDate={endDate} expenses={expenses} currency={currency} />
 
                     <TransactionsList
                         expenses={monthExpenses}
@@ -74,6 +79,9 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: MENU_PADDING,
         position: 'relative',
+    },
+    monthSwitcher: {
+        marginTop: 15,
     },
 });
 

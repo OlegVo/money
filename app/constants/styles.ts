@@ -59,6 +59,11 @@ export const monthSwitcher = {
     height: 44,
 };
 
+export const totalLine = {
+    height: 44,
+    fontSize: 18,
+};
+
 export const wideButton = {
     horizontalPadding: 10,
     textColor: BLUE_FONT_COLOR,

@@ -10,10 +10,9 @@ import {
     MENU_PADDING,
 } from '../constants/styles';
 import { ExpensesReport } from '../components';
-import { ICategories, IExpense } from '../types';
+import { IExpense } from '../types';
 
 interface IPropsT {
-    categories: ICategories;
     expenses: IExpense[];
     currency: string;
 }
@@ -22,7 +21,7 @@ type IProps = IPropsT & {actions: IActions};
 
 class ReportsScreen extends React.PureComponent<IProps> {
     render() {
-        const { expenses, categories, currency } = this.props;
+        const { expenses, currency } = this.props;
 
         const startDate = moment().startOf('month');
         const endDate = moment().endOf('month');
@@ -33,7 +32,6 @@ class ReportsScreen extends React.PureComponent<IProps> {
                     startDate={startDate}
                     endDate={endDate}
                     expenses={expenses}
-                    categories={categories.expenses}
                     currency={currency}
                 />
             </View>
@@ -49,7 +47,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
-    categories: state.categories,
     expenses: state.expenses,
     currency: state.currency,
 });
