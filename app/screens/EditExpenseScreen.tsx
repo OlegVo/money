@@ -8,17 +8,19 @@ import * as moment from 'moment';
 import { IAppState, IExpenseValues, Page } from '../types';
 import {
     BASE_HORIZONTAL_PADDING,
-    colors,
+    colors, deleteButton,
     fonts,
     GRAY_FONT_COLOR,
     list,
     LIST_BORDER_COLOR,
     MAIN_BACKGROUND_COLOR,
-    WHITE_FONT_COLOR,
+    WHITE_FONT_COLOR
 } from '../constants/styles';
 import { generateId } from '../helpers/id';
 import { NavigationBar, IButton } from '../components/NavigationBar';
 import { Arrow } from '../components/common/Arrow';
+import { NO_CATEGORY } from '../constants/strings';
+import { WideButton } from '../components/WideButton';
 
 interface IPropsT {
     editingExpense: IExpenseValues;
@@ -57,15 +59,7 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
     }
 
     back() {
-        const { actions, editingExpense } = this.props;
-
-        if (editingExpense.id) {
-            actions.saveEditedExpense();
-            actions.saveExpenses();
-        } else {
-            actions.editExpense({ category: undefined });
-        }
-
+        const { actions } = this.props;
         actions.popPage();
     }
 
@@ -77,7 +71,7 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
             throw new Error('no submit for expense editing');
         }
 
-        if (!category || !sum || comment === undefined || !date) {
+        if (!sum || comment === undefined || !date) {
             throw new Error('invalid expense data');
         }
 
@@ -86,6 +80,18 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
 
         actions.setPage(Page.Balance);
     }
+
+    save = () => {
+        const { actions, editingExpense } = this.props;
+
+        if (!editingExpense.id) {
+            throw new Error('no save for new expense');
+        }
+
+        actions.saveEditedExpense();
+        actions.saveExpenses();
+        actions.popPage();
+    };
 
     delete() {
         const { actions, editingExpense } = this.props;
@@ -116,66 +122,46 @@ class EditExpenseScreen extends React.PureComponent<IProps> {
         }
 
         const rightButton: IButton = editingExpense.id
-            ? { text: 'Удалить', onPress: this.delete }
+            ? { text: 'Сохранить', onPress: this.save }
             : { text: 'Готово', onPress: this.submit };
 
-        return (
-            <View style={styles.container}>
+        return <View style={s.container}>
                 <NavigationBar back={this.back} rightButton={rightButton} actions={actions} />
 
-                {category && (
-                    <View style={styles.addExpenseForm}>
-                        <View style={styles.field}>
-                            <TextInput
-                                style={[styles.input, styles.sumInput]}
-                                value={sum ? sum.toString() : ''}
-                                onChangeText={this.changeSum}
-                                autoFocus={!editingExpense.id}
-                                selectionColor={colors.baseFont}
-                                placeholder='Сумма'
-                                keyboardType='numeric'
-                            />
-                        </View>
-
-                        <TouchableOpacity
-                            style={[styles.field, styles.category, { backgroundColor: category.color }]}
-                            onPress={this.selectCategory}
-                        >
-                            <Text style={styles.categoryText}>{category.name}</Text>
-                            <Arrow height={list.item.height} color={WHITE_FONT_COLOR} />
-                        </TouchableOpacity>
-
-                        <View style={styles.field}>
-                            <TextInput
-                                style={styles.input}
-                                value={comment}
-                                onChangeText={this.changeComment}
-                                selectionColor={colors.baseFont}
-                                placeholder='Комментарий'
-                                placeholderTextColor={GRAY_FONT_COLOR}
-                                returnKeyType='done'
-                                onSubmitEditing={this.submit}
-                            />
-                        </View>
-
-                        <TouchableOpacity style={[styles.field, styles.date]} onPress={this.showSelectDateScreen}>
-                            <Text style={styles.dateText}>{dateString}</Text>
-                            <Text style={styles.dateCommentText}>{dateComment}</Text>
-                            <Arrow height={list.item.height} color={MAIN_BACKGROUND_COLOR} />
-                        </TouchableOpacity>
+                <View style={s.addExpenseForm}>
+                    <View style={s.field}>
+                        <TextInput style={[s.input, s.sumInput]} value={sum ? sum.toString() : ''} onChangeText={this.changeSum} autoFocus={!editingExpense.id} selectionColor={colors.baseFont} placeholder='Сумма' keyboardType='numeric' />
                     </View>
-                )}
-            </View>
-        );
+
+                    <TouchableOpacity style={[s.field, s.category, { backgroundColor: category && category.color }]} onPress={this.selectCategory}>
+                        <Text style={category ? s.categoryText : s.noCategoryText}>{category ? category.name : NO_CATEGORY}</Text>
+                        <Arrow height={list.item.height} color={category ? WHITE_FONT_COLOR : undefined} />
+                    </TouchableOpacity>
+
+                    <View style={s.field}>
+                        <TextInput style={s.input} value={comment} onChangeText={this.changeComment} selectionColor={colors.baseFont} placeholder='Комментарий' placeholderTextColor={GRAY_FONT_COLOR} returnKeyType='done' onSubmitEditing={this.submit} />
+                    </View>
+
+                    <TouchableOpacity style={[s.field, s.date]} onPress={this.showSelectDateScreen}>
+                        <Text style={s.dateText}>{dateString}</Text>
+                        <Text style={s.dateCommentText}>{dateComment}</Text>
+                        <Arrow height={list.item.height} color={MAIN_BACKGROUND_COLOR} />
+                    </TouchableOpacity>
+                </View>
+
+                {!!editingExpense.id && <WideButton text='Удалить транзакцию' textColor={deleteButton.textColor} onPress={this.delete} actions={actions} />}
+            </View>;
     }
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
     },
-    addExpenseForm: {},
+    addExpenseForm: {
+        paddingBottom: deleteButton.marginTop,
+    },
     field: {
         paddingHorizontal: BASE_HORIZONTAL_PADDING,
         paddingVertical: 10,
@@ -195,11 +181,15 @@ const styles = StyleSheet.create({
     },
     category: {
         height: list.item.height,
-        borderBottomWidth: 0,
+        // borderBottomWidth: 0,
     },
     categoryText: {
         ...fonts.base,
         color: WHITE_FONT_COLOR,
+        lineHeight: 30,
+    },
+    noCategoryText: {
+        ...fonts.base,
         lineHeight: 30,
     },
     date: {

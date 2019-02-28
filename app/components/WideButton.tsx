@@ -7,19 +7,20 @@ import { fonts } from '../constants/styles';
 
 interface IProps {
     text: string;
+    textColor?: string;
     onPress: () => void;
     actions: IActions;
 }
 
 export class WideButton extends React.PureComponent<IProps> {
     render() {
-        const { text, onPress } = this.props;
+        const { text, textColor, onPress } = this.props;
 
         return (
             <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={onPress}>
                 <View style={styles.container}>
                     <View style={styles.textWrap}>
-                        <Text style={styles.text}>{text}</Text>
+                        <Text style={[styles.text, { color: textColor || wideButton.textColor }]}>{text}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -42,6 +43,5 @@ const styles = StyleSheet.create({
     },
     text: {
         ...fonts.base,
-        color: wideButton.textColor,
     },
 });

@@ -3,14 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import actionCreators from '../actions/index';
-import { IAppState, ICategories, ICategory, IExpenseValues, Page } from '../types';
+import { IAppState, ICategories, ICategory, Page } from '../types';
 import { IActions } from '../actions';
 import { CategoriesList, NavigationBar } from '../components';
 import { WideButton } from '../components/WideButton';
 
 interface IPropsT {
     categories: ICategories;
-    editingExpense: IExpenseValues;
 }
 
 type IProps = IPropsT & { actions: IActions };
@@ -23,15 +22,9 @@ class CategoriesScreen extends React.PureComponent<IProps> {
     }
 
     selectCategory(category: ICategory) {
-        const { editingExpense, actions } = this.props;
-
-        const addEditExpenseScreen = !editingExpense.category;
+        const { actions } = this.props;
         actions.editExpense({ category });
-        if (addEditExpenseScreen) {
-            actions.pushPage(Page.EditExpense);
-        } else {
-            actions.popPage();
-        }
+        actions.popPage();
     }
 
     addCategory = () => {
@@ -40,9 +33,7 @@ class CategoriesScreen extends React.PureComponent<IProps> {
     };
 
     render() {
-        const { editingExpense, categories, actions } = this.props;
-
-        if (!editingExpense.date) return null;
+        const { categories, actions } = this.props;
 
         return (
             <View style={styles.container}>
@@ -64,7 +55,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state: IAppState): IPropsT => ({
     categories: state.categories,
-    editingExpense: state.editingExpense,
 });
 
 const mapDispatchToProps = (dispatch): { actions: IActions } => ({

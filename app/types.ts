@@ -26,7 +26,7 @@ export interface ICategory {
 
 export interface IExpenseData {
     id: string;
-    categoryId: string;
+    categoryId?: string;
     sum: number;
     comment: string;
     date: string;
@@ -42,7 +42,7 @@ export interface ITransaction {
 
 export interface IExpense extends ITransaction {
     type: 'expense';
-    category: ICategory;
+    category?: ICategory;
 }
 
 export interface IExpenseValues {

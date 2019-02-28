@@ -2,11 +2,12 @@ import * as React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import * as moment from 'moment';
 import * as styleConstants from '../constants/styles';
-import { colors } from '../constants/styles';
+import { colors, list } from '../constants/styles';
 import * as formats from '../constants/formats';
 import { ICategory, IExpense, IIncome } from '../types';
 import { ListItemWithSum } from './common/ListItemWithSum';
 import { ListSectionTitle } from './common/ListSectionTitle';
+import { NO_CATEGORY } from '../constants/strings';
 
 interface IProps {
     transaction: IExpense | IIncome;
@@ -48,10 +49,10 @@ export class TransactionListItem extends React.PureComponent<IProps> {
 
                 <TouchableOpacity activeOpacity={styleConstants.TOUCHABLE_ACTIVE_OPACITY} onPress={this.onPress}>
                     <ListItemWithSum
-                        text={transaction.comment || category && category.name || ''}
+                        text={transaction.comment || category && category.name || NO_CATEGORY}
                         sum={transaction.sum}
                         currency={currency}
-                        circleColor={category && category.color}
+                        circleColor={category ? category.color : list.item.backgroundColor}
                         textColor={transaction.type === 'income' ? colors.incomeGreen : undefined}
                         plusSign={transaction.type === 'income'}
                     />

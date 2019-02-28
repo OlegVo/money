@@ -21,6 +21,7 @@ export const fonts = {
 
 // синий фон
 export const MAIN_BACKGROUND_COLOR = '#086ca2';
+export const DELETE_COLOR = '#d71e12';
 
 // текст на синем фоне
 export const WHITE_FONT_COLOR = '#fff';
@@ -43,6 +44,7 @@ export const TOP_BUTTON_HEIGHT = 30;
 export const list = {
     item: {
         height: 50,
+        backgroundColor: WHITE_FONT_COLOR,
     },
     arrow: {
         horizontalPadding: 15,
@@ -60,4 +62,9 @@ export const monthSwitcher = {
 export const wideButton = {
     horizontalPadding: 10,
     textColor: BLUE_FONT_COLOR,
+};
+
+export const deleteButton = {
+    marginTop: 30,
+    textColor: DELETE_COLOR,
 };

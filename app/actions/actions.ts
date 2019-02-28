@@ -94,8 +94,7 @@ interface ISetExpensesAction {
 
 export const setExpenses = (expensesData: IExpenseData[], categories: ICategory[]): ISetExpensesAction => {
     const expenses = expensesData.map(e => {
-        const category = categories.find(c => c.id === e.categoryId);
-        if (!category) throw new Error(`No category ${e.categoryId}`);
+        const category = e.categoryId ? categories.find(c => c.id === e.categoryId) : undefined;
 
         return {
             type: 'expense' as 'expense',
@@ -203,12 +202,11 @@ export function saveExpenses(): AsyncAction {
         const { expenses, categories } = getState();
 
         const expensesData: IExpenseData[] = expenses.map(e => {
-            const category = categories.expenses.find(c => c === e.category);
-            if (!category) throw new Error(`No category ${e.category}`);
+            const category = e.category && categories.expenses.find(c => c === e.category);
 
             return {
                 id: e.id,
-                categoryId: category.id,
+                categoryId: category && category.id,
                 sum: e.sum,
                 comment: e.comment,
                 date: e.date,

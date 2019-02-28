@@ -29,7 +29,7 @@ type IProps = IPropsT & { actions: IActions };
 class MainScreen extends React.PureComponent<IProps> {
     addExpense = () => {
         this.props.actions.startEditingExpense();
-        this.props.actions.pushPage(Page.Categories);
+        this.props.actions.pushPage(Page.EditExpense);
     };
 
     render() {
@@ -51,7 +51,7 @@ class MainScreen extends React.PureComponent<IProps> {
             <View style={styles.container}>
                 {false && <Balance balance={balance} currency={currency} />}
 
-                <WideButton text='Добавить расходы' onPress={this.addExpense} actions={actions} />
+                <WideButton text='Добавить транзакцию' onPress={this.addExpense} actions={actions} />
 
                 <ScrollView>
                     <MonthSwitcher period={currentPeriod} actions={actions} />

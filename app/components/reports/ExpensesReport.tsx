@@ -8,9 +8,10 @@ import { formatRange } from '../../helpers/date';
 import { ListItemWithSum } from '../common/ListItemWithSum';
 import * as styleConstants from '../../constants/styles';
 import { filterExpensesByDates } from '../../helpers/expenses';
+import { NO_CATEGORY } from '../../constants/strings';
 
 interface ISumByCategory {
-    category: ICategory;
+    category?: ICategory;
     sum: number;
 }
 
@@ -31,15 +32,16 @@ export class ExpensesReport extends React.PureComponent<IProps> {
         const sumsByCategory: ISumByCategory[] = [];
         const sumsByCategoryMap: { [i: string]: ISumByCategory } = {};
         rangeExpenses.forEach(expense => {
-            if (sumsByCategoryMap[expense.category.id]) {
-                sumsByCategoryMap[expense.category.id].sum += expense.sum;
+            const categoryId = expense.category ? expense.category.id : '0';
+            if (sumsByCategoryMap[categoryId]) {
+                sumsByCategoryMap[categoryId].sum += expense.sum;
             } else {
                 const newSum = {
                     sum: expense.sum,
                     category: expense.category,
                 };
                 sumsByCategory.push(newSum);
-                sumsByCategoryMap[expense.category.id] = newSum;
+                sumsByCategoryMap[categoryId] = newSum;
             }
         });
         sumsByCategory.sort((a, b) => a.sum > b.sum ? -1 : 1);
@@ -64,14 +66,15 @@ export class ExpensesReport extends React.PureComponent<IProps> {
                     <ScrollView>
                         {sumsByCategory.map((sumByCategory, i) => {
                             const percent = Math.ceil(sumByCategory.sum * 100 / maxSum);
+                            const category = sumByCategory.category;
 
                             return (
                                 <ListItemWithSum
                                     key={i}
-                                    text={sumByCategory.category.name}
+                                    text={category ? category.name : NO_CATEGORY}
                                     sum={sumByCategory.sum}
                                     currency={currency}
-                                    lineColor={sumByCategory.category.color}
+                                    lineColor={category && category.color}
                                     lineWidth={percent}
                                 />
                             );
