@@ -86,6 +86,8 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
 
         const today = moment();
 
+        const showNextMonthButton = today.date(1).diff(date) > 0;
+
         return (
             <View style={styles.container}>
                 <View style={styles.month}>
@@ -102,7 +104,7 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
 
                         <Text style={styles.monthLabelText}>{monthLabel}</Text>
 
-                        {date.format(MONTH_FORMAT) !== month && firstDayOfMonth.diff(date) < 0 && (
+                        {showNextMonthButton && (
                             <Arrow height={monthSwitcher.height} onPress={this.nextMonth} />
                         )}
                     </View>
@@ -114,7 +116,7 @@ export class DatePicker extends React.PureComponent<IProps, IState> {
                             if (date.format(MONTH_FORMAT) === month && day === monthDay) {
                                 dayStyle.push(styles.dayCurrent);
                                 daytTextStyle.push(styles.dayTextCurrent);
-                            } else if ((date.format(MONTH_FORMAT) === month && day > today.date()) || firstDayOfMonth.diff(date) > 0) {
+                            } else if ((today.format(MONTH_FORMAT) === month && day > today.date()) || firstDayOfMonth.diff(today) > 0) {
                                 daytTextStyle.push(styles.dayTextDisabled);
                             }
 
